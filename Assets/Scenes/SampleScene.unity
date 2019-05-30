@@ -556,6 +556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 371229114}
   - component: {fileID: 371229113}
+  - component: {fileID: 371229115}
   m_Layer: 0
   m_Name: UMA_F2
   m_TagString: Untagged
@@ -628,7 +629,8 @@ MonoBehaviour:
       - HumanFemaleDCS
       - HumanFemale
   raceAnimationControllers:
-    defaultAnimationController: {fileID: 0}
+    defaultAnimationController: {fileID: 9100000, guid: eb280940c811fab4a9e3ddf09381c343,
+      type: 2}
     animators: []
     dynamicallyAddFromResources: 0
     resourcesFolderPath: 
@@ -653,7 +655,7 @@ MonoBehaviour:
   defaultSaveOptions: 15
   BoundsOffset: {x: 0, y: 0, z: 0}
   showPlaceholder: 1
-  previewModel: 0
+  previewModel: 1
   customModel: {fileID: 0}
   customRotation: {x: 0, y: 0, z: 0}
   previewColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -672,6 +674,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: -194.39, z: 0}
+--- !u!114 &371229115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371229112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d60a7257e5619f4f8b543d39e849402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,8 +761,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.121866986, y: -0.44475487, z: 0.061229423, w: 0.8852076}
-  m_LocalPosition: {x: 2.170002, y: 1.650941, z: -1.6058311}
+  m_LocalRotation: {x: 0.079516776, y: -0.072297215, z: 0.005782231, w: 0.9941916}
+  m_LocalPosition: {x: -0.6396916, y: 1.4972645, z: -3.1236176}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1317,6 +1331,46 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.data[9]._compatibleRaces.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.data[10]._compatibleRaces.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: context
+      value: 
+      objectReference: {fileID: 1313181198}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.data[9]._recipeName
+      value: FemaleShirt2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.data[9]._compatibleRaces.Array.data[0]
+      value: HumanFemaleDCS
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.data[9]._compatibleRaces.Array.data[1]
+      value: HumanFemale
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.data[10]._recipeName
+      value: FemaleShirt2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.data[10]._compatibleRaces.Array.data[0]
+      value: HumanFemaleDCS
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: preloadWardrobeRecipes.recipes.Array.data[10]._compatibleRaces.Array.data[1]
+      value: HumanFemale
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
 --- !u!1 &897580384
@@ -1329,6 +1383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 897580386}
   - component: {fileID: 897580385}
+  - component: {fileID: 897580387}
   m_Layer: 0
   m_Name: UMA_M3
   m_TagString: Untagged
@@ -1409,8 +1464,7 @@ MonoBehaviour:
       - HumanMaleDCS
       - HumanMale
   raceAnimationControllers:
-    defaultAnimationController: {fileID: 9100000, guid: eb280940c811fab4a9e3ddf09381c343,
-      type: 2}
+    defaultAnimationController: {fileID: 0}
     animators: []
     dynamicallyAddFromResources: 0
     resourcesFolderPath: 
@@ -1447,13 +1501,25 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897580384}
-  m_LocalRotation: {x: -0, y: 0.98410314, z: -0, w: 0.17759809}
-  m_LocalPosition: {x: 0.98, y: 0.119, z: -0.12041032}
+  m_LocalRotation: {x: -0, y: 0.9973791, z: -0, w: -0.07235279}
+  m_LocalPosition: {x: 1, y: 0.14, z: -0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 159.54001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 188.29799, z: 0}
+--- !u!114 &897580387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897580384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb5254cbbae3574ab621f56f3a08d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!144 &960906810
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -1855,6 +1921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1099168659}
   - component: {fileID: 1099168658}
+  - component: {fileID: 1099168660}
   m_Layer: 0
   m_Name: UMA_M2
   m_TagString: Untagged
@@ -1930,13 +1997,18 @@ MonoBehaviour:
       _compatibleRaces:
       - HumanMaleDCS
       - HumanMale
-    - _recipeName: M_Trainers_Black
+    - _recipeName: ShavedHead
       _compatibleRaces:
-      - HumanMaleDCS
       - HumanMale
+      - HumanMaleDCS
+      - HumanMaleHighPoly
+    - _recipeName: TallShoes_Recipe
+      _compatibleRaces:
+      - HumanMale
+      - HumanMaleDCS
+      - HumanMaleHighPoly
   raceAnimationControllers:
-    defaultAnimationController: {fileID: 9100000, guid: eb280940c811fab4a9e3ddf09381c343,
-      type: 2}
+    defaultAnimationController: {fileID: 0}
     animators: []
     dynamicallyAddFromResources: 0
     resourcesFolderPath: 
@@ -1973,13 +2045,25 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099168657}
-  m_LocalRotation: {x: -0, y: 0.98410314, z: -0, w: 0.17759809}
-  m_LocalPosition: {x: -0.13, y: 0.119, z: -0.12041032}
+  m_LocalRotation: {x: -0, y: 0.9974508, z: -0, w: -0.0713579}
+  m_LocalPosition: {x: -0.17, y: 0.119, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 159.54001, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 188.18399, z: 0}
+--- !u!114 &1099168660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099168657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0eb1e8187ca0840ad408f494cd389f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1110508974
 Transform:
   m_ObjectHideFlags: 0
@@ -1987,13 +2071,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110798378}
-  m_LocalRotation: {x: -0, y: 0.97054136, z: -0, w: 0.24093468}
-  m_LocalPosition: {x: -1.3165087, y: 0.07700002, z: -2.1489284}
+  m_LocalRotation: {x: -0.01307249, y: 0.94337404, z: 0.107306354, w: 0.31362393}
+  m_LocalPosition: {x: -3.0299997, y: 0.09000003, z: -0.4855317}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 152.117, z: 0}
+  m_LocalEulerAnglesHint: {x: -12.161, y: 142.955, z: 2.5}
 --- !u!1 &1110798378
 GameObject:
   m_ObjectHideFlags: 0
@@ -2009,6 +2093,7 @@ GameObject:
   - component: {fileID: 1117363020}
   - component: {fileID: 1117272936}
   - component: {fileID: 1110798379}
+  - component: {fileID: 1110798380}
   m_Layer: 0
   m_Name: ThirdPersonController
   m_TagString: Untagged
@@ -2068,10 +2153,26 @@ MonoBehaviour:
   preloadWardrobeRecipes:
     loadDefaultRecipes: 1
     recipes:
-    - _recipeName: New UMAWardrobeRecipe
+    - _recipeName: M_Trainers_Black
+      _compatibleRaces:
+      - HumanMaleDCS
+      - HumanMale
+    - _recipeName: M_TrackPants_BlackWhite
+      _compatibleRaces:
+      - HumanMaleDCS
+      - HumanMale
+    - _recipeName: M_TrackTop_BlackWhite
+      _compatibleRaces:
+      - HumanMaleDCS
+      - HumanMale
+    - _recipeName: MaleHair1
       _compatibleRaces:
       - HumanMale
       - HumanMaleDCS
+    - _recipeName: MaleBeard1
+      _compatibleRaces:
+      - HumanMaleDCS
+      - HumanMale
   raceAnimationControllers:
     defaultAnimationController: {fileID: 9100000, guid: e2cf68ff4b1ffda45a77f7307dd789b9,
       type: 2}
@@ -2104,6 +2205,18 @@ MonoBehaviour:
   customRotation: {x: 0, y: 0, z: 0}
   previewColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _buildCharacterEnabled: 1
+--- !u!114 &1110798380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110798378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ff9381883908443a870dbab67c22bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &1113977978
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2195,6 +2308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1228677911}
   - component: {fileID: 1228677910}
+  - component: {fileID: 1228677912}
   m_Layer: 0
   m_Name: UMA_F1
   m_TagString: Untagged
@@ -2254,18 +2368,19 @@ MonoBehaviour:
   preloadWardrobeRecipes:
     loadDefaultRecipes: 1
     recipes:
-    - _recipeName: FemaleHair1
-      _compatibleRaces:
-      - HumanFemaleDCS
-      - HumanFemale
-    - _recipeName: FemalePants2
-      _compatibleRaces:
-      - HumanFemaleDCS
-      - HumanFemale
     - _recipeName: FemaleShirt2
       _compatibleRaces:
       - HumanFemaleDCS
       - HumanFemale
+    - _recipeName: FemaleSportPants_Recipe
+      _compatibleRaces:
+      - HumanFemale
+      - HumanFemaleDCS
+    - _recipeName: FemaleTallShoes_Black
+      _compatibleRaces:
+      - HumanFemale
+      - HumanFemaleDCS
+      - HumanFemaleHighPoly
   raceAnimationControllers:
     defaultAnimationController: {fileID: 0}
     animators: []
@@ -2318,7 +2433,7 @@ MonoBehaviour:
   defaultSaveOptions: 15
   BoundsOffset: {x: 0, y: 0, z: 0}
   showPlaceholder: 1
-  previewModel: 0
+  previewModel: 1
   customModel: {fileID: 0}
   customRotation: {x: 0, y: 0, z: 0}
   previewColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -2337,6 +2452,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: -194.39, z: 0}
+--- !u!114 &1228677912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228677909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945b42fa200b3cb4181f8155d52298e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1313181198 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11470452, guid: fe29e3c90ef88194184c6f3656db5ec5,
