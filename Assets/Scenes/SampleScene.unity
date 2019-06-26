@@ -112,6 +112,147 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 7f05cc1175566c347bcd0b7b49c8681a, type: 2}
+--- !u!1 &54143589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 54143590}
+  - component: {fileID: 54143592}
+  - component: {fileID: 54143591}
+  m_Layer: 0
+  m_Name: UMA_F6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &54143590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54143589}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.67, y: -1.3588996, z: -0.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1004595634}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &54143591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54143589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &54143592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54143589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcffb0a198605474c8a4d1c67c1515fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 1313181198}
+  umaData: {fileID: 0}
+  umaRecipe: {fileID: 0}
+  umaAdditionalRecipes:
+  - {fileID: 11400000, guid: 920d59ac577b2d9449aa36a4d9e86f10, type: 2}
+  umaGenerator: {fileID: 0}
+  animationController: {fileID: 0}
+  CharacterCreated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterBegun:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterDnaUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  RecipeUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  hide: 0
+  loadBlendShapes: 0
+  activeRace:
+    name: HumanFemaleDCS
+  defaultChangeRaceOptions: 8
+  cacheCurrentState: 1
+  rebuildSkeleton: 0
+  preloadWardrobeRecipes:
+    loadDefaultRecipes: 1
+    recipes:
+    - _recipeName: FemaleHair2
+      _compatibleRaces:
+      - HumanFemaleDCS
+      - HumanFemale
+    - _recipeName: FemalePants1
+      _compatibleRaces:
+      - HumanFemaleDCS
+      - HumanFemale
+    - _recipeName: FemaleShirt2
+      _compatibleRaces:
+      - HumanFemaleDCS
+      - HumanFemale
+  raceAnimationControllers:
+    defaultAnimationController: {fileID: 9100000, guid: 66af5264f1619114db5f72f979ce14bd,
+      type: 2}
+    animators: []
+    dynamicallyAddFromResources: 0
+    resourcesFolderPath: 
+    dynamicallyAddFromAssetBundles: 0
+    assetBundleNames: 
+  characterColors:
+    _colors: []
+  predefinedDNA:
+    PreloadValues: []
+  loadPathType: 0
+  loadPath: 
+  loadFilename: 
+  loadString: 
+  loadFileOnStart: 0
+  waitForBundles: 1
+  defaultLoadOptions: 31
+  savePathType: 0
+  savePath: 
+  saveFilename: 
+  makeUniqueFilename: 0
+  ensureSharedColors: 0
+  defaultSaveOptions: 15
+  BoundsOffset: {x: 0, y: 0, z: 0}
+  showPlaceholder: 1
+  previewModel: 1
+  customModel: {fileID: 0}
+  customRotation: {x: 0, y: 0, z: 0}
+  previewColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _buildCharacterEnabled: 1
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 371229112}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.71, y: -1.3588996, z: -0.61}
+  m_LocalPosition: {x: -8.36, y: -1.3588996, z: -0.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1004595634}
@@ -319,7 +460,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 371229112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 945b42fa200b3cb4181f8155d52298e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &534669902
@@ -612,7 +753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1626907811}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &735174253
 GameObject:
@@ -795,7 +936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 487678, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.99
+      value: -6.31
       objectReference: {fileID: 0}
     - target: {fileID: 487678, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -879,6 +1020,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: preloadWardrobeRecipes.recipes.Array.data[3]._compatibleRaces.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
@@ -1140,7 +1285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897580384}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.93, y: -3, z: -21}
+  m_LocalPosition: {x: -2.26, y: -3, z: -21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1626907811}
@@ -1189,6 +1334,8 @@ Transform:
   - {fileID: 371229114}
   - {fileID: 1736643747}
   - {fileID: 1362765889}
+  - {fileID: 1701128834}
+  - {fileID: 54143590}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1438,155 +1585,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1110508974
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110798378}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -13.27, y: -3, z: -21}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1626907811}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!1 &1110798378
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1110508974}
-  - component: {fileID: 1110798379}
-  - component: {fileID: 1110798380}
-  m_Layer: 0
-  m_Name: UMA_M4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1110798379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110798378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcffb0a198605474c8a4d1c67c1515fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  context: {fileID: 1313181198}
-  umaData: {fileID: 0}
-  umaRecipe: {fileID: 0}
-  umaAdditionalRecipes:
-  - {fileID: 11400000, guid: 920d59ac577b2d9449aa36a4d9e86f10, type: 2}
-  umaGenerator: {fileID: 0}
-  animationController: {fileID: 0}
-  CharacterCreated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  CharacterBegun:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  CharacterDestroyed:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  CharacterUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  CharacterDnaUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  RecipeUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  hide: 0
-  loadBlendShapes: 0
-  activeRace:
-    name: HumanMaleDCS
-  defaultChangeRaceOptions: 8
-  cacheCurrentState: 1
-  rebuildSkeleton: 0
-  preloadWardrobeRecipes:
-    loadDefaultRecipes: 1
-    recipes:
-    - _recipeName: M_Trainers_Black
-      _compatibleRaces:
-      - HumanMaleDCS
-      - HumanMale
-    - _recipeName: MaleHair1
-      _compatibleRaces:
-      - HumanMale
-      - HumanMaleDCS
-    - _recipeName: MaleBeard1
-      _compatibleRaces:
-      - HumanMaleDCS
-      - HumanMale
-    - _recipeName: MaleJeans
-      _compatibleRaces:
-      - HumanMaleDCS
-      - HumanMale
-    - _recipeName: MaleShirt2
-      _compatibleRaces:
-      - HumanMale
-      - HumanMaleDCS
-  raceAnimationControllers:
-    defaultAnimationController: {fileID: 9100000, guid: 66af5264f1619114db5f72f979ce14bd,
-      type: 2}
-    animators: []
-    dynamicallyAddFromResources: 0
-    resourcesFolderPath: 
-    dynamicallyAddFromAssetBundles: 0
-    assetBundleNames: 
-  characterColors:
-    _colors: []
-  predefinedDNA:
-    PreloadValues: []
-  loadPathType: 0
-  loadPath: 
-  loadFilename: 
-  loadString: 
-  loadFileOnStart: 0
-  waitForBundles: 1
-  defaultLoadOptions: 31
-  savePathType: 0
-  savePath: 
-  saveFilename: 
-  makeUniqueFilename: 0
-  ensureSharedColors: 0
-  defaultSaveOptions: 15
-  BoundsOffset: {x: 0, y: 0, z: 0}
-  showPlaceholder: 1
-  previewModel: 0
-  customModel: {fileID: 0}
-  customRotation: {x: 0, y: 0, z: 0}
-  previewColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _buildCharacterEnabled: 1
---- !u!114 &1110798380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110798378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1212002631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,7 +1827,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228677909}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 1.28, y: -1.3588996, z: -0.81}
+  m_LocalPosition: {x: -10.65, y: -1.3588996, z: -0.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1004595634}
@@ -1844,7 +1842,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1228677909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 945b42fa200b3cb4181f8155d52298e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1313181198 stripped
@@ -1930,7 +1928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 487678, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.97
+      value: -4.35
       objectReference: {fileID: 0}
     - target: {fileID: 487678, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1978,7 +1976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: preloadWardrobeRecipes.recipes.Array.size
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: preloadWardrobeRecipes.recipes.Array.data[9]._compatibleRaces.Array.size
@@ -2014,6 +2012,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: preloadWardrobeRecipes.recipes.Array.data[3]._compatibleRaces.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
@@ -2149,8 +2151,246 @@ PrefabInstance:
       propertyPath: preloadWardrobeRecipes.recipes.Array.data[6]._compatibleRaces.Array.data[1]
       value: HumanFemaleDCS
       objectReference: {fileID: 0}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[11]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[12]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[13]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[14]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[15]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[16]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[17]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[18]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[19]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
+    - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+      propertyPath: umaAdditionalRecipes.Array.data[20]
+      value: 
+      objectReference: {fileID: 11400000, guid: 05cad1e396dfa45499339f83259c73c5,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
+--- !u!1 &1547900377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1547900378}
+  - component: {fileID: 1547900380}
+  - component: {fileID: 1547900379}
+  m_Layer: 0
+  m_Name: UMA_M7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1547900378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547900377}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 1.07, y: -3, z: -21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1626907811}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1547900379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547900377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1547900380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547900377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcffb0a198605474c8a4d1c67c1515fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 1313181198}
+  umaData: {fileID: 0}
+  umaRecipe: {fileID: 0}
+  umaAdditionalRecipes:
+  - {fileID: 11400000, guid: 920d59ac577b2d9449aa36a4d9e86f10, type: 2}
+  umaGenerator: {fileID: 0}
+  animationController: {fileID: 0}
+  CharacterCreated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterBegun:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterDnaUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  RecipeUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  hide: 0
+  loadBlendShapes: 0
+  activeRace:
+    name: o3n Male
+  defaultChangeRaceOptions: 8
+  cacheCurrentState: 1
+  rebuildSkeleton: 0
+  preloadWardrobeRecipes:
+    loadDefaultRecipes: 1
+    recipes:
+    - _recipeName: o3n_male_jeans_01_recipe
+      _compatibleRaces:
+      - o3n Male
+    - _recipeName: o3n_male_shirt_01_recipe
+      _compatibleRaces:
+      - o3n Male
+    - _recipeName: o3n_male_eyebrow_02_recipe
+      _compatibleRaces:
+      - o3n Male
+      - o3n Orc Male
+      - o3n Elf Male
+    - _recipeName: o3n_male_military_hair_01_LOD1_Recipe_v2
+      _compatibleRaces:
+      - o3n Male
+  raceAnimationControllers:
+    defaultAnimationController: {fileID: 9100000, guid: 66af5264f1619114db5f72f979ce14bd,
+      type: 2}
+    animators: []
+    dynamicallyAddFromResources: 0
+    resourcesFolderPath: 
+    dynamicallyAddFromAssetBundles: 0
+    assetBundleNames: 
+  characterColors:
+    _colors: []
+  predefinedDNA:
+    PreloadValues: []
+  loadPathType: 0
+  loadPath: 
+  loadFilename: 
+  loadString: 
+  loadFileOnStart: 0
+  waitForBundles: 1
+  defaultLoadOptions: 31
+  savePathType: 0
+  savePath: 
+  saveFilename: 
+  makeUniqueFilename: 0
+  ensureSharedColors: 0
+  defaultSaveOptions: 15
+  BoundsOffset: {x: 0, y: 0, z: 0}
+  showPlaceholder: 1
+  previewModel: 0
+  customModel: {fileID: 0}
+  customRotation: {x: 0, y: 0, z: 0}
+  previewColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _buildCharacterEnabled: 1
 --- !u!1001 &1605832548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2263,7 +2503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1626907811
 Transform:
   m_ObjectHideFlags: 0
@@ -2278,9 +2518,9 @@ Transform:
   - {fileID: 735174255}
   - {fileID: 1099168659}
   - {fileID: 897580386}
-  - {fileID: 1110508974}
   - {fileID: 584862357}
   - {fileID: 1719159359}
+  - {fileID: 1547900378}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2426,7 +2666,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a6418a0fc773d8944af9bf3dc7483d06, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2468,6 +2708,147 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: -90, y: 2.16, z: 0}
+--- !u!1 &1701128833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1701128834}
+  - component: {fileID: 1701128836}
+  - component: {fileID: 1701128835}
+  m_Layer: 0
+  m_Name: UMA_F5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1701128834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701128833}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: -2.46, y: -1.3588996, z: -0.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1004595634}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &1701128835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701128833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1701128836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701128833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcffb0a198605474c8a4d1c67c1515fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  context: {fileID: 1313181198}
+  umaData: {fileID: 0}
+  umaRecipe: {fileID: 0}
+  umaAdditionalRecipes:
+  - {fileID: 11400000, guid: 920d59ac577b2d9449aa36a4d9e86f10, type: 2}
+  umaGenerator: {fileID: 0}
+  animationController: {fileID: 0}
+  CharacterCreated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterBegun:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  CharacterDnaUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  RecipeUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UMA.UMADataEvent, UMA_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  hide: 0
+  loadBlendShapes: 0
+  activeRace:
+    name: HumanFemaleDCS
+  defaultChangeRaceOptions: 8
+  cacheCurrentState: 1
+  rebuildSkeleton: 0
+  preloadWardrobeRecipes:
+    loadDefaultRecipes: 1
+    recipes:
+    - _recipeName: FemaleHair2
+      _compatibleRaces:
+      - HumanFemaleDCS
+      - HumanFemale
+    - _recipeName: FemalePants1
+      _compatibleRaces:
+      - HumanFemaleDCS
+      - HumanFemale
+    - _recipeName: FemaleShirt2
+      _compatibleRaces:
+      - HumanFemaleDCS
+      - HumanFemale
+  raceAnimationControllers:
+    defaultAnimationController: {fileID: 9100000, guid: 66af5264f1619114db5f72f979ce14bd,
+      type: 2}
+    animators: []
+    dynamicallyAddFromResources: 0
+    resourcesFolderPath: 
+    dynamicallyAddFromAssetBundles: 0
+    assetBundleNames: 
+  characterColors:
+    _colors: []
+  predefinedDNA:
+    PreloadValues: []
+  loadPathType: 0
+  loadPath: 
+  loadFilename: 
+  loadString: 
+  loadFileOnStart: 0
+  waitForBundles: 1
+  defaultLoadOptions: 31
+  savePathType: 0
+  savePath: 
+  saveFilename: 
+  makeUniqueFilename: 0
+  ensureSharedColors: 0
+  defaultSaveOptions: 15
+  BoundsOffset: {x: 0, y: 0, z: 0}
+  showPlaceholder: 1
+  previewModel: 1
+  customModel: {fileID: 0}
+  customRotation: {x: 0, y: 0, z: 0}
+  previewColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _buildCharacterEnabled: 1
 --- !u!1 &1719159356
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,33 +2925,32 @@ MonoBehaviour:
   hide: 0
   loadBlendShapes: 0
   activeRace:
-    name: HumanMaleDCS
+    name: o3n Male
   defaultChangeRaceOptions: 8
   cacheCurrentState: 1
   rebuildSkeleton: 0
   preloadWardrobeRecipes:
     loadDefaultRecipes: 1
     recipes:
-    - _recipeName: MaleBrow02
+    - _recipeName: o3n_male_jeans_01_recipe
       _compatibleRaces:
-      - HumanMale
-      - HumanMaleDCS
-    - _recipeName: MaleUnderwear
+      - o3n Male
+    - _recipeName: o3n_male_shirt_01_recipe
       _compatibleRaces:
-      - HumanMale
-      - HumanMaleDCS
-    - _recipeName: MaleShirt2
+      - o3n Male
+    - _recipeName: o3n_male_eyebrow_02_recipe
       _compatibleRaces:
-      - HumanMale
-      - HumanMaleDCS
-    - _recipeName: MaleJeans
+      - o3n Male
+      - o3n Orc Male
+      - o3n Elf Male
+    - _recipeName: o3n_male_beard_03_recipe
       _compatibleRaces:
-      - HumanMaleDCS
-      - HumanMale
-    - _recipeName: M_Trainers_Black
+      - o3n Male
+      - o3n Orc Male
+    - _recipeName: o3n_male_hair_01_recipe
       _compatibleRaces:
-      - HumanMaleDCS
-      - HumanMale
+      - o3n Male
+      - o3n Orc Male
   raceAnimationControllers:
     defaultAnimationController: {fileID: 9100000, guid: 66af5264f1619114db5f72f979ce14bd,
       type: 2}
@@ -2615,7 +2995,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1626907811}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1736643743 stripped
 GameObject:
