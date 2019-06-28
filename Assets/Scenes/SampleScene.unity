@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.43849525, g: 0.47817606, b: 0.5213604, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 54143589}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
+  m_Script: {fileID: 11500000, guid: 945b42fa200b3cb4181f8155d52298e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &54143592
@@ -286,7 +286,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -315,13 +315,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170076733}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.09489723, y: -0.040818397, z: 0.0038944182, w: 0.99464226}
   m_LocalPosition: {x: 0, y: 18.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 10.9, y: -4.7, z: 0}
 --- !u!1 &371229112
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 371229112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
+  m_Script: {fileID: 11500000, guid: 945b42fa200b3cb4181f8155d52298e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &534669902
@@ -980,7 +980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11497362, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: preloadWardrobeRecipes.recipes.Array.size
@@ -1842,7 +1842,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1228677909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
+  m_Script: {fileID: 11500000, guid: 945b42fa200b3cb4181f8155d52298e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1313181198 stripped
@@ -1972,7 +1972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11497362, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11453600, guid: d1252d816e89f044ba088c0b7c3447c2, type: 3}
       propertyPath: preloadWardrobeRecipes.recipes.Array.size
@@ -2749,7 +2749,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1701128833}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c539e20a8b77e046b64ab712f97004b, type: 3}
+  m_Script: {fileID: 11500000, guid: 945b42fa200b3cb4181f8155d52298e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1701128836
