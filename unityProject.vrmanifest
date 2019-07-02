@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.tugofwar2018v.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\HCC Developer\\Documents\\Ria\\UnityTugOfWar\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "Tug-of-war-2018v [Testing]"
+        }
+      }
+    }
+  ]
+}
