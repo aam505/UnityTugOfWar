@@ -12,7 +12,7 @@ public class UmaFemale : MonoBehaviour
     private Dictionary<string, DnaSetter> dna;
     // Start is called before the first frame update
     private string umaName;
-
+    bool setSize = false;
 
     private ExpressionPlayer expression;
     private bool connected = false;
@@ -57,7 +57,11 @@ public class UmaFemale : MonoBehaviour
             expression.leftBrowUp_Down = 0.4f;
             expression.rightBrowUp_Down = 0.4f;
             expression.midBrowUp_Down = 0f;
-
+            if (setSize == false)
+            {
+                GameObject.Find("UMA_FTEST").transform.localScale = new Vector3(2, 2, 2);
+                setSize = true;
+            }
         }
 
         dna = avatar.GetDNA(); //takes couple of frames 
