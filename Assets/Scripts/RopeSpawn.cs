@@ -83,15 +83,18 @@ public class RopeSpawn : MonoBehaviour
         GameObject First = ropeJoints[0];
         GameObject Last = ropeJoints[ropeJoints.Count-1];
 
+
         First.GetComponent<Rigidbody>().isKinematic = true;
-        Last.GetComponent<Rigidbody>().isKinematic = true;
+        //ropeJoints[18].transform.localPosition = new Vector3(0, 0, 0);
 
-        Last.transform.localPosition = new Vector3(-0.026f, -1.565f, 1.563f);
-    
-        First.transform.eulerAngles = new Vector3 (-90f, 0, 0);
-        Last.transform.eulerAngles = new Vector3 (-90f, 0, 0);
-        First.transform.localPosition = new Vector3(-0.026f, -1.565f, -0.048f);
+       // Last.GetComponent<Rigidbody>().isKinematic = true;
+        //ropeJoints[23].transform.localPosition = new Vector3(0, 0, 0);
 
+        // Last.transform.localPosition = new Vector3(-0.026f, -1.565f, 1.563f);
 
+        First.transform.eulerAngles = new Vector3 (20.375f, 41.733f, -89.98901f);
+        //Last.transform.eulerAngles = new Vector3 (-90f, 0, 0);
+        First.transform.localPosition = new Vector3(-0.566f, 0.195f, -2.889f);
+        
     }
 }

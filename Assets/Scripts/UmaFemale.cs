@@ -13,9 +13,12 @@ public class UmaFemale : MonoBehaviour
     // Start is called before the first frame update
     private string umaName;
     bool setSize = false;
-
+    Transform uma;
+    GameObject parent;
     private ExpressionPlayer expression;
     private bool connected = false;
+    GameObject rope;
+    private bool setUp=true;
 
     void OnEnable()
     {
@@ -44,27 +47,69 @@ public class UmaFemale : MonoBehaviour
 
         umaName = transform.gameObject.name;
 
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (connected)
+        if (connected && setUp)
         {
+            Debug.Log("Setting up..");
+            setUp = false;
+
             expression.mouthUp_Down = 0.4f;
             expression.browsIn = 1f;
             expression.leftBrowUp_Down = 0.4f;
             expression.rightBrowUp_Down = 0.4f;
             expression.midBrowUp_Down = 0f;
+
             if (setSize == false)
             {
-                GameObject.Find("UMA_FTEST").transform.localScale = new Vector3(2, 2, 2);
+                parent = GameObject.Find("UMA_FTEST");
+                parent.transform.localScale = new Vector3(2, 2, 2);
+                //parent.transform.localPosition = new Vector3(-0.28f, 3.905f, -3.033f);
                 setSize = true;
             }
+             parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
+            //uma.GetComponent<Animator>().applyRootMotion = true;
+
+            rope = GameObject.Find("RopeParts");
+
+            Transform[] children = parent.GetComponentsInChildren<Transform>();
+
+        
+
+            foreach (Transform child in children)
+            {
+                if (child.gameObject.name == "RightHand")
+                { 
+                    rope.transform.Find("19").parent = child;
+                }
+
+                if (child.gameObject.name == "LeftHand")
+                {
+                    rope.transform.Find("22").parent = child;
+                }
+
+
+            }
+
+            GameObject.Find("22").GetComponent<Rigidbody>().isKinematic = true;
+            GameObject.Find("22").transform.localPosition = new Vector3(-0.1212f, -0.0877f, -0.0564f);
+            GameObject.Find("22").transform.eulerAngles = new Vector3(156.5f, -85.13f, 27.752f);
+
+
+            GameObject.Find("19").GetComponent<Rigidbody>().isKinematic = true;
+            GameObject.Find("19").transform.localPosition = new Vector3(-0.083f, -0.0008f, -0.0516f);
+            GameObject.Find("19").transform.eulerAngles = new Vector3(-148.2f, -122.7f, -142.365f);
+
+
+            dna = avatar.GetDNA(); //takes couple of frames 
         }
 
-        dna = avatar.GetDNA(); //takes couple of frames 
+        
     
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) //load features from file
@@ -118,8 +163,11 @@ public class UmaFemale : MonoBehaviour
             dna["forearmWidth"].Set(1f);
             dna["lowerWeight"].Set(1f);
             dna["neckThickness"].Set(1f);
-            dna["upperMuscle"].Set(0.7f);
-            dna["upperWeight"].Set(0.7f);
+            dna["upperMuscle"].Set(1f);
+            if(name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+                dna["upperWeight"].Set(0.53f);
+            else
+               dna["upperWeight"].Set(0.7f);
 
             dna["eyeSize"].Set(0.4f);
 
