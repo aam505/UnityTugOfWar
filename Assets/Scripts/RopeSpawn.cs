@@ -92,9 +92,9 @@ public class RopeSpawn : MonoBehaviour
 
         // Last.transform.localPosition = new Vector3(-0.026f, -1.565f, 1.563f);
 
-        First.transform.eulerAngles = new Vector3 (20.375f, 41.733f, -89.98901f);
+        First.transform.eulerAngles = new Vector3 (-90f, 0f, 0f);
         //Last.transform.eulerAngles = new Vector3 (-90f, 0, 0);
-        First.transform.localPosition = new Vector3(-0.566f, 0.195f, -2.889f);
+        First.transform.localPosition = new Vector3(-0.258f, -0.008f, -3.059f);
         
     }
 }

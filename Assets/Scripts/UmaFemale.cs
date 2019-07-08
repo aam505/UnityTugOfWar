@@ -81,29 +81,29 @@ public class UmaFemale : MonoBehaviour
 
         
 
-            foreach (Transform child in children)
-            {
-                if (child.gameObject.name == "RightHand")
-                { 
-                    rope.transform.Find("19").parent = child;
-                }
+            //foreach (Transform child in children)
+            //{
+            //    if (child.gameObject.name == "RightHand")
+            //    { 
+            //        rope.transform.Find("18").parent = child;
+            //    }
 
-                if (child.gameObject.name == "LeftHand")
-                {
-                    rope.transform.Find("22").parent = child;
-                }
-
-
-            }
-
-            GameObject.Find("22").GetComponent<Rigidbody>().isKinematic = true;
-            GameObject.Find("22").transform.localPosition = new Vector3(-0.1212f, -0.0877f, -0.0564f);
-            GameObject.Find("22").transform.eulerAngles = new Vector3(156.5f, -85.13f, 27.752f);
+            //    if (child.gameObject.name == "LeftHand")
+            //    {
+            //        rope.transform.Find("21").parent = child;
+            //    }
 
 
-            GameObject.Find("19").GetComponent<Rigidbody>().isKinematic = true;
-            GameObject.Find("19").transform.localPosition = new Vector3(-0.083f, -0.0008f, -0.0516f);
-            GameObject.Find("19").transform.eulerAngles = new Vector3(-148.2f, -122.7f, -142.365f);
+            //}
+
+            GameObject.Find("20").GetComponent<Rigidbody>().isKinematic = true;
+            GameObject.Find("20").transform.localPosition = new Vector3(0.256f, -0.03f, 0.925f);
+            GameObject.Find("20").transform.eulerAngles = new Vector3(114.93f, 88.8f, -101.211f);
+
+
+            GameObject.Find("23").GetComponent<Rigidbody>().isKinematic = true;
+            GameObject.Find("23").transform.localPosition = new Vector3(0.313f, -0.097f, 1.572f);
+            GameObject.Find("23").transform.eulerAngles = new Vector3(-90.37f,12f, -14.40997f);
 
 
             dna = avatar.GetDNA(); //takes couple of frames 
