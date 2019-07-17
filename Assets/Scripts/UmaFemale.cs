@@ -313,10 +313,10 @@ public class UmaFemale : MonoBehaviour
 
             if (part.gameObject.name == "LeftHand")
             {
-                Transform ropeHandleLow = GameObject.Find("ObiHandleLow").transform;
-                ropeHandleLow.parent = part;
-                ropeHandleLow.localPosition = new Vector3(-0.101f, -0.0253f, -0.0338f);
-                //ropePiece.eulerAngles = new Vector3(-116.8f, -89.67899f, -9.492004f); //TODO GET SET ANGLES
+               // Transform ropeHandleLow = GameObject.Find("ObiHandleLow").transform;
+               // ropeHandleLow.parent = part;
+                //ropeHandleLow.localPosition = new Vector3(-0.101f, -0.0253f, -0.0338f);
+ 
                 // }
                 Debug.Log("Parenting second to last piece");
 
@@ -336,11 +336,9 @@ public class UmaFemale : MonoBehaviour
 
             if (part.gameObject.name == "RightHand")
             {
-                Transform ropeHandleLow = GameObject.Find("ObiHandleHigh").transform;
-                ropeHandleLow.parent = part;
-                ropeHandleLow.localPosition = new Vector3(-0.069f, 0.014f, -0.023f);
-                //   ropePiece.eulerAngles = new Vector3(117.7f, 0.08725181f, 0.07270979f);
-                // }
+               // Transform ropeHandleLow = GameObject.Find("ObiHandleHigh").transform;
+              //  ropeHandleLow.parent = part;
+              //  ropeHandleLow.localPosition = new Vector3(-0.069f, 0.014f, -0.023f);    
                 Debug.Log("Parenting second to last piece");
 
             }
