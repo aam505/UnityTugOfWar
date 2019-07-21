@@ -18,7 +18,7 @@ public class UmaFemale : MonoBehaviour
     private ExpressionPlayer expression;
     private bool connected = false;
     GameObject rope;
-    private bool setUp=true;
+    private bool setUp = true;
     Transform[] umaBodyParts;
 
 
@@ -69,38 +69,39 @@ public class UmaFemale : MonoBehaviour
 
             if (setSize == false)
             {
-                parent = GameObject.Find("UMA_FTEST");
+                //parent = GameObject.Find("UMA_FTEST");
+                parent = transform.parent.gameObject;
                 parent.transform.localScale = new Vector3(2, 2, 2);
                 //parent.transform.localPosition = new Vector3(-0.28f, 3.905f, -3.033f);
                 setSize = true;
             }
-             parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
+            parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
             //uma.GetComponent<Animator>().applyRootMotion = true;
 
-          umaBodyParts = parent.GetComponentsInChildren<Transform>();
-
-           
-
-                //foreach (Transform child in children)
-                //{
-                //    if (child.gameObject.name == "RightHand")
-                //    { 
-                //        rope.transform.Find("18").parent = child;
-                //    }
-
-                //    if (child.gameObject.name == "LeftHand")
-                //    {
-                //        rope.transform.Find("21").parent = child;
-                //    }
+            umaBodyParts = parent.GetComponentsInChildren<Transform>();
 
 
-                //}
 
-                dna = avatar.GetDNA(); //takes couple of frames 
+            //foreach (Transform child in children)
+            //{
+            //    if (child.gameObject.name == "RightHand")
+            //    { 
+            //        rope.transform.Find("18").parent = child;
+            //    }
+
+            //    if (child.gameObject.name == "LeftHand")
+            //    {
+            //        rope.transform.Find("21").parent = child;
+            //    }
+
+
+            //}
+
+            dna = avatar.GetDNA(); //takes couple of frames 
         }
 
-        
-    
+
+
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) //load features from file
         {
@@ -146,18 +147,18 @@ public class UmaFemale : MonoBehaviour
             dna["noseSize"].Set(0.38f);
             dna["noseWidth"].Set(0.4f);
             dna["lipsSize"].Set(0);
- 
-            
+
+
 
             dna["armWidth"].Set(1f);
             dna["forearmWidth"].Set(1f);
             dna["lowerWeight"].Set(1f);
             dna["neckThickness"].Set(1f);
             dna["upperMuscle"].Set(1f);
-            if(name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+            if (name.Equals("UMA_F3") || name.Equals("UMA_F4"))
                 dna["upperWeight"].Set(0.53f);
             else
-               dna["upperWeight"].Set(0.7f);
+                dna["upperWeight"].Set(0.7f);
 
             dna["eyeSize"].Set(0.4f);
 
@@ -254,7 +255,7 @@ public class UmaFemale : MonoBehaviour
             {
                 avatar.characterColors.SetColor("Footwear01", new Color(27f / 255f, 27f / 255f, 27f / 255f));
                 avatar.characterColors.SetColor("ClothingBottom01", new Color(120f / 255f, 141f / 255f, 183f / 255f));
-                avatar.characterColors.SetColor("ClothingTop01",  Color.white);
+                avatar.characterColors.SetColor("ClothingTop01", Color.white);
             }
             else
             {
@@ -313,19 +314,16 @@ public class UmaFemale : MonoBehaviour
 
             if (part.gameObject.name == "LeftHand")
             {
-               // Transform ropeHandleLow = GameObject.Find("ObiHandleLow").transform;
-               // ropeHandleLow.parent = part;
-                //ropeHandleLow.localPosition = new Vector3(-0.101f, -0.0253f, -0.0338f);
- 
-                // }
+                Transform ropeHandleLow = GameObject.Find("ObiHandleLow").transform;
+                ropeHandleLow.parent = part;
+                ropeHandleLow.localPosition = new Vector3(-0.101f, -0.0253f, -0.0338f);
+
+                
                 Debug.Log("Parenting second to last piece");
 
             }
         }
 
-        Debug.Log("PARENT LAST PIECE CALLED;");
-
-        
     }
     public void ParentSecondToLastPiece()
     {
@@ -336,9 +334,9 @@ public class UmaFemale : MonoBehaviour
 
             if (part.gameObject.name == "RightHand")
             {
-               // Transform ropeHandleLow = GameObject.Find("ObiHandleHigh").transform;
-              //  ropeHandleLow.parent = part;
-              //  ropeHandleLow.localPosition = new Vector3(-0.069f, 0.014f, -0.023f);    
+                Transform ropeHandleLow = GameObject.Find("ObiHandleHigh").transform;
+                ropeHandleLow.parent = part;
+                ropeHandleLow.localPosition = new Vector3(-0.069f, 0.014f, -0.023f);    
                 Debug.Log("Parenting second to last piece");
 
             }
