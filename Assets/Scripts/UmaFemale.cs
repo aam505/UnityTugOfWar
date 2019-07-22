@@ -67,14 +67,15 @@ public class UmaFemale : MonoBehaviour
             expression.rightBrowUp_Down = 0.4f;
             expression.midBrowUp_Down = 0f;
 
-            if (setSize == false)
-            {
-                //parent = GameObject.Find("UMA_FTEST");
-                parent = transform.parent.gameObject;
-                parent.transform.localScale = new Vector3(2, 2, 2);
-                //parent.transform.localPosition = new Vector3(-0.28f, 3.905f, -3.033f);
-                setSize = true;
-            }
+            //if (setSize == false)
+            //{
+
+            //parent = transform.parent.gameObject;
+            // parent.transform.localScale = new Vector3(2, 2, 2);
+            //parent.transform.localPosition = new Vector3(-0.28f, 3.905f, -3.033f);
+            // setSize = true;
+            //}
+            parent = transform.parent.gameObject;
             parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
             //uma.GetComponent<Animator>().applyRootMotion = true;
 

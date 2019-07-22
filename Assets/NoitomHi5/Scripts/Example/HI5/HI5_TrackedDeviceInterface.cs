@@ -13,7 +13,7 @@ public class HI5_TrackedDeviceInterface : MonoBehaviour
 {
     [SerializeField]
     private SteamVR_TrackedObject m_SteamVR_TrackedObject;
-
+    private bool found = false;
     private string m_DeviceSerialNumber = null;
     private int m_Index = -1;
 
@@ -33,6 +33,18 @@ public class HI5_TrackedDeviceInterface : MonoBehaviour
         HI5_Calibration.OnCalibrationComplete += HandleCalibrationComplete;
     }
 
+
+    private void Update()
+    {
+      
+            
+            if (m_SteamVR_TrackedObject.transform.childCount >= 2)
+            {
+                m_SteamVR_TrackedObject.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
+            
+            }
+        
+    }
     private void OnDisable()
     {
         newPosesAction.enabled = false;

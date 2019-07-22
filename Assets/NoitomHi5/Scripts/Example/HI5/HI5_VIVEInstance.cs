@@ -25,12 +25,9 @@ using HI5.VRCalibration;
 
         private HumanButtons mHumanButtons;
 
-        public int xx=0;
-        public int yy = 0;
-        public int zz=180;
+
         SteamVR_Events.Action newPosesAction;
-       public bool translateRight=false;
-        public bool translateLeft=false;
+
         public bool rotateLeft=false;
        public bool rotateRight = false;
         public bool trackPosition = true;
@@ -150,22 +147,7 @@ using HI5.VRCalibration;
             x = eulerAngles.x;
             y = eulerAngles.y;
             z = eulerAngles.z;
-
-
-            if (rotateRight)
-            {
-
-
-                eulerAngles = new Vector3(x-xx,y-yy,z-zz);
-
-               
-            }
-            else if (rotateLeft)
-            {
-                eulerAngles = new Vector3(x,-y,z-90);
-
-            }
-
+     
             HandBones[m_INDEX_Hand].localEulerAngles = eulerAngles;
             
 
@@ -205,18 +187,6 @@ using HI5.VRCalibration;
             Transform t = bones[(int)bone];
             if (t != null)
             {
-                if (translateRight)
-                {
-                    //Vector3 translated = new Vector3(rotation.y, rotation.z, rotation.z);
-                    Vector3 translated = new Vector3(rotation.x, rotation.z , rotation.y);
-                    rotation = translated;
-                   
-                }
-                if (translateLeft)
-                {
-                    Vector3 translated = new Vector3(rotation.x, -rotation.z, rotation.y);
-                    rotation = translated;
-                }
                  Quaternion rot = Quaternion.Euler(rotation);
           
                 if (!float.IsNaN(rot.x) && !float.IsNaN(rot.y) && !float.IsNaN(rot.z) && !float.IsNaN(rot.w))

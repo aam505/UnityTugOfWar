@@ -139,6 +139,7 @@ namespace Valve.VR
             if (connected)
             {
                 UpdateModel();
+               
             }
         }
 

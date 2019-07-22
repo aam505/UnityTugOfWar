@@ -86,16 +86,12 @@ public class ExperimentController : MonoBehaviour
         leftHandHandle = GameObject.Find("ObiHandleLeftHand");
         rightHandHandle = GameObject.Find("ObiHandleRightHand");
 
-        leftHandHandle.transform.parent = participantLeftHand.transform;
-        leftHandHandle.transform.localPosition = new Vector3(-0.101f, -0.0253f, -0.0338f);
-
-        rightHandHandle.transform.parent = participantRightHand.transform;
-        rightHandHandle.transform.localPosition = new Vector3(-0.069f, 0.014f, -0.023f);
+       
 
         //todo delete
         ConditionDropdowns[1].value = 1;
         ConditionDropdowns[2].value = 2;
-
+     
 
     }
 
