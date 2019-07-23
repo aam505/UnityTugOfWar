@@ -3,38 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UMA;
+using UMA.CharacterSystem;
 
 public class ExperimentController : MonoBehaviour
 {
-    enum Gender // your custom enumeration
+    public enum Gender // your custom enumeration
     {
         Male,
         Female
     };
 
+    public enum Condition
+    {
+        Weak,
+        Average,
+        Strong
+    };
 
-    
-
-    List<string> Conditions = new List<string>() { "Weak","Average","Strong" };
 
     [SerializeField]
-    public InputField pidInput;
+    public int pid;
     int ParticipantId;
 
-
-
-    [SerializeField]
-    public Dropdown GenderDropdown;
-    public Dropdown C1Dropdown;
-    public Dropdown C2Dropdown;
-    public Dropdown C3Dropdown;
-
-    public List<Dropdown> ConditionDropdowns;
-    public Button start;
-    public int currentTrial = -1;
     private bool started = false;
     float startedTrialTime;
-    public bool finishedExperiment =false;
+    public bool finishedExperiment = false;
 
     public GameObject participantLeftHand;
     public GameObject participantRightHand;
@@ -43,100 +37,205 @@ public class ExperimentController : MonoBehaviour
 
     TrialController TrialController;
 
-    List<string> orderedConditions = new List<string>();
+    public Gender gender;
+    public Condition condition;
 
-    public void StartExperiment()
+
+
+    bool trialOngoing;
+    float startedTrial;
+    float endedTrial;
+
+    public bool startExperiment;
+    [SerializeField]
+    public GameObject setting;
+    [SerializeField]
+    public GameObject FemaleStrong;
+    [SerializeField]
+    public GameObject FemaleAverage;
+    [SerializeField]
+    public GameObject FemaleWeak;
+
+
+    public GameObject startText;
+    public GameObject countdownSound;
+    public GameObject startSound;
+
+    public Dictionary<string, GameObject> avatarGameObjects = new Dictionary<string, GameObject>();
+
+    Transform currentAvatar;
+    ExperimentController experimentController;
+
+    float postTrialDelay = 60;
+    float trialDuration = 10;
+
+    private float startCounter;
+    private bool counting;
+
+
+
+    //todo add none condition
+
+    public void OnCreated(UMAData data)
     {
-        if (System.Int32.TryParse(pidInput.text, out ParticipantId))
+        
+        
+
+        if (gender == Gender.Female)
         {
-
-            currentTrial = 0;
-           
-            Debug.Log("Starting experiment...");
-            foreach(Dropdown dropdown in ConditionDropdowns)
+            if (data.transform.GetComponent<UmaFemale>().condition.ToString().Equals(condition.ToString()))
             {
-                orderedConditions.Add(GenderDropdown.options[GenderDropdown.value].text + dropdown.options[dropdown.value].text);
+                currentAvatar = data.transform;
+                currentAvatar.GetComponent<UmaFemale>().ParentLastPiece();
+                currentAvatar.GetComponent<UmaFemale>().ParentSecondToLastPiece();
             }
-            transform.GetChild(0).gameObject.SetActive(false); //setting canvas inactive 
-            Debug.Log("--Conditions");
-            foreach (string condition in orderedConditions)
+            else
             {
-                Debug.Log(condition);
+                data.gameObject.SetActive(false);
             }
-
-            startTrial();
-            startedTrialTime = Time.time;
-
         }
-        else
-            Debug.LogError("Wrong participant id.");
+      //  else if (data.transform.GetComponent<UmaMale>().condition.ToString().Equals(condition.ToString()))
+      //  {
+      //      currentAvatar = data.transform;
+      //  }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        TrialController = transform.gameObject.GetComponent<TrialController>();
-        pidInput.text = "0";
-        ConditionDropdowns.Add(C1Dropdown);
-        ConditionDropdowns.Add(C2Dropdown);
-        ConditionDropdowns.Add(C3Dropdown);
+    bool startedExperiment = false;
 
-        addOptions();
+    public void Start()
+    {
+      
+        pid = 0;
 
         leftHandHandle = GameObject.Find("ObiHandleLeftHand");
         rightHandHandle = GameObject.Find("ObiHandleRightHand");
 
-       
+        trialOngoing = false;
+        experimentController = transform.GetComponent<ExperimentController>();
+        avatarGameObjects.Add("FemaleStrong", FemaleStrong);
+        avatarGameObjects.Add("FemaleAverage", FemaleAverage);
+        avatarGameObjects.Add("FemaleWeak", FemaleWeak);
 
-        //todo delete
-        ConditionDropdowns[1].value = 1;
-        ConditionDropdowns[2].value = 2;
-     
-
-    }
-
-    public void startTrial()
-    {
-        
-        Debug.Log("Starting trial in experiment controller: " + (currentTrial + 1)   + "/" + Conditions.Count +" " +orderedConditions[currentTrial]);
-        TrialController.startTrial(orderedConditions[currentTrial]);
-    }
-    public void nextTrial()
-    {
-        if (!finishedExperiment)
+        foreach (GameObject avatar in avatarGameObjects.Values)
         {
-            float t = Time.time - startedTrialTime;
+            DynamicCharacterAvatar uma = avatar.transform.GetComponent<DynamicCharacterAvatar>();
+
+            uma.CharacterCreated.AddListener(OnCreated);
+
+          
+        }
+        //todomales
+
+      
+    }
+ 
+
+    int countdownStarter = 1;
+
+    private void countToStart()
+    {
+        float t = Time.time - startCounter;
+        float minutes = (int)t / 60;
+        float seconds = (t % 60) + 1;
+
+        if (seconds < 4)
+        {
+
+            startText.GetComponent<TMPro.TextMeshProUGUI>().text = ((int)seconds).ToString();
+            if ((int)seconds == 1 && countdownStarter == 1)
+            {
+                countdownSound.GetComponent<AudioSource>().Play();
+                countdownStarter = 2;
+            }
+            if ((int)seconds == 2 && countdownStarter == 2)
+            {
+                countdownSound.GetComponent<AudioSource>().Play();
+                countdownStarter = 3;
+            }
+            if ((int)seconds == 3 && countdownStarter == 3)
+            {
+                countdownSound.GetComponent<AudioSource>().Play();
+                countdownStarter = 4;
+            }
+
+
+        }
+        else
+        {
+            counting = false;
+            startedTrial = Time.time;
+            trialOngoing = true;
+            startText.GetComponent<TMPro.TextMeshProUGUI>().text = "START";
+            startSound.GetComponent<AudioSource>().Play();
+            currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
+        }
+
+    }
+    void Update()
+    {
+
+
+        if (startExperiment && !startedExperiment)
+        {
+            currentAvatar.GetComponent<Animator>().SetTrigger("Start");
+            startCounter = Time.time;
+            counting = true;
+            startedExperiment = true;
+
+        }
+        if (counting)
+            countToStart();
+
+        if (trialOngoing)
+        {
+            float t = Time.time - startedTrial;
             float minutes = (int)t / 60;
             float seconds = (t % 60) + 1;
 
-            currentTrial++;
-            if (currentTrial < Conditions.Count)
+
+            if (seconds > 1)
             {
-                startedTrialTime = Time.time;
-                Debug.Log("Finished trial in experiment controller " + (currentTrial + 1) + "; Seconds elapsed:" + seconds);
-                startTrial();
+                startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
             }
-            else
+            if (seconds > trialDuration)
             {
-                finishedExperiment = true;
-                Debug.Log("Experiment finished. Last condition:" + orderedConditions[currentTrial] + "; Seconds elapsed:" + seconds);
+
+                currentAvatar.GetComponent<Animator>().SetTrigger("Reverse");
+                startText.GetComponent<TMPro.TextMeshProUGUI>().text = "STOP";
+                startSound.GetComponent<AudioSource>().Play();
+
+                endedTrial = Time.time;
+                trialOngoing = false;
+
+
+
+                Debug.Log("---Ending trial in trial controller " + " after " + postTrialDelay + "s");
+
+
+
             }
         }
-
-    }
-    void addOptions()
-    {
-        for(int i = 0; i < ConditionDropdowns.Count; i++)
+        else
         {
-            ConditionDropdowns[i].ClearOptions();
-            ConditionDropdowns[i].AddOptions(Conditions);
+            if (endedTrial != 0)
+            {
+                float t = Time.time - endedTrial;
+                float minutes = (int)t / 60;
+                float seconds = (t % 60) + 1;
+                if (seconds > 2)
+                {
+                    startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+                }
+                if (seconds > postTrialDelay)
+                {
+                    //GameObject.Find("ObiHandleLeft").transform.parent = transform;
+                    //GameObject.Find("ObiHandleRight").transform.parent = transform;
+                    //currentAvatar.SetActive(false);
+                    endedTrial = 0;
+                    Debug.Log("---Onto next trial");
+                    //experimentController.nextTrial();
+                }
+            }
         }
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
