@@ -25,30 +25,20 @@ public class ExperimentController : MonoBehaviour
     [SerializeField]
     public int pid;
     int ParticipantId;
-
     private bool started = false;
     float startedTrialTime;
     public bool finishedExperiment = false;
-
     public GameObject participantLeftHand;
     public GameObject participantRightHand;
     private GameObject leftHandHandle;
     private GameObject rightHandHandle;
-
-    TrialController TrialController;
-
     public Gender gender;
     public Condition condition;
-
-
-
     bool trialOngoing;
     float startedTrial;
     float endedTrial;
-
     public bool startExperiment;
-    [SerializeField]
-    public GameObject setting;
+
     [SerializeField]
     public GameObject FemaleStrong;
     [SerializeField]
@@ -56,7 +46,13 @@ public class ExperimentController : MonoBehaviour
     [SerializeField]
     public GameObject FemaleWeak;
 
-
+    [SerializeField]
+    public GameObject MaleStrong;
+    [SerializeField]
+    public GameObject MaleAverage;
+    [SerializeField]
+    public GameObject MaleWeak;
+   
     public GameObject startText;
     public GameObject countdownSound;
     public GameObject startSound;
@@ -64,7 +60,6 @@ public class ExperimentController : MonoBehaviour
     public Dictionary<string, GameObject> avatarGameObjects = new Dictionary<string, GameObject>();
 
     Transform currentAvatar;
-    ExperimentController experimentController;
 
     float postTrialDelay = 60;
     float trialDuration = 10;
@@ -72,61 +67,70 @@ public class ExperimentController : MonoBehaviour
     private float startCounter;
     private bool counting;
 
-
-
+    public GameObject maleArms;
+    public GameObject femaleArms;
     //todo add none condition
 
     public void OnCreated(UMAData data)
     {
-        
-        
+        //disable all
+        data.gameObject.SetActive(false);
 
+        //enable right one
         if (gender == Gender.Female)
         {
             if (data.transform.GetComponent<UmaFemale>().condition.ToString().Equals(condition.ToString()))
             {
+                data.gameObject.SetActive(true);
                 currentAvatar = data.transform;
                 currentAvatar.GetComponent<UmaFemale>().ParentLastPiece();
                 currentAvatar.GetComponent<UmaFemale>().ParentSecondToLastPiece();
-            }
-            else
-            {
-                data.gameObject.SetActive(false);
+              
             }
         }
-      //  else if (data.transform.GetComponent<UmaMale>().condition.ToString().Equals(condition.ToString()))
-      //  {
-      //      currentAvatar = data.transform;
-      //  }
+
+        if (gender == Gender.Male)
+        {
+            if (data.transform.GetComponent<UmaMale>().condition.ToString().Equals(condition.ToString()))
+            {
+                data.gameObject.SetActive(true);
+                currentAvatar = data.transform;
+                currentAvatar.GetComponent<UmaMale>().ParentLastPiece();
+                currentAvatar.GetComponent<UmaMale>().ParentSecondToLastPiece();
+               
+            }
+        }
     }
 
     bool startedExperiment = false;
 
     public void Start()
     {
-      
+
         pid = 0;
+        trialOngoing = false;
+
+        if (gender == Gender.Female)
+            maleArms.SetActive(false);
+        else
+            femaleArms.SetActive(false);
 
         leftHandHandle = GameObject.Find("ObiHandleLeftHand");
         rightHandHandle = GameObject.Find("ObiHandleRightHand");
-
-        trialOngoing = false;
-        experimentController = transform.GetComponent<ExperimentController>();
+       
         avatarGameObjects.Add("FemaleStrong", FemaleStrong);
         avatarGameObjects.Add("FemaleAverage", FemaleAverage);
         avatarGameObjects.Add("FemaleWeak", FemaleWeak);
 
+        avatarGameObjects.Add("MaleStrong", MaleStrong);
+        avatarGameObjects.Add("MaleAverage", MaleAverage);
+        avatarGameObjects.Add("MaleWeak", MaleWeak);
+
         foreach (GameObject avatar in avatarGameObjects.Values)
         {
             DynamicCharacterAvatar uma = avatar.transform.GetComponent<DynamicCharacterAvatar>();
-
             uma.CharacterCreated.AddListener(OnCreated);
-
-          
-        }
-        //todomales
-
-      
+        }      
     }
  
 
@@ -141,7 +145,7 @@ public class ExperimentController : MonoBehaviour
         if (seconds < 4)
         {
 
-            startText.GetComponent<TMPro.TextMeshProUGUI>().text = ((int)seconds).ToString();
+            startText.GetComponent<TMPro.TextMeshProUGUI>().text = (4-(int)seconds).ToString();
             if ((int)seconds == 1 && countdownStarter == 1)
             {
                 countdownSound.GetComponent<AudioSource>().Play();
@@ -173,8 +177,6 @@ public class ExperimentController : MonoBehaviour
     }
     void Update()
     {
-
-
         if (startExperiment && !startedExperiment)
         {
             currentAvatar.GetComponent<Animator>().SetTrigger("Start");
@@ -191,28 +193,21 @@ public class ExperimentController : MonoBehaviour
             float t = Time.time - startedTrial;
             float minutes = (int)t / 60;
             float seconds = (t % 60) + 1;
-
-
-            if (seconds > 1)
+           
+            if (seconds > 2)
             {
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
             }
             if (seconds > trialDuration)
             {
-
                 currentAvatar.GetComponent<Animator>().SetTrigger("Reverse");
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "STOP";
                 startSound.GetComponent<AudioSource>().Play();
 
                 endedTrial = Time.time;
                 trialOngoing = false;
-
-
-
                 Debug.Log("---Ending trial in trial controller " + " after " + postTrialDelay + "s");
-
-
-
+               
             }
         }
         else
@@ -228,12 +223,8 @@ public class ExperimentController : MonoBehaviour
                 }
                 if (seconds > postTrialDelay)
                 {
-                    //GameObject.Find("ObiHandleLeft").transform.parent = transform;
-                    //GameObject.Find("ObiHandleRight").transform.parent = transform;
-                    //currentAvatar.SetActive(false);
                     endedTrial = 0;
                     Debug.Log("---Onto next trial");
-                    //experimentController.nextTrial();
                 }
             }
         }

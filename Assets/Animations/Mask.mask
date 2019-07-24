@@ -7,7 +7,7 @@ AvatarMask:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Mask
-  m_Mask: 00000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_Mask: 00000000010000000100000000000000000000000100000001000000000000000000000000000000000000000000000000000000
   m_Elements:
   - m_Path: 
     m_Weight: 1
@@ -48,19 +48,19 @@ AvatarMask:
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftOuterBreast/LeftInnerBreast
     m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftArmAdjust
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmAdjust
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmTwist
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftForeArmTwist/LeftForeArmTwistAdjust
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand
     m_Weight: 0
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandFinger01_01
@@ -94,7 +94,7 @@ AvatarMask:
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftArm/LeftForeArm/LeftHand/LeftHandFinger05_01/LeftHandFinger05_02/LeftHandFinger05_03
     m_Weight: 0
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftShoulderAdjust
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/LeftShoulder/LeftTrapezius
     m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/Neck
@@ -258,19 +258,19 @@ AvatarMask:
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightOuterBreast/RightInnerBreast
     m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightArmAdjust
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmAdjust
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmTwist
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightForeArmTwist/RightForeArmTwistAdjust
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand
     m_Weight: 0
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandFinger01_01
@@ -304,7 +304,7 @@ AvatarMask:
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/RightHandFinger05_01/RightHandFinger05_02/RightHandFinger05_03
     m_Weight: 0
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightShoulderAdjust
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/RightShoulder/RightTrapezius
     m_Weight: 1
   - m_Path: UMA_Female_Rig/Global/Position/Hips/LowerBack/Spine/Spine1/Spine1Adjust

@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UMA.CharacterSystem;
-using System;
 using UMA.PoseTools;
 using UMA;
 using RootMotion.FinalIK;
-using RootMotion;
 
 public class UmaFemale : MonoBehaviour
 {
@@ -15,24 +12,24 @@ public class UmaFemale : MonoBehaviour
     // Start is called before the first frame update
     private string umaName;
     bool setSize = false;
-
-    public enum Condition
-    {
-        Weak,
-        Average,
-        Strong
-    };
-
-    public Condition condition;
-
     GameObject parent;
     private ExpressionPlayer expression;
     private bool connected = false;
     GameObject rope;
     private bool setUp = true;
     Transform[] umaBodyParts;
-     AimIK aimIK;
+    AimIK aimIK;
     private Transform hand;
+    bool loadedText = false;
+    public enum Condition
+    {
+        Weak,
+        Average,
+        Strong
+    };
+    public Condition condition;
+
+
 
     void OnEnable()
     {
@@ -53,19 +50,12 @@ public class UmaFemale : MonoBehaviour
         connected = true;
     }
 
-
-
     void Start()
     {
         avatar = GetComponent<DynamicCharacterAvatar>();
-
         umaName = transform.gameObject.name;
-       
-
     }
 
-    bool loadedText=false;
-    // Update is called once per frame
     void Update()
     {
 
@@ -76,10 +66,8 @@ public class UmaFemale : MonoBehaviour
         }
         if (connected && setUp)
         {
-            
-            setUp = false;
 
-           
+            setUp = false;
 
             expression.mouthUp_Down = 0.4f;
             expression.browsIn = 1f;
@@ -88,32 +76,24 @@ public class UmaFemale : MonoBehaviour
             expression.midBrowUp_Down = 0f;
             expression.enableBlinking = true;
             expression.maxBlinkDelay = 2;
-            //if (setSize == false)
-            //{
 
-            //parent = transform.parent.gameObject;
-            // parent.transform.localScale = new Vector3(2, 2, 2);
-            //parent.transform.localPosition = new Vector3(-0.28f, 3.905f, -3.033f);
-            // setSize = true;
-            //}
             parent = transform.parent.gameObject;
             parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
             umaBodyParts = parent.GetComponentsInChildren<Transform>();
 
             dna = avatar.GetDNA(); //takes couple of frames 
-
-
             aimIK = transform.gameObject.AddComponent<AimIK>();
 
-      
-            Transform[] heirarchy=new Transform[2];
+
+            Transform[] heirarchy = new Transform[2];
             heirarchy[0] = null;
             heirarchy[1] = null;
             Transform root = null;
 
             foreach (Transform bodyPart in umaBodyParts)
             {
-                if (bodyPart.gameObject.name.Equals("Head")){
+                if (bodyPart.gameObject.name.Equals("Head"))
+                {
                     heirarchy[1] = bodyPart;
                 }
                 if (bodyPart.gameObject.name.Equals("Neck"))
@@ -133,7 +113,7 @@ public class UmaFemale : MonoBehaviour
             aimIK.solver.target = GameObject.Find("TrackedHead").transform;
             aimIK.solver.transform = heirarchy[1];
 
-         
+
             if (condition == Condition.Weak)
                 weakCondition();
             else if (condition == Condition.Strong)
@@ -143,9 +123,6 @@ public class UmaFemale : MonoBehaviour
 
             avatar.BuildCharacter();
         }
-
-       
-
 
     }
 
@@ -210,7 +187,6 @@ public class UmaFemale : MonoBehaviour
 
         avatar.BuildCharacter();
     }
-
 
     private void averageCondition()
     {
@@ -343,7 +319,6 @@ public class UmaFemale : MonoBehaviour
         avatar.BuildCharacter();
     }
 
-
     public void ParentLastPiece()
     {
         Debug.Log(transform.gameObject.name);
@@ -354,7 +329,7 @@ public class UmaFemale : MonoBehaviour
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleLeft").transform;
                 ropeHandleLow.parent = part;
-                ropeHandleLow.localPosition = new Vector3(-0.0921f, -0.0346f, -0.0361f);                
+                ropeHandleLow.localPosition = new Vector3(-0.0921f, -0.0346f, -0.0361f);
                 Debug.Log("Parenting to left hand");
 
             }
@@ -372,22 +347,20 @@ public class UmaFemale : MonoBehaviour
 
     public void ParentSecondToLastPiece()
     {
-
-
         foreach (Transform part in transform.GetComponentsInChildren<Transform>())
         {
 
-            if (part.gameObject.name.Equals("RightHand") )
+            if (part.gameObject.name.Equals("RightHand"))
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleRight").transform;
                 ropeHandleLow.parent = part;
-                ropeHandleLow.localPosition = new Vector3(-0.0694f, 0.0318f, -0.0563f);    
+                ropeHandleLow.localPosition = new Vector3(-0.0694f, 0.0318f, -0.0563f);
                 //ropeHandleLow.localRotation = new Quaternion(31.866f, 99f, -55.678f,1);    
                 Debug.Log("Parenting to right hand");
 
             }
 
-            if(part.gameObject.name.Equals("hand_R"))
+            if (part.gameObject.name.Equals("hand_R"))
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleRight").transform;
                 ropeHandleLow.parent = part;
