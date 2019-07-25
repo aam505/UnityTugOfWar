@@ -21,6 +21,11 @@ public class UmaFemale : MonoBehaviour
     AimIK aimIK;
     private Transform hand;
     bool loadedText = false;
+    bool activate = false;
+    bool activated =false;
+
+    private UmaMoodSlider moodSetting;
+
     public enum Condition
     {
         Weak,
@@ -45,15 +50,18 @@ public class UmaFemale : MonoBehaviour
     public void OnCreated(UMAData data)
     {
         expression = GetComponent<ExpressionPlayer>();
-        expression.enableBlinking = false;
-        expression.enableSaccades = false;
+        expression.enableBlinking = true;
+        expression.enableSaccades = true;
+        expression.gazeMode = ExpressionPlayer.GazeMode.Acquiring;
         connected = true;
+       
     }
 
     void Start()
     {
         avatar = GetComponent<DynamicCharacterAvatar>();
         umaName = transform.gameObject.name;
+        transform.gameObject.AddComponent<UmaMoodSlider>();
     }
 
     void Update()
@@ -69,13 +77,12 @@ public class UmaFemale : MonoBehaviour
 
             setUp = false;
 
-            expression.mouthUp_Down = 0.4f;
-            expression.browsIn = 1f;
-            expression.leftBrowUp_Down = 0.4f;
-            expression.rightBrowUp_Down = 0.4f;
-            expression.midBrowUp_Down = 0f;
-            expression.enableBlinking = true;
-            expression.maxBlinkDelay = 2;
+            //expression.mouthUp_Down = 0.4f;
+            //expression.browsIn = 1f;
+            //expression.leftBrowUp_Down = 0.4f;
+            //expression.rightBrowUp_Down = 0.4f;
+            //expression.midBrowUp_Down = 0f;
+            moodSetting = gameObject.AddComponent<UmaMoodSlider>();
 
             parent = transform.parent.gameObject;
             parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
@@ -110,7 +117,7 @@ public class UmaFemale : MonoBehaviour
 
             aimIK.solver.SetChain(heirarchy, root);
 
-            aimIK.solver.target = GameObject.Find("TrackedHead").transform;
+            setIKTargetHead();
             aimIK.solver.transform = heirarchy[1];
 
 
@@ -122,10 +129,42 @@ public class UmaFemale : MonoBehaviour
                 averageCondition();
 
             avatar.BuildCharacter();
+
+            transform.gameObject.SetActive(false);
+
+        }
+
+        if(connected && activate && !activated)
+        {
+            activated = true;
+            transform.gameObject.SetActive(true);
         }
 
     }
 
+    public void Activate()
+    {
+        activate = true;
+    }
+
+
+    public void setMood(int m)
+    {
+        moodSetting.mood = m;
+
+    }
+
+  
+
+    public void setIKTargetHead()
+    {
+        aimIK.solver.target = GameObject.Find("TrackedHead").transform;
+    }
+
+    public void setIKTargetHand()
+    {
+        aimIK.solver.target = GameObject.Find("ObiHandleRight").transform;
+    }
 
     private void weakCondition()
     {

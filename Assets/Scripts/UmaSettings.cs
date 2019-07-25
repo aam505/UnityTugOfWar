@@ -5,7 +5,7 @@ using UMA.PoseTools;
 using UMA;
 using RootMotion.FinalIK;
 
-public class UmaMale : MonoBehaviour
+public class UmaSettings : MonoBehaviour
 {
     private DynamicCharacterAvatar avatar;
     private Dictionary<string, DnaSetter> dna;
@@ -18,16 +18,12 @@ public class UmaMale : MonoBehaviour
     private Transform hand;
     GameObject parent;
     private bool setUp = true;
-    public Condition condition;
+   
     private ExpressionPlayer expression;
     private bool connected = false;
 
-    public enum Condition
-    {
-        Weak,
-        Average,
-        Strong
-    };
+    private UmaMoodSlider moodSetting;
+    private ExperimentController controller;
 
 
     void OnEnable()
@@ -44,14 +40,26 @@ public class UmaMale : MonoBehaviour
     public void OnCreated(UMAData data)
     {
         expression = GetComponent<ExpressionPlayer>();
-        expression.enableBlinking = false;
-        expression.enableSaccades = false;
         connected = true;
     }
     void Start()
     {
         avatar = GetComponent<DynamicCharacterAvatar>();
-        umaName = transform.gameObject.name;
+        controller = GameObject.Find("ExperimentController").GetComponent<ExperimentController>();
+
+        if (controller.gender == ExperimentController.Gender.Female)
+        {
+            umaName = "UMA_F4";
+        } else
+        {
+
+            umaName = "UMA_M5";
+        }
+        //get name based on gender and condition
+        //umaName = transform.gameObject.name;
+
+       
+
     }
 
     // Update is called once per frame
@@ -59,7 +67,7 @@ public class UmaMale : MonoBehaviour
     {
         if (!loadedText)
         {
-            avatar.LoadFromTextFile(name);
+            avatar.LoadFromTextFile(umaName);
             loadedText = true;
         }
 
@@ -67,12 +75,11 @@ public class UmaMale : MonoBehaviour
         {
             setUp = false;
 
-            expression.mouthUp_Down = -0.35f;
-            expression.browsIn = 1f;
-            expression.noseSneer = 0f;
-            expression.leftBrowUp_Down = 0.4f;
-            expression.rightBrowUp_Down = 0.4f;
-
+            //expression.mouthUp_Down = -0.35f;
+            //expression.browsIn = 1f;
+            //expression.noseSneer = 0f;
+            //expression.leftBrowUp_Down = 0.4f;
+            // expression.rightBrowUp_Down = 0.4f;
 
             parent = transform.parent.gameObject;
             parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
@@ -82,6 +89,7 @@ public class UmaMale : MonoBehaviour
 
             aimIK = transform.gameObject.AddComponent<AimIK>();
 
+            moodSetting = gameObject.GetComponent<UmaMoodSlider>();
 
             Transform[] heirarchy = new Transform[2];
             heirarchy[0] = null;
@@ -105,23 +113,62 @@ public class UmaMale : MonoBehaviour
             }
 
             aimIK.solver.SetChain(heirarchy, root);
-            aimIK.solver.target = GameObject.Find("TrackedHead").transform;
+
+            setIKTargetHead();
+
             aimIK.solver.transform = heirarchy[1];
 
-
-            if (condition == Condition.Weak)
-                weakCondition();
-            else if (condition == Condition.Strong)
-                strongCondition();
-            else if (condition == Condition.Average)
-                averageCondition();
-
+            if (controller.gender == ExperimentController.Gender.Female)
+            {
+                switch (controller.condition)
+                {
+                    case ExperimentController.Condition.Average:
+                        averageConditionFemale();
+                        break;
+                    case ExperimentController.Condition.Weak:
+                        weakConditionFemale();
+                        break;
+                    case ExperimentController.Condition.Strong:
+                        strongConditionFemale();
+                        break;
+                    default:
+                        break;
+                }
+            } else
+            {
+                switch (controller.condition)
+                {
+                    case ExperimentController.Condition.Average:
+                        averageConditionMale();
+                        break;
+                    case ExperimentController.Condition.Weak:
+                        weakConditionMale();
+                        break;
+                    case ExperimentController.Condition.Strong:
+                        strongConditionMale();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        
             avatar.BuildCharacter();
-        }    
+
+
+            ParentSecondToLastPiece();
+            ParentLastPiece();
+        }
 
     }
 
-    private void strongCondition()
+    public void setMood(int m)
+    {
+        Debug.Log("setting mood " + m);
+        moodSetting.mood = m;
+
+    }
+
+    private void strongConditionMale()
     {
         if (dna == null)
         {
@@ -177,7 +224,7 @@ public class UmaMale : MonoBehaviour
         avatar.BuildCharacter();
     }
 
-    private void averageCondition()
+    private void averageConditionMale()
     {
         if (dna == null)
         {
@@ -228,7 +275,7 @@ public class UmaMale : MonoBehaviour
         avatar.BuildCharacter();
     }
 
-    private void weakCondition()
+    private void weakConditionMale()
     {
         if (dna == null)
         {
@@ -278,6 +325,198 @@ public class UmaMale : MonoBehaviour
         dna["mouthSize"].Set(0.5f);
         dna["lowerMuscle"].Set(0.5f);
 
+
+        avatar.BuildCharacter();
+    }
+
+    private void weakConditionFemale()
+    {
+        if (dna == null)
+        {
+            dna = avatar.GetDNA();
+        }
+
+        if (name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+        {
+            avatar.characterColors.SetColor("Footwear01", new Color(27f / 255f, 27f / 255f, 27f / 255f));
+            avatar.characterColors.SetColor("ClothingBottom01", new Color(120f / 255f, 141f / 255f, 183f / 255f));
+            avatar.characterColors.SetColor("ClothingTop01", Color.white);
+        }
+        else
+        {
+            avatar.characterColors.SetColor("Shirt", Color.white);
+            avatar.characterColors.SetColor("Pants1", new Color(120f / 255f, 141f / 255f, 183f / 255f));
+        }
+
+
+        avatar.characterColors.SetColor("Eyes", new UnityEngine.Color(99f / 255f, 67f / 255f, 67f / 255f));
+
+        dna["chinPosition"].Set(0.5f);
+        dna["chinPronounced"].Set(0.3f);
+        dna["chinSize"].Set(0.3f);
+        dna["headWidth"].Set(0.5f);
+        dna["jawsPosition"].Set(0.5f);
+        dna["jawsSize"].Set(0.3f);
+        dna["noseSize"].Set(0.3f);
+        dna["noseWidth"].Set(0.3f);
+        dna["lipsSize"].Set(0.6f);
+
+        dna["armWidth"].Set(0.3f);
+        dna["forearmWidth"].Set(0.3f);
+        dna["lowerWeight"].Set(0.3f);
+        dna["neckThickness"].Set(0.3f);
+        dna["upperMuscle"].Set(0.3f);
+        dna["upperWeight"].Set(0.3f);
+
+        dna["eyeSize"].Set(0.1f);
+
+
+        dna["cheekPosition"].Set(0.5f);
+        dna["lowCheekPosition"].Set(0.5f);
+        //dna["lowCheekPronounced"].Set(0.5f);
+        dna["cheekSize"].Set(0.5f);
+        dna["mouthSize"].Set(0.5f);
+        dna["lowerMuscle"].Set(0.5f);
+
+        dna["noseInclination"].Set(0.47f);
+        dna["nosePosition"].Set(0.362f);
+        dna["noseSize"].Set(1);
+        dna["noseSize"].Set(0.594f);
+        dna["noseWidth"].Set(0.4f);
+        dna["foreheadSize"].Set(1);
+        dna["breastSize"].Set(0.3f);
+        dna["breastCleavage"].Set(0.7f);
+
+        avatar.BuildCharacter();
+    }
+
+    private void averageConditionFemale()
+    {
+        if (dna == null)
+        {
+            dna = avatar.GetDNA();
+        }
+
+        if (name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+        {
+            avatar.characterColors.SetColor("Footwear01", new Color(27f / 255f, 27f / 255f, 27f / 255f));
+            avatar.characterColors.SetColor("ClothingBottom01", new Color(120f / 255f, 141f / 255f, 183f / 255f));
+            avatar.characterColors.SetColor("ClothingTop01", new Color(128f / 255f, 128f / 255f, 128f / 255f));
+        }
+        else
+        {
+            avatar.characterColors.SetColor("Shirt", Color.grey);
+            avatar.characterColors.SetColor("Pants1", new Color(120f / 255f, 141f / 255f, 183f / 255f));
+        }
+
+        avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
+
+        dna["chinPosition"].Set(0.5f);
+        dna["chinPronounced"].Set(0.5f);
+        dna["chinSize"].Set(0.5f);
+        dna["headWidth"].Set(0.5f);
+        dna["jawsPosition"].Set(0.5f);
+        dna["jawsSize"].Set(0.5f);
+        dna["noseSize"].Set(0.5f);
+        dna["noseWidth"].Set(0.5f);
+        dna["lipsSize"].Set(0.4f);
+
+        dna["armWidth"].Set(0.5f);
+        dna["forearmWidth"].Set(0.5f);
+        dna["lowerWeight"].Set(0.5f);
+        dna["neckThickness"].Set(0.5f);
+        dna["upperMuscle"].Set(0.5f);
+        dna["upperWeight"].Set(0.5f);
+
+        dna["eyeSize"].Set(0.5f);
+
+
+        dna["cheekPosition"].Set(0.5f);
+        dna["lowCheekPosition"].Set(0.5f);
+        //dna["lowCheekPronounced"].Set(0.5f);
+        dna["cheekSize"].Set(0.5f);
+        dna["mouthSize"].Set(0.5f);
+        dna["lowerMuscle"].Set(0.5f);
+
+        dna["noseInclination"].Set(0.47f);
+        dna["nosePosition"].Set(0.362f);
+        dna["noseSize"].Set(1);
+        dna["noseSize"].Set(0.594f);
+        dna["noseWidth"].Set(0.4f);
+        dna["foreheadSize"].Set(1);
+        dna["breastSize"].Set(0.3f);
+        dna["breastCleavage"].Set(0.7f);
+
+
+
+        avatar.BuildCharacter();
+
+    }
+
+    private void strongConditionFemale()
+    {
+        if (dna == null)
+        {
+            dna = avatar.GetDNA();
+        }
+
+
+
+        avatar.characterColors.SetColor("Shirt", Color.black);
+
+
+        if (name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+        {
+            avatar.characterColors.SetColor("Footwear01", new Color(27f / 255f, 27f / 255f, 27f / 255f));
+            avatar.characterColors.SetColor("ClothingBottom01", new Color(53f / 255f, 53f / 255f, 77f / 255f));
+            avatar.characterColors.SetColor("ClothingTop01", new Color(29f / 255f, 28f / 255f, 36f / 255f));
+        }
+        else
+        {
+            avatar.characterColors.SetColor("Shirt", Color.black);
+            avatar.characterColors.SetColor("Pants1", new Color(20f / 255f, 18f / 255f, 36f / 255f));
+        }
+
+        avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
+
+        dna["chinPosition"].Set(1f);
+        dna["chinPronounced"].Set(1f);
+        dna["chinSize"].Set(1f);
+        dna["headWidth"].Set(0.850f);
+        dna["jawsPosition"].Set(0f);
+        dna["jawsSize"].Set(1f);
+        dna["noseSize"].Set(0.38f);
+        dna["noseWidth"].Set(0.4f);
+        dna["lipsSize"].Set(0);
+
+
+
+        dna["armWidth"].Set(1f);
+        dna["forearmWidth"].Set(1f);
+        dna["lowerWeight"].Set(1f);
+        dna["neckThickness"].Set(1f);
+        dna["upperMuscle"].Set(1f);
+        if (name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+            dna["upperWeight"].Set(0.53f);
+        else
+            dna["upperWeight"].Set(0.7f);
+
+        dna["eyeSize"].Set(0.4f);
+
+        dna["cheekPosition"].Set(0.5f);
+        dna["lowCheekPosition"].Set(0.5f);
+        //dna["lowCheekPronounced"].Set(0.5f);
+        dna["cheekSize"].Set(0.5f);
+        dna["mouthSize"].Set(0.5f);
+        dna["lowerMuscle"].Set(0.3f);
+
+        dna["noseInclination"].Set(0.47f);
+        dna["nosePosition"].Set(0.362f);
+        dna["noseSize"].Set(0.594f);
+        dna["noseWidth"].Set(0.4f);
+        dna["foreheadSize"].Set(1);
+        dna["breastSize"].Set(0.3f);
+        dna["breastCleavage"].Set(0.7f);
 
         avatar.BuildCharacter();
     }
@@ -335,5 +574,15 @@ public class UmaMale : MonoBehaviour
             }
         }
 
+    }
+
+    public void setIKTargetHead()
+    {
+        aimIK.solver.target = GameObject.Find("TrackedHead").transform;
+    }
+
+    public void setIKTargetHand()
+    {
+        aimIK.solver.target = GameObject.Find("ObiHandleRight").transform;
     }
 }

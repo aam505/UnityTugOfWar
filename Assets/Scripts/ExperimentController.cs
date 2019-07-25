@@ -21,37 +21,26 @@ public class ExperimentController : MonoBehaviour
         Strong
     };
 
-
-    [SerializeField]
-    public int pid;
-    int ParticipantId;
+    
+    public int ParticipantId;
+    public bool startExperiment;
     private bool started = false;
     float startedTrialTime;
-    public bool finishedExperiment = false;
+    bool finishedExperiment = false;
     public GameObject participantLeftHand;
     public GameObject participantRightHand;
-    private GameObject leftHandHandle;
-    private GameObject rightHandHandle;
     public Gender gender;
     public Condition condition;
     bool trialOngoing;
     float startedTrial;
     float endedTrial;
-    public bool startExperiment;
+    
 
-    [SerializeField]
-    public GameObject FemaleStrong;
-    [SerializeField]
-    public GameObject FemaleAverage;
-    [SerializeField]
-    public GameObject FemaleWeak;
-
-    [SerializeField]
-    public GameObject MaleStrong;
-    [SerializeField]
-    public GameObject MaleAverage;
-    [SerializeField]
-    public GameObject MaleWeak;
+   // [SerializeField]
+   // public GameObject FemaleAvatar;
+   // [SerializeField]
+   // public GameObject MaleAvatars;
+   
    
     public GameObject startText;
     public GameObject countdownSound;
@@ -59,7 +48,7 @@ public class ExperimentController : MonoBehaviour
 
     public Dictionary<string, GameObject> avatarGameObjects = new Dictionary<string, GameObject>();
 
-    Transform currentAvatar;
+    public Transform currentAvatar;
 
     float postTrialDelay = 60;
     float trialDuration = 10;
@@ -69,68 +58,35 @@ public class ExperimentController : MonoBehaviour
 
     public GameObject maleArms;
     public GameObject femaleArms;
+
+    bool connected = true;
     //todo add none condition
 
-    public void OnCreated(UMAData data)
-    {
-        //disable all
-        data.gameObject.SetActive(false);
-
-        //enable right one
-        if (gender == Gender.Female)
-        {
-            if (data.transform.GetComponent<UmaFemale>().condition.ToString().Equals(condition.ToString()))
-            {
-                data.gameObject.SetActive(true);
-                currentAvatar = data.transform;
-                currentAvatar.GetComponent<UmaFemale>().ParentLastPiece();
-                currentAvatar.GetComponent<UmaFemale>().ParentSecondToLastPiece();
-              
-            }
-        }
-
-        if (gender == Gender.Male)
-        {
-            if (data.transform.GetComponent<UmaMale>().condition.ToString().Equals(condition.ToString()))
-            {
-                data.gameObject.SetActive(true);
-                currentAvatar = data.transform;
-                currentAvatar.GetComponent<UmaMale>().ParentLastPiece();
-                currentAvatar.GetComponent<UmaMale>().ParentSecondToLastPiece();
-               
-            }
-        }
-    }
+ 
 
     bool startedExperiment = false;
 
     public void Start()
     {
 
-        pid = 0;
+        ParticipantId = 0;
         trialOngoing = false;
 
         if (gender == Gender.Female)
             maleArms.SetActive(false);
         else
             femaleArms.SetActive(false);
+      
 
-        leftHandHandle = GameObject.Find("ObiHandleLeftHand");
-        rightHandHandle = GameObject.Find("ObiHandleRightHand");
+        if (gender == Gender.Female) {
+            maleArms.SetActive(false);
        
-        avatarGameObjects.Add("FemaleStrong", FemaleStrong);
-        avatarGameObjects.Add("FemaleAverage", FemaleAverage);
-        avatarGameObjects.Add("FemaleWeak", FemaleWeak);
-
-        avatarGameObjects.Add("MaleStrong", MaleStrong);
-        avatarGameObjects.Add("MaleAverage", MaleAverage);
-        avatarGameObjects.Add("MaleWeak", MaleWeak);
-
-        foreach (GameObject avatar in avatarGameObjects.Values)
-        {
-            DynamicCharacterAvatar uma = avatar.transform.GetComponent<DynamicCharacterAvatar>();
-            uma.CharacterCreated.AddListener(OnCreated);
-        }      
+        }
+        else {
+            femaleArms.SetActive(false);
+           
+        }
+       
     }
  
 
@@ -172,6 +128,12 @@ public class ExperimentController : MonoBehaviour
             startText.GetComponent<TMPro.TextMeshProUGUI>().text = "START";
             startSound.GetComponent<AudioSource>().Play();
             currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
+
+            currentAvatar.GetComponent<UmaSettings>().setMood(1);
+           // currentAvatar.GetComponent<UmaSettings>().setIKTargetHand();
+          
+                
+            
         }
 
     }
@@ -201,13 +163,14 @@ public class ExperimentController : MonoBehaviour
             if (seconds > trialDuration)
             {
                 currentAvatar.GetComponent<Animator>().SetTrigger("Reverse");
+                currentAvatar.GetComponent<UmaSettings>().setMood(0);
+               // currentAvatar.GetComponent<UmaSettings>().setIKTargetHead();
+                
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "STOP";
-                startSound.GetComponent<AudioSource>().Play();
 
+                startSound.GetComponent<AudioSource>().Play();
                 endedTrial = Time.time;
                 trialOngoing = false;
-                Debug.Log("---Ending trial in trial controller " + " after " + postTrialDelay + "s");
-               
             }
         }
         else
