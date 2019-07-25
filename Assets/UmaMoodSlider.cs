@@ -29,7 +29,7 @@ public class UmaMoodSlider : MonoBehaviour
     {
         expression = GetComponent<ExpressionPlayer>();
         expression.enableBlinking = true;
-        expression.enableSaccades = true;
+        expression.enableSaccades = false;
         connected = true;
         expression.gazeMode = ExpressionPlayer.GazeMode.Acquiring;
 

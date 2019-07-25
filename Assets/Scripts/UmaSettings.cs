@@ -14,11 +14,14 @@ public class UmaSettings : MonoBehaviour
     bool loadedText = false;
     GameObject rope;
     Transform[] umaBodyParts;
-    AimIK aimIK;
+
+    AimIK aimIKHead;
+   // LimbIK aimIKLeftArm;
+    //LimbIK aimIKRightArm;
+
     private Transform hand;
     GameObject parent;
-    private bool setUp = true;
-   
+    private bool setUp = true;   
     private ExpressionPlayer expression;
     private bool connected = false;
 
@@ -87,8 +90,10 @@ public class UmaSettings : MonoBehaviour
 
             dna = avatar.GetDNA(); //takes couple of frames 
 
-            aimIK = transform.gameObject.AddComponent<AimIK>();
-
+            aimIKHead = transform.gameObject.AddComponent<AimIK>();
+            //aimIKLeftArm = transform.gameObject.AddComponent<LimbIK>();
+            //aimIKRightArm = transform.gameObject.AddComponent<LimbIK>();
+            
             moodSetting = gameObject.GetComponent<UmaMoodSlider>();
 
             Transform[] heirarchy = new Transform[2];
@@ -96,8 +101,18 @@ public class UmaSettings : MonoBehaviour
             heirarchy[1] = null;
             Transform root = null;
 
+            Transform[] heirarchyLeftArm = new Transform[4];
+            Transform[] heirarchyRightArm = new Transform[4];
+
+            for (int i = 0; i < 3; i++)
+            {
+                heirarchyLeftArm[i] = null;
+                heirarchyRightArm[i] = null;
+            }
+
             foreach (Transform bodyPart in umaBodyParts)
             {
+                Debug.Log(bodyPart.name);
                 if (bodyPart.gameObject.name.Equals("Head"))
                 {
                     heirarchy[1] = bodyPart;
@@ -110,13 +125,62 @@ public class UmaSettings : MonoBehaviour
                 {
                     root = bodyPart;
                 }
+                if (bodyPart.gameObject.name.Equals("LeftShoulder") ||
+                    bodyPart.gameObject.name.Equals("Clavicle_L"))
+                {
+                    heirarchyLeftArm[0] = bodyPart;
+                }
+                if (bodyPart.gameObject.name.Equals("RightShoulder") ||
+                    bodyPart.gameObject.name.Equals("Clavicle_R"))
+                {
+                    heirarchyRightArm[0] = bodyPart;
+                }
+                if (bodyPart.gameObject.name.Equals("LeftArm") ||
+                    bodyPart.gameObject.name.Equals("Upperarm_L"))
+                {
+                    heirarchyLeftArm[1] = bodyPart;
+                }
+                if (bodyPart.gameObject.name.Equals("RightArm") ||
+                    bodyPart.gameObject.name.Equals("Upperarm_R"))
+                {
+                    heirarchyRightArm[1] = bodyPart;
+                }
+                if (bodyPart.gameObject.name.Equals("LeftForeArm") ||
+                    bodyPart.gameObject.name.Equals("Lowerarm_L"))
+                {
+                    heirarchyLeftArm[2] = bodyPart;
+                }
+                if (bodyPart.gameObject.name.Equals("RightForeArm") ||
+                    bodyPart.gameObject.name.Equals("Lowerarm_R") )
+                {
+                    heirarchyRightArm[2] = bodyPart;
+                }
+                if (bodyPart.gameObject.name.Equals("LeftHand") ||
+                    bodyPart.gameObject.name.Equals("hand_L"))
+                {
+                    heirarchyLeftArm[3] = bodyPart;
+                }
+                if (bodyPart.gameObject.name.Equals("RightHand") ||
+                    bodyPart.gameObject.name.Equals("hand_R"))
+                {
+                    heirarchyRightArm[3] = bodyPart;
+                }
             }
 
-            aimIK.solver.SetChain(heirarchy, root);
+            aimIKHead.solver.SetChain(heirarchy, root);
+            
+           // aimIKLeftArm.solver.SetChain(heirarchyLeftArm[1], heirarchyLeftArm[2], heirarchyLeftArm[3], root);
+           // aimIKRightArm.solver.SetChain(heirarchyRightArm[1], heirarchyRightArm[2], heirarchyRightArm[3], root);
 
             setIKTargetHead();
-
-            aimIK.solver.transform = heirarchy[1];
+            //aimIKLeftArm.solver.target = GameObject.Find("Target").transform;
+            //aimIKRightArm.solver.target = GameObject.Find("Target").transform;
+            
+            aimIKHead.solver.transform = heirarchy[1];
+           // aimIKLeftArm.solver.bendModifier = IKSolverLimb.BendModifier.Animation;
+           // aimIKLeftArm.solver.SetIKRotationWeight(0);
+            //aimIKRightArm.solver.bendModifier = IKSolverLimb.BendModifier.Animation;
+            //aimIKRightArm.solver.SetIKRotationWeight(0);
 
             if (controller.gender == ExperimentController.Gender.Female)
             {
@@ -153,7 +217,6 @@ public class UmaSettings : MonoBehaviour
             }
         
             avatar.BuildCharacter();
-
 
             ParentSecondToLastPiece();
             ParentLastPiece();
@@ -578,11 +641,11 @@ public class UmaSettings : MonoBehaviour
 
     public void setIKTargetHead()
     {
-        aimIK.solver.target = GameObject.Find("TrackedHead").transform;
+        aimIKHead.solver.target = GameObject.Find("TrackedHead").transform;
     }
 
     public void setIKTargetHand()
     {
-        aimIK.solver.target = GameObject.Find("ObiHandleRight").transform;
+        aimIKHead.solver.target = GameObject.Find("ObiHandleRight").transform;
     }
 }
