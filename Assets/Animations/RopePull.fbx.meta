@@ -485,7 +485,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Long Pull Reversed
       takeName: mixamo.com
-      firstFrame: 96
+      firstFrame: 103
       lastFrame: 124
       wrapMode: 0
       orientationOffsetY: 0

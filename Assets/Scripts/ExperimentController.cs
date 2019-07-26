@@ -34,24 +34,24 @@ public class ExperimentController : MonoBehaviour
     bool trialOngoing;
     float startedTrial;
     float endedTrial;
-    
+    int countdownStarter = 1;
 
-   // [SerializeField]
-   // public GameObject FemaleAvatar;
-   // [SerializeField]
-   // public GameObject MaleAvatars;
-   
-   
+    // [SerializeField]
+    // public GameObject FemaleAvatar;
+    // [SerializeField]
+    // public GameObject MaleAvatars;
+
+
     public GameObject startText;
     public GameObject countdownSound;
     public GameObject startSound;
 
     public Dictionary<string, GameObject> avatarGameObjects = new Dictionary<string, GameObject>();
-
+    
     public Transform currentAvatar;
 
     float postTrialDelay = 60;
-    float trialDuration = 10;
+    float trialDuration = 6;
 
     private float startCounter;
     private bool counting;
@@ -62,46 +62,28 @@ public class ExperimentController : MonoBehaviour
     bool connected = true;
     //todo add none condition
 
- 
-
     bool startedExperiment = false;
 
     public void Start()
     {
+        ParticipantId = 0; //todo: remove
 
-        ParticipantId = 0;
         trialOngoing = false;
 
         if (gender == Gender.Female)
             maleArms.SetActive(false);
         else
             femaleArms.SetActive(false);
-      
-
-        if (gender == Gender.Female) {
-            maleArms.SetActive(false);
-       
-        }
-        else {
-            femaleArms.SetActive(false);
-           
-        }
-       
     }
- 
-
-    int countdownStarter = 1;
 
     private void countToStart()
     {
-        float t = Time.time - startCounter;
-        float minutes = (int)t / 60;
-        float seconds = (t % 60) + 1;
+        float seconds = getSeconds(startCounter);
 
         if (seconds < 4)
         {
-
             startText.GetComponent<TMPro.TextMeshProUGUI>().text = (4-(int)seconds).ToString();
+
             if ((int)seconds == 1 && countdownStarter == 1)
             {
                 countdownSound.GetComponent<AudioSource>().Play();
@@ -125,10 +107,11 @@ public class ExperimentController : MonoBehaviour
             counting = false;
             startedTrial = Time.time;
             trialOngoing = true;
+
             startText.GetComponent<TMPro.TextMeshProUGUI>().text = "START";
+
             startSound.GetComponent<AudioSource>().Play();
             currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
-
             currentAvatar.GetComponent<UmaSettings>().setMood(1);
            // currentAvatar.GetComponent<UmaSettings>().setIKTargetHand();
           
@@ -141,24 +124,32 @@ public class ExperimentController : MonoBehaviour
     {
         if (startExperiment && !startedExperiment)
         {
+            Debug.Log("Start experiment");
             currentAvatar.GetComponent<Animator>().SetTrigger("Start");
             startCounter = Time.time;
             counting = true;
             startedExperiment = true;
 
         }
+        if (!startExperiment)
+        {
+            endedTrial = 0;
+            startedExperiment = false;
+            countdownStarter = 1;
+            trialOngoing = false;
+            startedTrial = 0;
+        }
         if (counting)
             countToStart();
 
         if (trialOngoing)
         {
-            float t = Time.time - startedTrial;
-            float minutes = (int)t / 60;
-            float seconds = (t % 60) + 1;
+            float seconds = getSeconds(startedTrial);
            
             if (seconds > 2)
             {
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+                Debug.Log("here");
             }
             if (seconds > trialDuration)
             {
@@ -177,9 +168,7 @@ public class ExperimentController : MonoBehaviour
         {
             if (endedTrial != 0)
             {
-                float t = Time.time - endedTrial;
-                float minutes = (int)t / 60;
-                float seconds = (t % 60) + 1;
+                float seconds = getSeconds(endedTrial);
                 if (seconds > 2)
                 {
                     startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
@@ -191,5 +180,14 @@ public class ExperimentController : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    float getSeconds(float startOfTime)
+    {
+        float t = Time.time - startOfTime;
+        float minutes = (int)t / 60;
+        float seconds = (t % 60) + 1;
+        return seconds;
     }
 }

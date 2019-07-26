@@ -78,12 +78,6 @@ public class UmaSettings : MonoBehaviour
         {
             setUp = false;
 
-            //expression.mouthUp_Down = -0.35f;
-            //expression.browsIn = 1f;
-            //expression.noseSneer = 0f;
-            //expression.leftBrowUp_Down = 0.4f;
-            // expression.rightBrowUp_Down = 0.4f;
-
             parent = transform.parent.gameObject;
             parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
             umaBodyParts = parent.GetComponentsInChildren<Transform>();
@@ -112,7 +106,7 @@ public class UmaSettings : MonoBehaviour
 
             foreach (Transform bodyPart in umaBodyParts)
             {
-                Debug.Log(bodyPart.name);
+               
                 if (bodyPart.gameObject.name.Equals("Head"))
                 {
                     heirarchy[1] = bodyPart;
