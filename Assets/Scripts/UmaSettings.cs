@@ -79,7 +79,7 @@ public class UmaSettings : MonoBehaviour
             setUp = false;
 
             parent = transform.parent.gameObject;
-            parent.transform.GetChild(0).GetComponent<Animator>().applyRootMotion = true;
+            transform.GetComponent<Animator>().applyRootMotion = true;
             umaBodyParts = parent.GetComponentsInChildren<Transform>();
 
             dna = avatar.GetDNA(); //takes couple of frames 
@@ -251,6 +251,9 @@ public class UmaSettings : MonoBehaviour
 
         avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
 
+
+        dna["height"].Set(0.6f);
+        
         dna["chinPosition"].Set(1f);
         dna["chinPronounced"].Set(1f);
         dna["chinSize"].Set(1f);
@@ -301,6 +304,9 @@ public class UmaSettings : MonoBehaviour
         }
 
         avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
+
+        dna["height"].Set(0.55f);
+
 
         dna["chinPosition"].Set(0.5f);
         dna["chinPronounced"].Set(0.5f);
@@ -354,6 +360,8 @@ public class UmaSettings : MonoBehaviour
 
 
         avatar.characterColors.SetColor("Eyes", new UnityEngine.Color(99f / 255f, 67f / 255f, 67f / 255f));
+
+
 
         dna["chinPosition"].Set(0.5f);
         dna["chinPronounced"].Set(0.3f);
@@ -468,6 +476,8 @@ public class UmaSettings : MonoBehaviour
 
         avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
 
+
+        dna["height"].Set(0.55f);
         dna["chinPosition"].Set(0.5f);
         dna["chinPronounced"].Set(0.5f);
         dna["chinSize"].Set(0.5f);
@@ -535,6 +545,8 @@ public class UmaSettings : MonoBehaviour
         }
 
         avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
+
+        dna["height"].Set(0.6f);
 
         dna["chinPosition"].Set(1f);
         dna["chinPronounced"].Set(1f);

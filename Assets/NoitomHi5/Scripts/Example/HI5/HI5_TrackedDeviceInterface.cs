@@ -43,7 +43,10 @@ public class HI5_TrackedDeviceInterface : MonoBehaviour
                 m_SteamVR_TrackedObject.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
             
             }
-        
+
+        if (m_SteamVR_TrackedObject.GetComponent<MeshRenderer>()!=null)
+            m_SteamVR_TrackedObject.GetComponent<MeshRenderer>().enabled = false;
+
     }
     private void OnDisable()
     {
