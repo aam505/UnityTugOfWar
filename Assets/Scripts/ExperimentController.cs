@@ -59,6 +59,10 @@ public class ExperimentController : MonoBehaviour
     public GameObject maleArms;
     public GameObject femaleArms;
 
+    public GameObject trackedLeftHand;
+    public GameObject trackedRightHand;
+    public GameObject trackedHead;
+
     bool connected = true;
     //todo add none condition
 
@@ -69,6 +73,9 @@ public class ExperimentController : MonoBehaviour
         ParticipantId = 0; //todo: remove
 
         trialOngoing = false;
+
+        Writer.participantId = ParticipantId;
+        Writer.condition = gender.ToString()+condition.ToString();
 
         if (gender == Gender.Female)
             maleArms.SetActive(false);
@@ -82,7 +89,10 @@ public class ExperimentController : MonoBehaviour
 
         if (seconds < 4)
         {
-            startText.GetComponent<TMPro.TextMeshProUGUI>().text = (4-(int)seconds).ToString();
+            string secondsString = (4 - (int)seconds).ToString(); 
+            startText.GetComponent<TMPro.TextMeshProUGUI>().text = secondsString;
+
+            Writer.logData.action = "counting " + secondsString;
 
             if ((int)seconds == 1 && countdownStarter == 1)
             {
@@ -109,6 +119,7 @@ public class ExperimentController : MonoBehaviour
             trialOngoing = true;
 
             startText.GetComponent<TMPro.TextMeshProUGUI>().text = "START";
+            Writer.logData.action = "start";
 
             startSound.GetComponent<AudioSource>().Play();
             currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
@@ -122,6 +133,23 @@ public class ExperimentController : MonoBehaviour
     }
     void Update()
     {
+        if (trackedHead != null)
+        {
+            Writer.logData.setHead(trackedHead.transform.position.x, trackedHead.transform.position.y, trackedHead.transform.position.z, 
+                trackedHead.transform.eulerAngles.x, trackedHead.transform.eulerAngles.y, trackedHead.transform.eulerAngles.z);
+        }
+
+        if (trackedLeftHand != null)
+        {
+            Writer.logData.setLeftHand(trackedLeftHand.transform.position.x, trackedLeftHand.transform.position.y, trackedLeftHand.transform.position.z,
+                trackedLeftHand.transform.eulerAngles.x, trackedLeftHand.transform.eulerAngles.y, trackedLeftHand.transform.eulerAngles.z);
+        }
+
+        if (trackedRightHand != null)
+        {
+            Writer.logData.setRighttHand(trackedRightHand.transform.position.x, trackedRightHand.transform.position.y, trackedRightHand.transform.position.z,
+                trackedRightHand.transform.eulerAngles.x, trackedRightHand.transform.eulerAngles.y, trackedRightHand.transform.eulerAngles.z);
+        }
         if (startExperiment && !startedExperiment)
         {
             Debug.Log("Start experiment");
@@ -129,6 +157,7 @@ public class ExperimentController : MonoBehaviour
             startCounter = Time.time;
             counting = true;
             startedExperiment = true;
+            Writer.logData.action = "start_experiment";
 
         }
         if (!startExperiment)
@@ -149,7 +178,8 @@ public class ExperimentController : MonoBehaviour
             if (seconds > 2)
             {
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-                Debug.Log("here");
+                Writer.logData.action = "";
+
             }
             if (seconds > trialDuration)
             {
@@ -158,6 +188,7 @@ public class ExperimentController : MonoBehaviour
                // currentAvatar.GetComponent<UmaSettings>().setIKTargetHead();
                 
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "STOP";
+                Writer.logData.action = "stop";
 
                 startSound.GetComponent<AudioSource>().Play();
                 endedTrial = Time.time;
@@ -172,6 +203,7 @@ public class ExperimentController : MonoBehaviour
                 if (seconds > 2)
                 {
                     startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+                    Writer.logData.action = "";
                 }
                 if (seconds > postTrialDelay)
                 {

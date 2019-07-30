@@ -10,10 +10,11 @@ public class Writer : MonoBehaviour
 
     public static LogData logData;
     public static int participantId = -1;
-    private static string fileName = "ExperimentLog";
+    private static string fileName = "ExLog";
     private static object locker = new Object();
-    public static bool logging = false;
+    public static bool logging = true;
     bool first = true;
+    public static string condition;
 
     void Start()
     {
@@ -33,9 +34,15 @@ public class Writer : MonoBehaviour
     {
         logData.timestamp = DateTime.Now;
 
-        using (StreamWriter outputFile = new StreamWriter(fileName + "_p" + participantId + ".csv", true))
+        using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_c" + condition + ".csv", true))
         {
-            //todo
+            if (first)
+            {
+                outputfile.WriteLine(logData.getHeader());
+                first = false;
+            }
+            outputfile.WriteLine(logData.toString());
+
         }
 
         //Debug.Log(logData.toString());
