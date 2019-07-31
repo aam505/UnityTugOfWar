@@ -16,12 +16,12 @@ public class UmaSettings : MonoBehaviour
     Transform[] umaBodyParts;
 
     AimIK aimIKHead;
-   // LimbIK aimIKLeftArm;
+    // LimbIK aimIKLeftArm;
     //LimbIK aimIKRightArm;
 
     private Transform hand;
     GameObject parent;
-    private bool setUp = true;   
+    private bool setUp = true;
     private ExpressionPlayer expression;
     private bool connected = false;
 
@@ -49,19 +49,42 @@ public class UmaSettings : MonoBehaviour
     {
         avatar = GetComponent<DynamicCharacterAvatar>();
         controller = GameObject.Find("ExperimentController").GetComponent<ExperimentController>();
-
         if (controller.gender == ExperimentController.Gender.Female)
         {
-            umaName = "UMA_F4";
-        } else
-        {
-
-            umaName = "UMA_M5";
+            switch (controller.condition)
+            {
+                case ExperimentController.Condition.Average:
+                    umaName = "UMA_F3";
+                    break;
+                case ExperimentController.Condition.Weak:
+                    umaName = "UMA_F4";
+                    break;
+                case ExperimentController.Condition.Strong:
+                    umaName = "UMA_F4";
+                    break;
+                default:
+                    break;
+            }
         }
-        //get name based on gender and condition
-        //umaName = transform.gameObject.name;
+        else
+        {
+            switch (controller.condition)
+            {
+                case ExperimentController.Condition.Average:
+                    umaName = "UMA_M6";
+                    break;
+                case ExperimentController.Condition.Weak:
+                    umaName = "UMA_M7";
+                    break;
+                case ExperimentController.Condition.Strong:
+                    umaName = "UMA_M5";
+                    break;
+                default:
+                    break;
+            }
+        }
 
-       
+
 
     }
 
@@ -87,7 +110,7 @@ public class UmaSettings : MonoBehaviour
             aimIKHead = transform.gameObject.AddComponent<AimIK>();
             //aimIKLeftArm = transform.gameObject.AddComponent<LimbIK>();
             //aimIKRightArm = transform.gameObject.AddComponent<LimbIK>();
-            
+
             moodSetting = gameObject.GetComponent<UmaMoodSlider>();
 
             Transform[] heirarchy = new Transform[2];
@@ -106,7 +129,7 @@ public class UmaSettings : MonoBehaviour
 
             foreach (Transform bodyPart in umaBodyParts)
             {
-               
+
                 if (bodyPart.gameObject.name.Equals("Head"))
                 {
                     heirarchy[1] = bodyPart;
@@ -145,7 +168,7 @@ public class UmaSettings : MonoBehaviour
                     heirarchyLeftArm[2] = bodyPart;
                 }
                 if (bodyPart.gameObject.name.Equals("RightForeArm") ||
-                    bodyPart.gameObject.name.Equals("Lowerarm_R") )
+                    bodyPart.gameObject.name.Equals("Lowerarm_R"))
                 {
                     heirarchyRightArm[2] = bodyPart;
                 }
@@ -162,17 +185,17 @@ public class UmaSettings : MonoBehaviour
             }
 
             aimIKHead.solver.SetChain(heirarchy, root);
-            
-           // aimIKLeftArm.solver.SetChain(heirarchyLeftArm[1], heirarchyLeftArm[2], heirarchyLeftArm[3], root);
-           // aimIKRightArm.solver.SetChain(heirarchyRightArm[1], heirarchyRightArm[2], heirarchyRightArm[3], root);
+
+            // aimIKLeftArm.solver.SetChain(heirarchyLeftArm[1], heirarchyLeftArm[2], heirarchyLeftArm[3], root);
+            // aimIKRightArm.solver.SetChain(heirarchyRightArm[1], heirarchyRightArm[2], heirarchyRightArm[3], root);
 
             setIKTargetHead();
             //aimIKLeftArm.solver.target = GameObject.Find("Target").transform;
             //aimIKRightArm.solver.target = GameObject.Find("Target").transform;
-            
+
             aimIKHead.solver.transform = heirarchy[1];
-           // aimIKLeftArm.solver.bendModifier = IKSolverLimb.BendModifier.Animation;
-           // aimIKLeftArm.solver.SetIKRotationWeight(0);
+            // aimIKLeftArm.solver.bendModifier = IKSolverLimb.BendModifier.Animation;
+            // aimIKLeftArm.solver.SetIKRotationWeight(0);
             //aimIKRightArm.solver.bendModifier = IKSolverLimb.BendModifier.Animation;
             //aimIKRightArm.solver.SetIKRotationWeight(0);
 
@@ -192,12 +215,13 @@ public class UmaSettings : MonoBehaviour
                     default:
                         break;
                 }
-            } else
+            }
+            else
             {
                 switch (controller.condition)
                 {
                     case ExperimentController.Condition.Average:
-                        averageConditionMale();
+                        strongConditionMaleGreyShirt();
                         break;
                     case ExperimentController.Condition.Weak:
                         weakConditionMale();
@@ -209,7 +233,7 @@ public class UmaSettings : MonoBehaviour
                         break;
                 }
             }
-        
+
             avatar.BuildCharacter();
 
             ParentSecondToLastPiece();
@@ -220,7 +244,6 @@ public class UmaSettings : MonoBehaviour
 
     public void setMood(int m)
     {
-        Debug.Log("setting mood " + m);
         moodSetting.mood = m;
 
     }
@@ -253,7 +276,60 @@ public class UmaSettings : MonoBehaviour
 
 
         dna["height"].Set(0.6f);
-        
+
+        dna["chinPosition"].Set(1f);
+        dna["chinPronounced"].Set(1f);
+        dna["chinSize"].Set(1f);
+        dna["headWidth"].Set(0.850f);
+        dna["jawsPosition"].Set(0f);
+        dna["jawsSize"].Set(0.65f);
+        dna["noseSize"].Set(0.38f);
+        dna["noseWidth"].Set(0.4f);
+        dna["lipsSize"].Set(0.250f);
+
+        dna["armWidth"].Set(1f);
+        dna["forearmWidth"].Set(1f);
+        dna["lowerWeight"].Set(1f);
+        dna["neckThickness"].Set(1f);
+        dna["upperMuscle"].Set(0.7f);
+        dna["upperWeight"].Set(0.7f);
+
+        dna["eyeSize"].Set(0.5f);
+
+        dna["cheekPosition"].Set(0.5f);
+        dna["lowCheekPosition"].Set(0.5f);
+        //dna["lowCheekPronounced"].Set(0.5f);
+        dna["cheekSize"].Set(0.5f);
+        dna["mouthSize"].Set(0.5f);
+        dna["lowerMuscle"].Set(0.5f);
+
+
+        avatar.BuildCharacter();
+    }
+
+    private void strongConditionMaleGreyShirt()
+    {
+        if (dna == null)
+        {
+            dna = avatar.GetDNA();
+        }
+
+        if (umaName.Equals("UMA_M6") || umaName.Equals("UMA_M7"))
+        {
+            avatar.characterColors.SetColor("ClothingTop01", Color.gray);
+            avatar.characterColors.SetColor("ClothingBottom01", new Color(120f / 255f, 141f / 255f, 183f / 255f));
+        }
+        else
+        {
+            avatar.characterColors.SetColor("Pants1", new Color(120f / 255f, 141f / 255f, 183f / 255f));
+            avatar.characterColors.SetColor("Shirt", Color.gray);
+        }
+
+        avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
+
+
+        dna["height"].Set(0.6f);
+
         dna["chinPosition"].Set(1f);
         dna["chinPronounced"].Set(1f);
         dna["chinSize"].Set(1f);
@@ -345,7 +421,7 @@ public class UmaSettings : MonoBehaviour
             dna = avatar.GetDNA();
         }
 
-        if (name.Equals("UMA_M6") || name.Equals("UMA_M7"))
+        if (umaName.Equals("UMA_M6") || umaName.Equals("UMA_M7"))
         {
             avatar.characterColors.SetColor("ClothingTop01", Color.white);
 
@@ -401,7 +477,7 @@ public class UmaSettings : MonoBehaviour
             dna = avatar.GetDNA();
         }
 
-        if (name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+        if (umaName.Equals("UMA_F3") || umaName.Equals("UMA_F4"))
         {
             avatar.characterColors.SetColor("Footwear01", new Color(27f / 255f, 27f / 255f, 27f / 255f));
             avatar.characterColors.SetColor("ClothingBottom01", new Color(120f / 255f, 141f / 255f, 183f / 255f));
@@ -462,7 +538,7 @@ public class UmaSettings : MonoBehaviour
             dna = avatar.GetDNA();
         }
 
-        if (name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+        if (umaName.Equals("UMA_F3") || umaName.Equals("UMA_F4"))
         {
             avatar.characterColors.SetColor("Footwear01", new Color(27f / 255f, 27f / 255f, 27f / 255f));
             avatar.characterColors.SetColor("ClothingBottom01", new Color(120f / 255f, 141f / 255f, 183f / 255f));
@@ -532,7 +608,7 @@ public class UmaSettings : MonoBehaviour
         avatar.characterColors.SetColor("Shirt", Color.black);
 
 
-        if (name.Equals("UMA_F3") || name.Equals("UMA_F4"))
+        if (umaName.Equals("UMA_F3") || umaName.Equals("UMA_F4"))
         {
             avatar.characterColors.SetColor("Footwear01", new Color(27f / 255f, 27f / 255f, 27f / 255f));
             avatar.characterColors.SetColor("ClothingBottom01", new Color(53f / 255f, 53f / 255f, 77f / 255f));
@@ -590,6 +666,7 @@ public class UmaSettings : MonoBehaviour
         avatar.BuildCharacter();
     }
 
+
     public void ParentLastPiece()
     {
         Debug.Log(transform.gameObject.name);
@@ -608,7 +685,15 @@ public class UmaSettings : MonoBehaviour
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleLeft").transform;
                 ropeHandleLow.parent = part;
-                ropeHandleLow.localPosition = new Vector3(-0.0863f, 0.046f, 0.0242f);
+
+                if (controller.gender == ExperimentController.Gender.Female)
+                    if(controller.condition==ExperimentController.Condition.Strong)
+                        ropeHandleLow.localPosition = new Vector3(-0.033f, -0.011f, 0.02f);
+
+                    else
+                        ropeHandleLow.localPosition = new Vector3(-0.0273f, -0.0378f, 0.017f);
+                else
+                    ropeHandleLow.localPosition = new Vector3(-0.0863f, 0.046f, 0.0242f);
                 Debug.Log("Parenting to left hand");
 
             }
@@ -627,7 +712,10 @@ public class UmaSettings : MonoBehaviour
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleRight").transform;
                 ropeHandleLow.parent = part;
-                ropeHandleLow.localPosition = new Vector3(-0.0694f, 0.0318f, -0.0563f);
+                if (controller.gender == ExperimentController.Gender.Male && controller.condition==ExperimentController.Condition.Strong)
+                    ropeHandleLow.localPosition = new Vector3(-0.1279f, 0.0847f, 0.0094f);
+                else
+                    ropeHandleLow.localPosition = new Vector3(-0.0694f, 0.0318f, -0.0563f);
                 //ropeHandleLow.localRotation = new Quaternion(31.866f, 99f, -55.678f,1);    
                 Debug.Log("Parenting to right hand");
 
@@ -637,6 +725,7 @@ public class UmaSettings : MonoBehaviour
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleRight").transform;
                 ropeHandleLow.parent = part;
+               
                 ropeHandleLow.localPosition = new Vector3(-0.0716f, -0.0437f, 0.0208f);
                 //ropeHandleLow.localRotation = new Quaternion(31.866f, 99f, -55.678f,1);    
                 Debug.Log("Parenting to right hand");
