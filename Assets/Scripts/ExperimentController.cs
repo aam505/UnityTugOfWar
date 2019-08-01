@@ -35,6 +35,7 @@ public class ExperimentController : MonoBehaviour
     float startedTrial;
     float endedTrial;
     int countdownStarter = 1;
+    public bool debugMode = false;
 
     // [SerializeField]
     // public GameObject FemaleAvatar;
@@ -80,9 +81,6 @@ public class ExperimentController : MonoBehaviour
 
     [SerializeField]
     float afterStopCounter=10; // AMOUNT OF TIME BETWEEN stopping pulling and blacking in
-
-
-    bool proceded = false;
 
 
     IEnumerator DisplayImage(bool startWithImage)
@@ -155,10 +153,10 @@ public class ExperimentController : MonoBehaviour
 
         uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
 
-        //StartCoroutine(FadeInImage());
-
     }
 
+
+    bool pressed = false;
     private void countToStart()
     {
         float seconds = getSeconds(startCounter);
@@ -207,8 +205,21 @@ public class ExperimentController : MonoBehaviour
     }
     void Update()
     {
-        
-       
+        if (Input.GetKeyDown("space"))
+        {
+            if (!pressed)
+            {
+                print("space key was pressed");
+                startExperiment = true;
+                pressed = true;
+            }
+            else
+            {
+                pressed = false;
+                startExperiment = false;
+            }
+
+        }
 
         if (trackedHead != null)
         {
@@ -229,7 +240,16 @@ public class ExperimentController : MonoBehaviour
         }
         if (startExperiment && !startedExperiment)
         {
-            StartCoroutine(DisplayImage(true));
+            if(!debugMode)
+                StartCoroutine(DisplayImage(true));
+            else
+            {
+                Debug.Log("Starting experiment");
+                currentAvatar.GetComponent<Animator>().SetTrigger("Start");
+                startCounter = Time.time;
+                counting = true;
+                Writer.logData.action = "start_experiment";
+            }
             startedExperiment = true;
         }
         if (!startExperiment)
@@ -265,7 +285,9 @@ public class ExperimentController : MonoBehaviour
                 startSound.GetComponent<AudioSource>().Play();
                 endedTrial = Time.time;
                 trialOngoing = false;
-                StartCoroutine(DisplayImage(false));
+
+                if(!debugMode)
+                    StartCoroutine(DisplayImage(false));
             }
         }
         else
