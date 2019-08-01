@@ -13,7 +13,8 @@ public class GazeManager : MonoBehaviour
         if (Physics.Raycast(raydirection, out seen, sightlength))
         {
             //Debug.Log(seen.transform.name);
-            Writer.logData.gazeTarget = seen.transform.name;
+                if(seen.transform!=null)
+                    Writer.logData.gazeTarget = seen.transform.name;
         }
     }
 }

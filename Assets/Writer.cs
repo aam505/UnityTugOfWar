@@ -33,7 +33,7 @@ public class Writer : MonoBehaviour
     public void Log()
     {
         logData.timestamp = DateTime.Now;
-        Debug.Log(logData.timestamp);
+       // Debug.Log(logData.timestamp);
         using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_c" + condition + ".csv", true))
         {
             if (first)

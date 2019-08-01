@@ -21,7 +21,7 @@ public class ExperimentController : MonoBehaviour
         Strong
     };
 
-    
+  
     public int ParticipantId;
     public bool startExperiment;
     private bool started = false;
@@ -30,7 +30,12 @@ public class ExperimentController : MonoBehaviour
     public GameObject participantLeftHand;
     public GameObject participantRightHand;
     public Gender gender;
+    public GameObject myPrefab;
+
+    Condition currentCondition;
     public Condition condition;
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
     bool trialOngoing;
     float startedTrial;
     float endedTrial;
@@ -49,7 +54,8 @@ public class ExperimentController : MonoBehaviour
 
     public Dictionary<string, GameObject> avatarGameObjects = new Dictionary<string, GameObject>();
     
-    public Transform currentAvatar;
+    Transform currentAvatar;
+    public Transform avatarParent;
 
     float postTrialDelay = 60;
     float trialDuration = 6;
@@ -68,6 +74,7 @@ public class ExperimentController : MonoBehaviour
     //todo add none condition
 
     bool startedExperiment = false;
+    public int currentTrial = 0;
 
     Image uiImage;
 
@@ -81,7 +88,10 @@ public class ExperimentController : MonoBehaviour
 
     [SerializeField]
     float afterStopCounter=10; // AMOUNT OF TIME BETWEEN stopping pulling and blacking in
+    public int totalConditions = 5;
 
+
+    int currentIndex = 0;
 
     IEnumerator DisplayImage(bool startWithImage)
     {
@@ -99,9 +109,11 @@ public class ExperimentController : MonoBehaviour
                 yield return null; // Wait for frame then return to execution
             }
 
-            Debug.Log("Waiting for 30 seconds..");
-            yield return new WaitForSeconds(beforeStartCounter);
-
+            if (!debugMode)
+            {
+                Debug.Log("Waiting for 30 seconds..");
+                yield return new WaitForSeconds(beforeStartCounter);
+            }
             Debug.Log("Starting experiment");
             currentAvatar.GetComponent<Animator>().SetTrigger("Start");
             startCounter = Time.time;
@@ -114,18 +126,21 @@ public class ExperimentController : MonoBehaviour
         {
             //uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 0);
             //Fade out for loop
-            Debug.Log("Waiting 10 seconds...");
-            yield return new WaitForSeconds(afterStopCounter);
-
-            Debug.Log("Blacking out...");
-
-            for (float alpha = 0; alpha < 1; alpha += Time.deltaTime / fadeTime)
+            if (!debugMode)
             {
-                uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, alpha);
+                Debug.Log("Waiting 10 seconds...");
+                yield return new WaitForSeconds(afterStopCounter);
 
-                yield return null; // Wait for frame then return to execution
+                Debug.Log("Blacking out...");
+
+                for (float alpha = 0; alpha < 1; alpha += Time.deltaTime / fadeTime)
+                {
+                    uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, alpha);
+
+                    yield return null; // Wait for frame then return to execution
+                }
+                uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 1);
             }
-            uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 1);
         }
 
     }
@@ -133,6 +148,10 @@ public class ExperimentController : MonoBehaviour
     public void Start()
     {
         ParticipantId = 0; //todo: remove
+        currentAvatar = avatarParent.transform.Find("Avatar");
+
+        initialPosition = currentAvatar.transform.position;
+        initialRotation = currentAvatar.transform.rotation;
 
         trialOngoing = false;
 
@@ -144,7 +163,6 @@ public class ExperimentController : MonoBehaviour
         else
             femaleArms.SetActive(false);
 
-      
 
         if (parentCanvas.worldCamera != Camera.main)
             parentCanvas.worldCamera = Camera.main;
@@ -209,7 +227,6 @@ public class ExperimentController : MonoBehaviour
         {
             if (!pressed)
             {
-                print("space key was pressed");
                 startExperiment = true;
                 pressed = true;
             }
@@ -238,18 +255,12 @@ public class ExperimentController : MonoBehaviour
             Writer.logData.setRighttHand(trackedRightHand.transform.position.x, trackedRightHand.transform.position.y, trackedRightHand.transform.position.z,
                 trackedRightHand.transform.eulerAngles.x, trackedRightHand.transform.eulerAngles.y, trackedRightHand.transform.eulerAngles.z);
         }
+
         if (startExperiment && !startedExperiment)
         {
-            if(!debugMode)
+       
                 StartCoroutine(DisplayImage(true));
-            else
-            {
-                Debug.Log("Starting experiment");
-                currentAvatar.GetComponent<Animator>().SetTrigger("Start");
-                startCounter = Time.time;
-                counting = true;
-                Writer.logData.action = "start_experiment";
-            }
+        
             startedExperiment = true;
         }
         if (!startExperiment)
@@ -286,8 +297,7 @@ public class ExperimentController : MonoBehaviour
                 endedTrial = Time.time;
                 trialOngoing = false;
 
-                if(!debugMode)
-                    StartCoroutine(DisplayImage(false));
+                StartCoroutine(DisplayImage(false));
             }
         }
         else
@@ -299,14 +309,34 @@ public class ExperimentController : MonoBehaviour
                 {
                     startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
                     Writer.logData.action = "";
+
                 }
-                if (seconds > postTrialDelay)
+                if (seconds > 10)
                 {
                     endedTrial = 0;
                     Debug.Log("---Onto next trial");
+                    if (currentTrial < totalConditions)
+                        currentTrial++;
+
+                    parentHandles();
+                    Destroy(avatarParent.transform.Find("Avatar").gameObject);
+                    //currentAvatar.gameObject.GetComponent<UmaSettings>().loadNextAvatar();
+
+                    currentAvatar = Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity).transform;
+                    currentAvatar.parent = avatarParent;
+                    currentAvatar.position = initialPosition;
+                    currentAvatar.rotation = initialRotation;
+                    currentAvatar.name = "Avatar";
+                    currentAvatar.localScale = new Vector3(1, 1, 1);    
                 }
             }
         }
+    }
+
+    void parentHandles()
+    {
+        GameObject.Find("ObiHandleRight").transform.parent = avatarParent;
+        GameObject.Find("ObiHandleLeft").transform.parent = avatarParent;
     }
 
 

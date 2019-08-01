@@ -4,9 +4,51 @@ using UMA.CharacterSystem;
 using UMA.PoseTools;
 using UMA;
 using RootMotion.FinalIK;
+using static ExperimentController;
 
 public class UmaSettings : MonoBehaviour
 {
+
+    class Avatar
+    {
+        public Condition condition;
+        public string name;
+
+        public Avatar(Condition c, string n)
+        {
+            condition = c;
+            name = n;
+        }
+
+        public void setName(string n)
+        {
+            this.name = n;
+        }
+        public void setCondition(Condition c)
+        {
+            this.condition = c;
+        }
+    }
+
+    private void setFemaleNames()
+    {
+        umaAverageFemales.Add("UMA_F4");
+        umaAverageFemales.Add("UMA_F1");
+        umaAverageFemales.Add("UMA_F3");
+        umaNameFemaleStrong = "UMA_F4";
+        umaNameFemaleWeak = "UMA_F4";
+    }
+
+
+    private void setMaleNames()
+    {
+        umaAverageMales.Add("UMA_M6");
+        umaAverageMales.Add("UMA_M7");
+        umaAverageMales.Add("UMA_M6");
+        umaNameMaleStrong = "UMA_M5";
+        umaNameMaleWeak = "UMA_M7";
+    }
+
     private DynamicCharacterAvatar avatar;
     private Dictionary<string, DnaSetter> dna;
     // Start is called before the first frame update
@@ -27,6 +69,13 @@ public class UmaSettings : MonoBehaviour
 
     private UmaMoodSlider moodSetting;
     private ExperimentController controller;
+    private List<string> umaAverageFemales=new List<string>();
+    private List<string> umaAverageMales = new List<string>();
+    private string umaNameFemaleStrong;
+    private string umaNameFemaleWeak;
+    private string umaNameMaleStrong;
+    private string umaNameMaleWeak;
+    private List<Avatar> avatars;
 
 
     void OnEnable()
@@ -49,41 +98,72 @@ public class UmaSettings : MonoBehaviour
     {
         avatar = GetComponent<DynamicCharacterAvatar>();
         controller = GameObject.Find("ExperimentController").GetComponent<ExperimentController>();
-        if (controller.gender == ExperimentController.Gender.Female)
+
+        setFemaleNames();
+        setMaleNames();
+        avatars = new List<Avatar>();
+
+        int j = 0;
+        for (int i = 1; i <= controller.totalConditions; i++)
         {
-            switch (controller.condition)
+
+            if (i % 2 == 1)
             {
-                case ExperimentController.Condition.Average:
-                    umaName = "UMA_F3";
-                    break;
-                case ExperimentController.Condition.Weak:
-                    umaName = "UMA_F4";
-                    break;
-                case ExperimentController.Condition.Strong:
-                    umaName = "UMA_F4";
-                    break;
-                default:
-                    break;
+                if (controller.gender == ExperimentController.Gender.Female)
+                    avatars.Add(new Avatar(Condition.Average, umaAverageFemales[j]));
+                else
+                    avatars.Add(new Avatar(Condition.Average, umaAverageMales[j]));
+                j++;
             }
+            else
+            {
+                avatars.Add(new Avatar(Condition.Average, ""));
+            }
+
+        }
+
+        if (controller.condition == Condition.Strong)
+        {
+            avatars[1].setCondition(Condition.Strong);
+            avatars[3].setCondition(Condition.Weak);
+
+            if (controller.gender == Gender.Female)
+            {
+                avatars[1].setName(umaNameFemaleStrong);
+                avatars[3].setName(umaNameFemaleWeak);
+            }
+            else
+            {
+                avatars[1].setName(umaNameMaleStrong);
+                avatars[3].setName(umaNameMaleWeak);
+            }
+
+
         }
         else
         {
-            switch (controller.condition)
+            avatars[1].setCondition(Condition.Weak);
+            avatars[3].setCondition(Condition.Strong);
+
+            if (controller.gender == Gender.Female)
             {
-                case ExperimentController.Condition.Average:
-                    umaName = "UMA_M6";
-                    break;
-                case ExperimentController.Condition.Weak:
-                    umaName = "UMA_M7";
-                    break;
-                case ExperimentController.Condition.Strong:
-                    umaName = "UMA_M5";
-                    break;
-                default:
-                    break;
+                avatars[1].setName(umaNameFemaleWeak);
+                avatars[3].setName(umaNameFemaleStrong);
             }
+            else
+            {
+                avatars[1].setName(umaNameMaleWeak);
+                avatars[3].setName(umaNameMaleStrong);
+            }
+
+
         }
 
+        umaName = avatars[controller.currentTrial].name;
+        Debug.Log("Current idx " + controller.currentTrial);
+        Debug.Log("Current Uma " + umaName + " c:" +avatars[controller.currentTrial].condition);
+
+        avatar.LoadFromTextFile(umaName);
 
 
     }
@@ -91,11 +171,7 @@ public class UmaSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!loadedText)
-        {
-            avatar.LoadFromTextFile(umaName);
-            loadedText = true;
-        }
+       
 
         if (connected && setUp)
         {
@@ -106,6 +182,8 @@ public class UmaSettings : MonoBehaviour
             umaBodyParts = parent.GetComponentsInChildren<Transform>();
 
             dna = avatar.GetDNA(); //takes couple of frames 
+
+            loadConditionCharacteristics();
 
             aimIKHead = transform.gameObject.AddComponent<AimIK>();
             //aimIKLeftArm = transform.gameObject.AddComponent<LimbIK>();
@@ -199,47 +277,61 @@ public class UmaSettings : MonoBehaviour
             //aimIKRightArm.solver.bendModifier = IKSolverLimb.BendModifier.Animation;
             //aimIKRightArm.solver.SetIKRotationWeight(0);
 
-            if (controller.gender == ExperimentController.Gender.Female)
-            {
-                switch (controller.condition)
-                {
-                    case ExperimentController.Condition.Average:
-                        averageConditionFemale();
-                        break;
-                    case ExperimentController.Condition.Weak:
-                        weakConditionFemale();
-                        break;
-                    case ExperimentController.Condition.Strong:
-                        strongConditionFemale();
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                switch (controller.condition)
-                {
-                    case ExperimentController.Condition.Average:
-                        strongConditionMaleGreyShirt();
-                        break;
-                    case ExperimentController.Condition.Weak:
-                        weakConditionMale();
-                        break;
-                    case ExperimentController.Condition.Strong:
-                        strongConditionMale();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            avatar.BuildCharacter();
+            //loadConditionCharacteristics();
 
             ParentSecondToLastPiece();
             ParentLastPiece();
         }
 
+    }
+
+
+    private void loadConditionCharacteristics()
+    {
+        if (controller.gender == ExperimentController.Gender.Female)
+        {
+            Debug.Log("Loading dna for female.." + avatars[controller.currentTrial].condition);
+            switch (avatars[controller.currentTrial].condition)
+            {
+                case ExperimentController.Condition.Average:
+                    Debug.Log("In average switch case");
+                    //averageConditionFemale();
+                    averageConditionFemale();
+                    break;
+                case ExperimentController.Condition.Weak:
+                    Debug.Log("In weak switch case");
+                    weakConditionFemale();
+                    break;
+                case ExperimentController.Condition.Strong:
+                    Debug.Log("In strong switch case");
+                    strongConditionFemale();
+                    break;
+                default:
+                    Debug.LogError("Default switch case");
+                    break;
+            }
+        }
+        else
+        {
+            Debug.Log("Loading dna for male.." + avatars[controller.currentTrial].condition);
+            switch (avatars[controller.currentTrial].condition)
+            {
+                case ExperimentController.Condition.Average:
+                    strongConditionMaleGreyShirt();
+                    break;
+                case ExperimentController.Condition.Weak:
+                    weakConditionMale();
+                    break;
+                case ExperimentController.Condition.Strong:
+                    strongConditionMale();
+                    break;
+                default:
+                    Debug.LogError("Default switch case");
+                    break;
+            }
+        }
+
+        avatar.BuildCharacter();
     }
 
     public void setMood(int m)
@@ -472,6 +564,8 @@ public class UmaSettings : MonoBehaviour
 
     private void weakConditionFemale()
     {
+        Debug.Log("In weak female condition");
+
         if (dna == null)
         {
             dna = avatar.GetDNA();
@@ -533,6 +627,7 @@ public class UmaSettings : MonoBehaviour
 
     private void averageConditionFemale()
     {
+        Debug.Log("In average female condition");
         if (dna == null)
         {
             dna = avatar.GetDNA();
@@ -598,12 +693,13 @@ public class UmaSettings : MonoBehaviour
 
     private void strongConditionFemale()
     {
+        Debug.Log("In strong female condition");
+
+        Debug.Log(dna);
         if (dna == null)
         {
             dna = avatar.GetDNA();
         }
-
-
 
         avatar.characterColors.SetColor("Shirt", Color.black);
 
@@ -669,32 +765,31 @@ public class UmaSettings : MonoBehaviour
 
     public void ParentLastPiece()
     {
-        Debug.Log(transform.gameObject.name);
+
         foreach (Transform part in transform.GetComponentsInChildren<Transform>())
         {
-
             if (part.gameObject.name.Equals("LeftHand"))
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleLeft").transform;
                 ropeHandleLow.parent = part;
                 ropeHandleLow.localPosition = new Vector3(-0.0921f, -0.0346f, -0.0361f);
-               // Debug.Log("Parenting to left hand");
+                // Debug.Log("Parenting to left hand");
 
             }
             if (part.gameObject.name.Equals("hand_L"))
             {
-                Transform ropeHandleLow = GameObject.Find("ObiHandleLeft").transform;
+                Transform ropeHandleLow = GameObject.Find("ObiHandleLeft").transform; 
                 ropeHandleLow.parent = part;
 
                 if (controller.gender == ExperimentController.Gender.Female)
-                    if(controller.condition==ExperimentController.Condition.Strong)
+                    if (controller.condition == ExperimentController.Condition.Strong)
                         ropeHandleLow.localPosition = new Vector3(-0.033f, -0.011f, 0.02f);
 
                     else
                         ropeHandleLow.localPosition = new Vector3(-0.0273f, -0.0378f, 0.017f);
                 else
                     ropeHandleLow.localPosition = new Vector3(-0.0863f, 0.046f, 0.0242f);
-               // Debug.Log("Parenting to left hand");
+                // Debug.Log("Parenting to left hand");
 
             }
         }
@@ -704,7 +799,6 @@ public class UmaSettings : MonoBehaviour
     public void ParentSecondToLastPiece()
     {
 
-
         foreach (Transform part in transform.GetComponentsInChildren<Transform>())
         {
 
@@ -712,7 +806,7 @@ public class UmaSettings : MonoBehaviour
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleRight").transform;
                 ropeHandleLow.parent = part;
-                if (controller.gender == ExperimentController.Gender.Male && controller.condition==ExperimentController.Condition.Strong)
+                if (controller.gender == ExperimentController.Gender.Male && controller.condition == ExperimentController.Condition.Strong)
                     ropeHandleLow.localPosition = new Vector3(-0.1279f, 0.0847f, 0.0094f);
                 else
                     ropeHandleLow.localPosition = new Vector3(-0.0694f, 0.0318f, -0.0563f);
@@ -725,7 +819,7 @@ public class UmaSettings : MonoBehaviour
             {
                 Transform ropeHandleLow = GameObject.Find("ObiHandleRight").transform;
                 ropeHandleLow.parent = part;
-               
+
                 ropeHandleLow.localPosition = new Vector3(-0.0716f, -0.0437f, 0.0208f);
                 //ropeHandleLow.localRotation = new Quaternion(31.866f, 99f, -55.678f,1);    
                 //Debug.Log("Parenting to right hand");
@@ -733,6 +827,7 @@ public class UmaSettings : MonoBehaviour
         }
 
     }
+
 
     public void setIKTargetHead()
     {
