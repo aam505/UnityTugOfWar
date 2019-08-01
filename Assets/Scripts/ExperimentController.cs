@@ -68,6 +68,70 @@ public class ExperimentController : MonoBehaviour
 
     bool startedExperiment = false;
 
+    Image uiImage;
+
+   [SerializeField]
+    Canvas parentCanvas;
+   
+    float fadeTime=2; // amount of time it takes to fade an image
+
+    [SerializeField]
+    float beforeStartCounter=30; // AMOUNT OF TIME BETWEEN SEEING THE AVATAR AND STARTING THE EXPERIMENT
+
+    [SerializeField]
+    float afterStopCounter=10; // AMOUNT OF TIME BETWEEN stopping pulling and blacking in
+
+
+    bool proceded = false;
+
+
+    IEnumerator DisplayImage(bool startWithImage)
+    {
+        
+
+        if (startWithImage)
+        {
+            
+            uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 1);
+            //Fade out for loop
+            for (float alpha = 1; alpha > 0; alpha -= Time.deltaTime / fadeTime)
+            {
+                uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, alpha);
+
+                yield return null; // Wait for frame then return to execution
+            }
+
+            Debug.Log("Waiting for 30 seconds..");
+            yield return new WaitForSeconds(beforeStartCounter);
+
+            Debug.Log("Starting experiment");
+            currentAvatar.GetComponent<Animator>().SetTrigger("Start");
+            startCounter = Time.time;
+            counting = true;
+            Writer.logData.action = "start_experiment";
+
+
+        }
+        else
+        {
+            //uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 0);
+            //Fade out for loop
+            Debug.Log("Waiting 10 seconds...");
+            yield return new WaitForSeconds(afterStopCounter);
+
+            Debug.Log("Blacking out...");
+
+            for (float alpha = 0; alpha < 1; alpha += Time.deltaTime / fadeTime)
+            {
+                uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, alpha);
+
+                yield return null; // Wait for frame then return to execution
+            }
+            uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 1);
+        }
+
+    }
+
     public void Start()
     {
         ParticipantId = 0; //todo: remove
@@ -81,6 +145,18 @@ public class ExperimentController : MonoBehaviour
             maleArms.SetActive(false);
         else
             femaleArms.SetActive(false);
+
+      
+
+        if (parentCanvas.worldCamera != Camera.main)
+            parentCanvas.worldCamera = Camera.main;
+
+        uiImage = parentCanvas.GetComponentInChildren<Image>();
+
+        uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
+
+        //StartCoroutine(FadeInImage());
+
     }
 
     private void countToStart()
@@ -125,14 +201,15 @@ public class ExperimentController : MonoBehaviour
             currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
             currentAvatar.GetComponent<UmaSettings>().setMood(1);
            // currentAvatar.GetComponent<UmaSettings>().setIKTargetHand();
-          
-                
             
         }
 
     }
     void Update()
     {
+        
+       
+
         if (trackedHead != null)
         {
             Writer.logData.setHead(trackedHead.transform.position.x, trackedHead.transform.position.y, trackedHead.transform.position.z, 
@@ -152,13 +229,8 @@ public class ExperimentController : MonoBehaviour
         }
         if (startExperiment && !startedExperiment)
         {
-            Debug.Log("Start experiment");
-            currentAvatar.GetComponent<Animator>().SetTrigger("Start");
-            startCounter = Time.time;
-            counting = true;
+            StartCoroutine(DisplayImage(true));
             startedExperiment = true;
-            Writer.logData.action = "start_experiment";
-
         }
         if (!startExperiment)
         {
@@ -193,6 +265,7 @@ public class ExperimentController : MonoBehaviour
                 startSound.GetComponent<AudioSource>().Play();
                 endedTrial = Time.time;
                 trialOngoing = false;
+                StartCoroutine(DisplayImage(false));
             }
         }
         else

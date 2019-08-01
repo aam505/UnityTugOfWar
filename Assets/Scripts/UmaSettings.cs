@@ -678,7 +678,7 @@ public class UmaSettings : MonoBehaviour
                 Transform ropeHandleLow = GameObject.Find("ObiHandleLeft").transform;
                 ropeHandleLow.parent = part;
                 ropeHandleLow.localPosition = new Vector3(-0.0921f, -0.0346f, -0.0361f);
-                Debug.Log("Parenting to left hand");
+               // Debug.Log("Parenting to left hand");
 
             }
             if (part.gameObject.name.Equals("hand_L"))
@@ -694,7 +694,7 @@ public class UmaSettings : MonoBehaviour
                         ropeHandleLow.localPosition = new Vector3(-0.0273f, -0.0378f, 0.017f);
                 else
                     ropeHandleLow.localPosition = new Vector3(-0.0863f, 0.046f, 0.0242f);
-                Debug.Log("Parenting to left hand");
+               // Debug.Log("Parenting to left hand");
 
             }
         }
@@ -717,7 +717,7 @@ public class UmaSettings : MonoBehaviour
                 else
                     ropeHandleLow.localPosition = new Vector3(-0.0694f, 0.0318f, -0.0563f);
                 //ropeHandleLow.localRotation = new Quaternion(31.866f, 99f, -55.678f,1);    
-                Debug.Log("Parenting to right hand");
+                //Debug.Log("Parenting to right hand");
 
             }
 
@@ -728,7 +728,7 @@ public class UmaSettings : MonoBehaviour
                
                 ropeHandleLow.localPosition = new Vector3(-0.0716f, -0.0437f, 0.0208f);
                 //ropeHandleLow.localRotation = new Quaternion(31.866f, 99f, -55.678f,1);    
-                Debug.Log("Parenting to right hand");
+                //Debug.Log("Parenting to right hand");
             }
         }
 
