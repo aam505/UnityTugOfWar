@@ -189,16 +189,16 @@ public class ExperimentController : MonoBehaviour
                 yield return new WaitForSeconds(blackDuration);
                 StartCoroutine(DisplayImage(true)); //blacking out
 
-                Debug.Log("Starting countdown in 30 s...");
-                currentAvatar.GetComponent<Animator>().SetTrigger("Start");
+                //Debug.Log("Starting countdown in 30 s...");
+                //currentAvatar.GetComponent<Animator>().SetTrigger("Start");
 
-                yield return new WaitForSeconds(beforeStartCounter);
+                //yield return new WaitForSeconds(beforeStartCounter);
 
-                Debug.Log("Starting countdown...");
-                startCounter = Time.time;
-                counting = true;
+                //Debug.Log("Starting countdown...");
+                //startCounter = Time.time;
+                //counting = true;
 
-                Writer.logData.action = "start_counter";
+                //Writer.logData.action = "start_counter";
             }
             else
             {
@@ -403,14 +403,25 @@ public class ExperimentController : MonoBehaviour
 
     void parentHandles()
     {
-        GameObject handleLeft = GameObject.Find("ObiHandleLeft");
-        GameObject handleRight = GameObject.Find("ObiHandleRight");
+        
+        Transform pinkyHandleL = GameObject.Find("ObiHandleAvatarPinkyL").transform;
+        Transform thumbHandleL = GameObject.Find("ObiHandleAvatarThumbL").transform;
 
-        handleLeft.transform.parent = avatarParent;
-        handleRight.transform.parent = avatarParent;
+        Transform thumbHandleR = GameObject.Find("ObiHandleAvatarThumbR").transform;
+        Transform pinkyHandleR = GameObject.Find("ObiHandleAvatarPinkyR").transform;
 
-        handleLeft.transform.localPosition = new Vector3(-0.185f, 0.079f, 0.275f);
-        handleRight.transform.localPosition = new Vector3(-0.205f, 0.093f, 0.688f);
+        thumbHandleL.transform.parent = avatarParent;
+        pinkyHandleL.transform.parent = avatarParent;
+
+        thumbHandleR.transform.parent = avatarParent;
+        pinkyHandleR.transform.parent = avatarParent;
+
+        thumbHandleL.transform.localPosition = new Vector3(-0.185f, 0.079f, 0.275f);
+        pinkyHandleL.transform.localPosition = new Vector3(-0.205f, 0.093f, 0.688f);
+
+        thumbHandleR.transform.localPosition = new Vector3(-0.185f, 0.079f, 0.275f);
+        pinkyHandleR.transform.localPosition = new Vector3(-0.205f, 0.093f, 0.688f);
+
     }
 
 

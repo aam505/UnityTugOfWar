@@ -32,7 +32,7 @@ public class UmaSettings : MonoBehaviour
 
     private void setFemaleNames()
     {
-        umaAverageFemales.Add("UMA_F4");
+        umaAverageFemales.Add("UMA_F1");
         umaAverageFemales.Add("UMA_F1");
         umaAverageFemales.Add("UMA_F3");
         umaNameFemaleStrong = "UMA_F4";
@@ -69,7 +69,7 @@ public class UmaSettings : MonoBehaviour
 
     private UmaMoodSlider moodSetting;
     private ExperimentController controller;
-    private List<string> umaAverageFemales=new List<string>();
+    private List<string> umaAverageFemales = new List<string>();
     private List<string> umaAverageMales = new List<string>();
     private string umaNameFemaleStrong;
     private string umaNameFemaleWeak;
@@ -161,7 +161,7 @@ public class UmaSettings : MonoBehaviour
 
         umaName = avatars[controller.currentAvatarIdx].name;
         Debug.Log("Current idx " + controller.currentAvatarIdx);
-        Debug.Log("Current Uma " + umaName + " c:" +avatars[controller.currentAvatarIdx].condition);
+        Debug.Log("Current Uma " + umaName + " c:" + avatars[controller.currentAvatarIdx].condition);
 
         avatar.LoadFromTextFile(umaName);
 
@@ -171,7 +171,7 @@ public class UmaSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
 
         if (connected && setUp)
         {
@@ -279,8 +279,8 @@ public class UmaSettings : MonoBehaviour
 
             //loadConditionCharacteristics();
 
-            ParentSecondToLastPiece();
-            ParentLastPiece();
+
+            ParentHandles();
         }
 
     }
@@ -763,70 +763,95 @@ public class UmaSettings : MonoBehaviour
     }
 
 
-    public void ParentLastPiece()
-    {
-
-        foreach (Transform part in transform.GetComponentsInChildren<Transform>())
-        {
-            if (part.gameObject.name.Equals("LeftHand"))
-            {
-                Transform ropeHandleLow = GameObject.Find("ObiHandleLeft").transform;
-                ropeHandleLow.parent = part;
-                ropeHandleLow.localPosition = new Vector3(-0.0921f, -0.0346f, -0.0361f);
-                // Debug.Log("Parenting to left hand");
-
-            }
-            if (part.gameObject.name.Equals("hand_L"))
-            {
-                Transform ropeHandleLow = GameObject.Find("ObiHandleLeft").transform; 
-                ropeHandleLow.parent = part;
-
-                if (controller.gender == ExperimentController.Gender.Female)
-                    if (controller.condition == ExperimentController.Condition.Strong)
-                        ropeHandleLow.localPosition = new Vector3(-0.033f, -0.011f, 0.02f);
-
-                    else
-                        ropeHandleLow.localPosition = new Vector3(-0.0273f, -0.0378f, 0.017f);
-                else
-                    ropeHandleLow.localPosition = new Vector3(-0.0863f, 0.046f, 0.0242f);
-                // Debug.Log("Parenting to left hand");
-
-            }
-        }
-
-    }
-
-    public void ParentSecondToLastPiece()
+    public void ParentHandles()
     {
 
         foreach (Transform part in transform.GetComponentsInChildren<Transform>())
         {
 
-            if (part.gameObject.name.Equals("RightHand"))
-            {
-                Transform ropeHandleLow = GameObject.Find("ObiHandleRight").transform;
-                ropeHandleLow.parent = part;
-                if (controller.gender == ExperimentController.Gender.Male && controller.condition == ExperimentController.Condition.Strong)
-                    ropeHandleLow.localPosition = new Vector3(-0.1279f, 0.0847f, 0.0094f);
-                else
-                    ropeHandleLow.localPosition = new Vector3(-0.0694f, 0.0318f, -0.0563f);
-                //ropeHandleLow.localRotation = new Quaternion(31.866f, 99f, -55.678f,1);    
-                //Debug.Log("Parenting to right hand");
+            Transform pinkyHandleL = GameObject.Find("ObiHandleAvatarPinkyL").transform;
+            Transform thumbHandleL = GameObject.Find("ObiHandleAvatarThumbL").transform;
 
+            Transform thumbHandleR = GameObject.Find("ObiHandleAvatarThumbR").transform;
+            Transform pinkyHandleR = GameObject.Find("ObiHandleAvatarPinkyR").transform;
+
+
+            ////////////// UMA
+            if (part.gameObject.name.Equals("RightHandFinger05_02")) //THUMB RIGHT
+            {
+
+                thumbHandleR.parent = part;
+
+                thumbHandleR.localPosition = new Vector3(0, 0, 0);
+                Debug.Log("Parented right hand finger");
             }
 
-            if (part.gameObject.name.Equals("hand_R"))
+            if (part.gameObject.name.Equals("RightHandFinger01_02"))  //PINKY RIGHT
             {
-                Transform ropeHandleLow = GameObject.Find("ObiHandleRight").transform;
-                ropeHandleLow.parent = part;
 
-                ropeHandleLow.localPosition = new Vector3(-0.0716f, -0.0437f, 0.0208f);
-                //ropeHandleLow.localRotation = new Quaternion(31.866f, 99f, -55.678f,1);    
-                //Debug.Log("Parenting to right hand");
+                pinkyHandleR.parent = part;
+
+                pinkyHandleR.localPosition = new Vector3(0, 0f, 0);
             }
+
+
+            if (part.gameObject.name.Equals("LeftHandFinger05_02")) //THUMB LEFT
+            {
+
+                thumbHandleL.parent = part;
+
+                thumbHandleL.localPosition = new Vector3(0f, 0f, 0f);
+            }
+
+            if (part.gameObject.name.Equals("LeftHandFinger01_02"))  //pinky left
+            {
+
+                pinkyHandleL.parent = part;
+
+                pinkyHandleL.localPosition = new Vector3(0f, 0f, 0f);
+            }
+
+
+
+            ////////////// O3N
+            if (part.gameObject.name.Equals("thumb_002_R"))
+            {
+
+                thumbHandleR.parent = part;
+
+                thumbHandleR.localPosition = new Vector3(0f, 0f, 0f);
+            }
+
+            if (part.gameObject.name.Equals("pinky_001_R"))
+            {
+
+                pinkyHandleR.parent = part;
+
+                pinkyHandleR.localPosition = new Vector3(0f, 0f, 0f);
+            }
+
+
+            if (part.gameObject.name.Equals("thumb_002_L"))
+            {
+
+                thumbHandleL.parent = part;
+
+                thumbHandleL.localPosition = new Vector3(0f, 0f, 0f);
+            }
+
+            if (part.gameObject.name.Equals("pinky_001_L"))
+            {
+
+                pinkyHandleL.parent = part;
+
+                pinkyHandleL.localPosition = new Vector3(0f,0f, 0f);
+            }
+
         }
 
     }
+
+
 
 
     public void setIKTargetHead()
