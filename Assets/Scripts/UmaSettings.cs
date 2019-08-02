@@ -159,9 +159,9 @@ public class UmaSettings : MonoBehaviour
 
         }
 
-        umaName = avatars[controller.currentTrial].name;
-        Debug.Log("Current idx " + controller.currentTrial);
-        Debug.Log("Current Uma " + umaName + " c:" +avatars[controller.currentTrial].condition);
+        umaName = avatars[controller.currentAvatarIdx].name;
+        Debug.Log("Current idx " + controller.currentAvatarIdx);
+        Debug.Log("Current Uma " + umaName + " c:" +avatars[controller.currentAvatarIdx].condition);
 
         avatar.LoadFromTextFile(umaName);
 
@@ -290,8 +290,8 @@ public class UmaSettings : MonoBehaviour
     {
         if (controller.gender == ExperimentController.Gender.Female)
         {
-            Debug.Log("Loading dna for female.." + avatars[controller.currentTrial].condition);
-            switch (avatars[controller.currentTrial].condition)
+            Debug.Log("Loading dna for female.." + avatars[controller.currentAvatarIdx].condition);
+            switch (avatars[controller.currentAvatarIdx].condition)
             {
                 case ExperimentController.Condition.Average:
                     Debug.Log("In average switch case");
@@ -313,8 +313,8 @@ public class UmaSettings : MonoBehaviour
         }
         else
         {
-            Debug.Log("Loading dna for male.." + avatars[controller.currentTrial].condition);
-            switch (avatars[controller.currentTrial].condition)
+            Debug.Log("Loading dna for male.." + avatars[controller.currentAvatarIdx].condition);
+            switch (avatars[controller.currentAvatarIdx].condition)
             {
                 case ExperimentController.Condition.Average:
                     strongConditionMaleGreyShirt();
