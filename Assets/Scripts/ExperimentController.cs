@@ -240,20 +240,20 @@ public class ExperimentController : MonoBehaviour
     IEnumerator PushBack()
     {
 
-        Random r = new Random(2);
+        //Random r = new Random(2);
 
 
         //wait 2 sec for anim pulling to end
-        Debug.Log("Waiting for pulling anim to finish");
-        yield return new WaitForSeconds(0.5f);
+        //Debug.Log("Waiting for pulling anim to finish");
+        yield return new WaitForSeconds(2);
 
         //wait random time to trigger animation
         // Debug.Log("Waiting 4 seconds...");
         // yield return new WaitForSeconds(4);
 
-        Debug.Log("PushBack triggered in 3");
-        yield return new WaitForSeconds(3);
-        Debug.Log("PushBack triggered");
+        //Debug.Log("PushBack triggered in 3");
+        //yield return new WaitForSeconds(3);
+       // Debug.Log("PushBack triggered");
         currentAvatar.GetComponent<Animator>().SetTrigger("PushBack"); 
 
         yield return null;
@@ -301,10 +301,10 @@ public class ExperimentController : MonoBehaviour
             Writer.logData.action = "start";
 
             startSound.GetComponent<AudioSource>().Play();
-            Debug.Log("Start pulling..");
+         
             currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
             currentAvatar.GetComponent<UmaSettings>().setMood(1);
-            Debug.Log("Starting corutine");
+            
             StartCoroutine(PushBack());
             // currentAvatar.GetComponent<UmaSettings>().setIKTargetHand();
 
@@ -379,7 +379,6 @@ public class ExperimentController : MonoBehaviour
         {
             float seconds = getSeconds(startedTrial);
 
-            Debug.Log("Seconds.. " + seconds);
             if (seconds > 2)
             {
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
@@ -388,7 +387,7 @@ public class ExperimentController : MonoBehaviour
             }
             if (seconds > trialDuration)
             {
-                Debug.Log("Reversing...");
+               
                 currentAvatar.GetComponent<Animator>().SetTrigger("Reverse");
                 currentAvatar.GetComponent<UmaSettings>().setMood(0);
                 // currentAvatar.GetComponent<UmaSettings>().setIKTargetHead();
