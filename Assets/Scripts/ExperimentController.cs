@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UMA;
 using UMA.CharacterSystem;
+using Random = System.Random;
 
 public class ExperimentController : MonoBehaviour
 {
@@ -71,7 +72,6 @@ public class ExperimentController : MonoBehaviour
     public GameObject trackedHead;
 
     bool connected = true;
-    //todo add none condition
 
     bool startedExperiment = false;
     public int currentAvatarIdx =0;
@@ -84,7 +84,7 @@ public class ExperimentController : MonoBehaviour
     float fadeTime = 2; // amount of time it takes to fade an image
 
     [SerializeField]
-    float beforeStartCounter = 30; // AMOUNT OF TIME BETWEEN SEEING THE AVATAR AND STARTING THE EXPERIMENT
+    float beforeStartCounter; // AMOUNT OF TIME BETWEEN SEEING THE AVATAR AND STARTING THE EXPERIMENT
 
     [SerializeField]
     float afterStopCounter = 10; // AMOUNT OF TIME BETWEEN stopping pulling and blacking in
@@ -189,16 +189,16 @@ public class ExperimentController : MonoBehaviour
                 yield return new WaitForSeconds(blackDuration);
                 StartCoroutine(DisplayImage(true)); //blacking out
 
-                //Debug.Log("Starting countdown in 30 s...");
-                //currentAvatar.GetComponent<Animator>().SetTrigger("Start");
+                Debug.Log("Starting countdown in "+beforeStartCounter);
+                currentAvatar.GetComponent<Animator>().SetTrigger("Start");
 
-                //yield return new WaitForSeconds(beforeStartCounter);
+                yield return new WaitForSeconds(beforeStartCounter);
 
-                //Debug.Log("Starting countdown...");
-                //startCounter = Time.time;
-                //counting = true;
+                Debug.Log("Starting countdown...");
+                startCounter = Time.time;
+                counting = true;
 
-                //Writer.logData.action = "start_counter";
+                Writer.logData.action = "start_counter";
             }
             else
             {
@@ -233,6 +233,29 @@ public class ExperimentController : MonoBehaviour
             quizzCanvas.SetActive(true);
         else
             Debug.LogError("Canvas already active.");
+        yield return null;
+
+    }
+
+    IEnumerator PushBack()
+    {
+
+        Random r = new Random(2);
+
+
+        //wait 2 sec for anim pulling to end
+        Debug.Log("Waiting for pulling anim to finish");
+        yield return new WaitForSeconds(0.5f);
+
+        //wait random time to trigger animation
+        // Debug.Log("Waiting 4 seconds...");
+        // yield return new WaitForSeconds(4);
+
+        Debug.Log("PushBack triggered in 3");
+        yield return new WaitForSeconds(3);
+        Debug.Log("PushBack triggered");
+        currentAvatar.GetComponent<Animator>().SetTrigger("PushBack"); 
+
         yield return null;
 
     }
@@ -278,8 +301,11 @@ public class ExperimentController : MonoBehaviour
             Writer.logData.action = "start";
 
             startSound.GetComponent<AudioSource>().Play();
+            Debug.Log("Start pulling..");
             currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
             currentAvatar.GetComponent<UmaSettings>().setMood(1);
+            Debug.Log("Starting corutine");
+            StartCoroutine(PushBack());
             // currentAvatar.GetComponent<UmaSettings>().setIKTargetHand();
 
         }
@@ -353,6 +379,7 @@ public class ExperimentController : MonoBehaviour
         {
             float seconds = getSeconds(startedTrial);
 
+            Debug.Log("Seconds.. " + seconds);
             if (seconds > 2)
             {
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
@@ -361,6 +388,7 @@ public class ExperimentController : MonoBehaviour
             }
             if (seconds > trialDuration)
             {
+                Debug.Log("Reversing...");
                 currentAvatar.GetComponent<Animator>().SetTrigger("Reverse");
                 currentAvatar.GetComponent<UmaSettings>().setMood(0);
                 // currentAvatar.GetComponent<UmaSettings>().setIKTargetHead();
