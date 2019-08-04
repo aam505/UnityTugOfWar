@@ -14,7 +14,7 @@ public class Writer : MonoBehaviour
     private static object locker = new Object();
     public static bool logging = true;
     bool first = true;
-    public static string condition;
+    public static string gender;
 
     void Start()
     {
@@ -33,19 +33,24 @@ public class Writer : MonoBehaviour
     public void Log()
     {
         logData.timestamp = DateTime.Now;
-       // Debug.Log(logData.timestamp);
-        using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_c" + condition + ".csv", true))
+        // Debug.Log(logData.timestamp);
+        //using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_" + gender +".csv", true))
+        //{
+        //    if (first)
+        //    {
+        //        outputfile.WriteLine(logData.getHeader());
+        //        first = false;
+        //    }
+        //    outputfile.WriteLine(logData.toString());
+        // }
+        if (Input.GetKeyDown("space"))
         {
-            if (first)
-            {
-                outputfile.WriteLine(logData.getHeader());
-                first = false;
-            }
-            outputfile.WriteLine(logData.toString());
+            logData.space = "pressed";
+            Debug.Log(logData.toStringShort());
+            logData.space = "";
 
         }
-
-        //Debug.Log(logData.toString());
+        Debug.Log(logData.toStringShort());
 
     }
 }

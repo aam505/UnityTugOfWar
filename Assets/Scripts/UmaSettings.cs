@@ -101,7 +101,7 @@ public class UmaSettings : MonoBehaviour
             else
                 setMaleNames();
 
-            // Shuffle<Avatar>(controller.originalAvatarsList);
+            Shuffle<Avatar>(controller.originalAvatarsList);
 
         }
 
@@ -117,7 +117,7 @@ public class UmaSettings : MonoBehaviour
     private void setFemaleNames()
     {
 
-        //controller.originalAvatarsList.Add(new Avatar(Condition.Weak, "UMA_F4"));
+        controller.originalAvatarsList.Add(new Avatar(Condition.Weak, "UMA_F4"));
         controller.originalAvatarsList.Add(new Avatar(Condition.Average, "UMA_F2"));
         controller.originalAvatarsList.Add(new Avatar(Condition.Average, "UMA_F3"));
         controller.originalAvatarsList.Add(new Avatar(Condition.Strong, "UMA_F1"));
@@ -135,7 +135,6 @@ public class UmaSettings : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -245,8 +244,6 @@ public class UmaSettings : MonoBehaviour
             //aimIKRightArm.solver.SetIKRotationWeight(0);
 
             //loadConditionCharacteristics();
-
-
             ParentHandles();
         }
 
@@ -677,6 +674,21 @@ public class UmaSettings : MonoBehaviour
     /// ObiHandleAvatarThumbR -0.014f, -0.028f, -0.022f
     /// ObiHandleAvatarThumbL -0.0042f, 0.0142f, -0.0246f
     /// ObiHandleAvatarPinkyL -0.0256f, 0.0072f, -0.0107f
+    /// 
+    /// M7 O3N
+    /// ObiHandleAvatarThumbR -0.022f, 0.023f, -0.015f
+    /// ObiHandleAvatarThumbL  -0.013f, -0.024f, 0.016f
+    /// ObiHandleAvatarPinkyL -0.0155f, 0.0035f, 0.0125f
+    /// 
+    /// M1 UMA
+    /// ObiHandleAvatarThumbR  -0.02F, -0.029f,-0.015f
+    /// ObiHandleAvatarThumbL -0.004f, 0.022f, -0.013f
+    /// ObiHandleAvatarPinkyL -0.005f,  0.008f,  -0.029f
+    /// 
+    /// M5 UMA STRONG
+    /// ObiHandleAvatarThumbR  -0.016f, -0.04f, 0.006f
+    /// ObiHandleAvatarThumbL  -0.013f, 0.024f, 0.008f
+    /// ObiHandleAvatarPinkyL -0.007f,  0.007f,  -0.028f
     /// </summary>
     public void ParentHandles()
     {
@@ -687,41 +699,53 @@ public class UmaSettings : MonoBehaviour
             Transform pinkyHandleL = GameObject.Find("ObiHandleAvatarPinkyL").transform;
             Transform thumbHandleL = GameObject.Find("ObiHandleAvatarThumbL").transform;
             Transform thumbHandleR = GameObject.Find("ObiHandleAvatarThumbR").transform;
-            // Transform pinkyHandleR = GameObject.Find("ObiHandleAvatarPinkyR").transform;
+
 
             ////////////// UMA
             if (part.gameObject.name.Equals("RightHandFinger05_02")) //THUMB RIGHT
             {
                 thumbHandleR.parent = part;
                 if (umaName.Equals("UMA_F2") || umaName.Equals("UMA_F1"))
-                    thumbHandleR.localPosition = new Vector3(-0.0211f, 0.0407f, 0.017f);
+                    thumbHandleR.localPosition = new Vector3(-0.014f, -0.028f, -0.022f);
+                else
+                {
+                    if (umaName.Equals("UMA_M5"))
+                        thumbHandleR.localPosition = new Vector3(-0.016f, -0.04f, 0.006f);
                     else
-                        thumbHandleR.localPosition = new Vector3(0, 0, 0);
 
+                        thumbHandleR.localPosition = new Vector3(-0.02f, -0.029f, -0.015f);
+                }
             }
-            // if (part.gameObject.name.Equals("RightHandFinger01_02"))  //PINKY RIGHT
-            // {
-            //     pinkyHandleR.parent = part;
-            //     pinkyHandleR.localPosition = new Vector3(0, 0f, 0);
-            //  }
+
             if (part.gameObject.name.Equals("LeftHandFinger05_02")) //THUMB LEFT
             {
                 thumbHandleL.parent = part;
 
-                if (controller.gender == Gender.Female)
-                    thumbHandleL.localPosition = new Vector3(-0.017f, -0.029f, 0.005f);
+                if (umaName.Equals("UMA_F2") || umaName.Equals("UMA_F1"))
+                    thumbHandleL.localPosition = new Vector3(-0.0042f, 0.0142f, -0.0246f);
                 else
-                    thumbHandleL.localPosition = new Vector3(0f, 0f, 0f);
+                {
+                    if (umaName.Equals("UMA_M5"))
+
+                        thumbHandleL.localPosition = new Vector3(-0.013f, 0.024f, 0.008f);
+                    else
+                        thumbHandleL.localPosition = new Vector3(-0.004f, 0.022f, -0.013f);
+                }
             }
 
             if (part.gameObject.name.Equals("LeftHandFinger01_02"))  //pinky left
             {
                 pinkyHandleL.parent = part;
 
-                if (controller.gender == Gender.Female)
-                    pinkyHandleL.localPosition = new Vector3(-0.025f, 0.002f, 0.014f);
+                if (umaName.Equals("UMA_F2") || umaName.Equals("UMA_F1"))
+                    pinkyHandleL.localPosition = new Vector3(-0.0256f, 0.0072f, -0.0107f);
                 else
-                    pinkyHandleL.localPosition = new Vector3(0f, 0f, 0f);
+                {
+                    if (umaName.Equals("UMA_M5"))
+                        pinkyHandleL.localPosition = new Vector3(-0.007f, 0.007f, -0.028f);
+                    else
+                        pinkyHandleL.localPosition = new Vector3(-0.005f, 0.008f, -0.029f);
+                }
             }
 
 
@@ -735,14 +759,9 @@ public class UmaSettings : MonoBehaviour
                     thumbHandleR.localPosition = new Vector3(-0.0211f, 0.0407f, 0.017f);
                 else
 
-                    thumbHandleR.localPosition = new Vector3(0f, 0f, 0f);
+                    thumbHandleR.localPosition = new Vector3(-0.022f, 0.023f, -0.015f);
 
             }
-            //if (part.gameObject.name.Equals("pinky_001_R"))
-            //{
-            //    pinkyHandleR.parent = part;
-            //     pinkyHandleR.localPosition = new Vector3(0f, 0f, 0f);
-            // }
 
             if (part.gameObject.name.Equals("thumb_002_L"))
             {
@@ -751,7 +770,7 @@ public class UmaSettings : MonoBehaviour
                 if (controller.gender == Gender.Female)
                     thumbHandleL.localPosition = new Vector3(-0.017f, -0.029f, 0.005f);
                 else
-                    thumbHandleL.localPosition = new Vector3(0f, 0f, 0f);
+                    thumbHandleL.localPosition = new Vector3(-0.013f, -0.024f, 0.016f);
             }
 
             if (part.gameObject.name.Equals("pinky_001_L"))
@@ -761,7 +780,7 @@ public class UmaSettings : MonoBehaviour
                 if (controller.gender == Gender.Female)
                     pinkyHandleL.localPosition = new Vector3(-0.025f, 0.002f, 0.014f);
                 else
-                    pinkyHandleL.localPosition = new Vector3(0f, 0f, 0f);
+                    pinkyHandleL.localPosition = new Vector3(-0.0155f, 0.0035f, 0.0125f);
             }
 
         }

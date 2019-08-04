@@ -18,7 +18,7 @@ public class LogData
     public float headrx;
     public float headry;
     public float headrz;
-
+    public string space;
     public string action = ""; //start pulling,pulling, stop pulling
 
     public float leftHandx;
@@ -34,6 +34,8 @@ public class LogData
     public float rightHandry;
     public float rightHandz;
     public float rightHandrz;
+
+    public string splashScreen;
 
     public string gazeTarget = "";
      string s = ",";
@@ -77,15 +79,19 @@ public class LogData
     public string getHeader()
     {
       
-        return "Timestamp,HeadX,HeadY,HeadZ, HeadRX, HeadRY, HeadRZ, RightHandx,RightHandy,RightHandz,RightHandRX,RightHandRY,RightHandRZ" +
+        return "Timestamp,Condition,SplashScreen,HeadX,HeadY,HeadZ, HeadRX, HeadRY, HeadRZ, RightHandx,RightHandy,RightHandz,RightHandRX,RightHandRY,RightHandRZ" +
             "LeftHandx,LeftHandy,LeftHandz,LeftHandRX,LeftHandRY,LeftHandRZ,Action" +
            "Points,Action,GazeTarget";
     }
     public string toString()
     {
 
-        return timestamp.ToString("o").Remove(26, 6) + s + headx + s + heady + s + headz + s + headrx + s + headry + s + headrz + s + rightHandx + s + rightHandy + s + rightHandz + s +
-            rightHandrx + s + rightHandry + s + rightHandrz + s + leftHandx + s + leftHandy + s + leftHandz + s + leftHandrx + s + leftHandry + s + leftHandrz + s + action+s+gazeTarget;
+        return timestamp.ToString("o").Remove(26, 6) + s + conditon + s + splashScreen + s + headx + s + heady + s + headz + s + headrx + s + headry + s + headrz + s + rightHandx + s + rightHandy + s + rightHandz + s +
+            rightHandrx + s + rightHandry + s + rightHandrz + s + leftHandx + s + leftHandy + s + leftHandz + s + leftHandrx + s + leftHandry + s + leftHandrz + s + action + s + gazeTarget+s +space;
     }
+    public string toStringShort()
+    {
 
+        return timestamp.ToString("o").Remove(26, 6) + s + conditon + s + splashScreen + s + action + s + " -gazing: "+gazeTarget +s + space;
+    }
 }

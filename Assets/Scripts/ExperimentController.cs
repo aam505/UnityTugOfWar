@@ -29,9 +29,7 @@ public class ExperimentController : MonoBehaviour
     public GameObject participantRightHand;
     public Gender gender;
     public GameObject myPrefab;
-
-    Condition currentCondition;
-    public Condition condition;
+    
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     bool trialOngoing;
@@ -83,12 +81,16 @@ public class ExperimentController : MonoBehaviour
     GameObject quizzCanvas;
     int currentIndex = 0;
     bool first = true;
+    Condition currentCondition;
+
     IEnumerator DisplayImage(bool startWithImage)
     {
     
-        if (startWithImage) //black out
+        if (startWithImage) //black out  -- going out of black screen
         {
+
             uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 1);
+            Writer.logData.splashScreen = "blackOut";
             //Fade out for loop
             for (float alpha = 1; alpha > 0; alpha -= Time.deltaTime / fadeTime)
             {
@@ -97,14 +99,15 @@ public class ExperimentController : MonoBehaviour
                 yield return null; // Wait for frame then return to execution
             }
             uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 0);
+            Writer.logData.splashScreen = "";
             parentCanvas.gameObject.SetActive(false);
         }
-        else //black in
+        else //black in --- going into black screen
         {
             //uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 0);
             //Fade out for loop
             parentCanvas.gameObject.SetActive(true);
-
+            Writer.logData.splashScreen = "blackIn";
             for (float alpha = 0; alpha < 1; alpha += Time.deltaTime / fadeTime)
             {
                 uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, alpha);
@@ -112,6 +115,7 @@ public class ExperimentController : MonoBehaviour
                 yield return null; // Wait for frame then return to execution
             }
             uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 1);
+            Writer.logData.splashScreen = "";
 
         }
 
@@ -128,7 +132,7 @@ public class ExperimentController : MonoBehaviour
         trialOngoing = false;
 
         Writer.participantId = ParticipantId;
-        Writer.condition = gender.ToString() + condition.ToString();
+        Writer.gender = gender.ToString();
 
         if (gender == Gender.Female)
             maleArms.SetActive(false);
@@ -157,6 +161,7 @@ public class ExperimentController : MonoBehaviour
             quizzCanvas.SetActive(false);
 
         currentAvatarIdx++;
+        Writer.logData.action = "start_trial";
 
         if (currentAvatarIdx < 5)
         {
@@ -171,23 +176,29 @@ public class ExperimentController : MonoBehaviour
                 currentAvatar.localScale = new Vector3(1, 1, 1);
             }
 
+            Writer.logData.conditon = originalAvatarsList[currentIndex].condition.ToString();
+
             yield return new WaitForSeconds(blackDuration);
             StartCoroutine(DisplayImage(true)); //blacking out
 
 
-            //Debug.Log("Starting countdown in " + beforeStartCounter);
-            //currentAvatar.GetComponent<Animator>().SetTrigger("Start");
+            Debug.Log("Starting countdown in " + beforeStartCounter);
+            currentAvatar.GetComponent<Animator>().SetTrigger("Start");
+            Writer.logData.action = "pending_pulling";
 
-            //yield return new WaitForSeconds(beforeStartCounter);
+            yield return new WaitForSeconds(beforeStartCounter);
 
-            //Debug.Log("Starting countdown...");
-            //startCounter = Time.time;
-            //counting = true;
-
-            //Writer.logData.action = "start_counter";
+            Debug.Log("Starting countdown...");
+            startCounter = Time.time;
+            counting = true;
+            
+            Writer.logData.action = "start_counter";
         }
         else
         {
+            Writer.logData.conditon = "";
+            Writer.logData.action ="end";
+
             yield return new WaitForSeconds(blackDuration);
             StartCoroutine(DisplayImage(true)); //blacking out
 
@@ -225,10 +236,7 @@ public class ExperimentController : MonoBehaviour
 
     IEnumerator PushBack()
     {
-
         //Random r = new Random(2);
-
-
         //wait 2 sec for anim pulling to end
         //Debug.Log("Waiting for pulling anim to finish");
         yield return new WaitForSeconds(2);
@@ -241,6 +249,7 @@ public class ExperimentController : MonoBehaviour
         //yield return new WaitForSeconds(3);
         // Debug.Log("PushBack triggered");
         currentAvatar.GetComponent<Animator>().SetTrigger("PushBack");
+        Writer.logData.action = "push_back";
 
         yield return null;
 
@@ -285,7 +294,7 @@ public class ExperimentController : MonoBehaviour
             trialOngoing = true;
 
             startText.GetComponent<TMPro.TextMeshProUGUI>().text = "START";
-            Writer.logData.action = "start";
+            Writer.logData.action = "start_pulling";
 
             startSound.GetComponent<AudioSource>().Play();
 
@@ -304,7 +313,6 @@ public class ExperimentController : MonoBehaviour
     {
         if (first && !experimentStarted)
         {
-            Debug.Log("Spawning avatar.." + currentAvatarIdx);
             experimentStarted = true;
             startExperiment = true;
             pressed = true;
@@ -315,6 +323,7 @@ public class ExperimentController : MonoBehaviour
             {
                 startExperiment = true;
                 pressed = true;
+               
             }
             else
             {
@@ -368,7 +377,7 @@ public class ExperimentController : MonoBehaviour
             if (seconds > 2)
             {
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-                Writer.logData.action = "";
+                //Writer.logData.action = "";
 
             }
             if (seconds > trialDuration)
@@ -384,7 +393,6 @@ public class ExperimentController : MonoBehaviour
                 startSound.GetComponent<AudioSource>().Play();
                 endedTrial = Time.time;
                 trialOngoing = false;
-
                 Debug.Log("Blacking out in 10s");
 
             }
@@ -397,13 +405,11 @@ public class ExperimentController : MonoBehaviour
                 if (seconds > 2)
                 {
                     startText.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-                    Writer.logData.action = "pending_quizz_start";
-
+                    Writer.logData.action = "pending_quizz";
                 }
                 if (seconds > 10)
                 {
                     endedTrial = 0;
-
                     if (first)
                         first = false;
                     StartCoroutine(SpawnQuizz());
