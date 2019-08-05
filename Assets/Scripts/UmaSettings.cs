@@ -790,7 +790,7 @@ public class UmaSettings : MonoBehaviour
 
     public void setIKTargetHead()
     {
-        aimIKHead.solver.target = GameObject.Find("TrackedHead").transform;
+        aimIKHead.solver.target = GameObject.Find("headOF").transform;
     }
 
     public void setIKTargetHand()

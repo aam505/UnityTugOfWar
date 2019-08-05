@@ -9,6 +9,7 @@ public class Hi5_Message
     public class Hi5_MessageMessageKey
     {
         public static readonly string messageStateChange = "messageStateChange";
+        public static readonly string messageCalibrationResult = "messageCalibrationResult";
        
     }
     private static object _lock = new object();
@@ -39,7 +40,7 @@ public class Hi5_Message
     public Dictionary<string, MessageFun> dicMessage = new Dictionary<string, MessageFun>();
 
     //分发事件
-    public void DispenseMessage(string messageKey, object param1, object param2)
+    public void DispenseMessage(string messageKey, object param1, object param2 = null)
     {
         if (dicMessage.ContainsKey(messageKey))
         {
