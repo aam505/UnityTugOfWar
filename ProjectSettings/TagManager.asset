@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - RopeObject
+  - Leg
+  - SnapCube
+  - Arm
+  - SnapCylinder
+  - Saucers
+  - ExcludeTeleport
+  - Torso
+  - Head
+  - TrackedDevices
   layers:
   - Default
   - TransparentFX
@@ -15,14 +24,14 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Hide
+  - Hi5OtherFingerTail
+  - Hi5OtherFingerOther
+  - Hi5Palm
+  - Hi5ObjectGrasp
+  - Hi5Plane
+  - Hi5ObjectTrigger
+  - Hi5IndexFingerTail
   - 
   - 
   - 

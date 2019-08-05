@@ -25,8 +25,13 @@ using HI5.VRCalibration;
 
         private HumanButtons mHumanButtons;
 
+
         SteamVR_Events.Action newPosesAction;
-        
+
+        public bool rotateLeft=false;
+       public bool rotateRight = false;
+        public bool trackPosition = true;
+
         private void Awake()
         {
             newPosesAction = SteamVR_Events.NewPosesAction(OnNewPoses);
@@ -135,20 +140,31 @@ using HI5.VRCalibration;
 
         private void ApplyHandMotion_Rotation(HI5_Source source)
         {
-            if (HandBones[m_INDEX_Hand] != null)
-            {
-                HandBones[m_INDEX_Hand].localEulerAngles = HI5_DataTransform.ToUnityEulerAngles(source.GetReceivedRotation(m_INDEX_Hand, HandType));
-            }
+
+            Vector3 eulerAngles = HI5_DataTransform.ToUnityEulerAngles(source.GetReceivedRotation(m_INDEX_Hand, HandType));
+
+            float x, y, z;
+            x = eulerAngles.x;
+            y = eulerAngles.y;
+            z = eulerAngles.z;
+     
+            HandBones[m_INDEX_Hand].localEulerAngles = eulerAngles;
+            
+
         }
 
         private void ApplyHandMotion_Position(Vector3 pos, Quaternion rot)
         {
-            Vector3 offset = HandType == Hand.LEFT ? HI5_Manager.LeftOffset : HI5_Manager.RightOffset;
-            Vector3 handPos = pos + rot * offset;
-
-            if (HandBones[m_INDEX_Hand] != null)
+            if (trackPosition)
             {
-                HandBones[m_INDEX_Hand].localPosition = handPos;
+
+                Vector3 offset = HandType == Hand.LEFT ? HI5_Manager.LeftOffset : HI5_Manager.RightOffset;
+                Vector3 handPos = pos + rot * offset;
+
+                if (HandBones[m_INDEX_Hand] != null)
+                {
+                    HandBones[m_INDEX_Hand].localPosition = handPos;
+                }
             }
         }
 
@@ -171,7 +187,8 @@ using HI5.VRCalibration;
             Transform t = bones[(int)bone];
             if (t != null)
             {
-                Quaternion rot = Quaternion.Euler(rotation);
+                 Quaternion rot = Quaternion.Euler(rotation);
+          
                 if (!float.IsNaN(rot.x) && !float.IsNaN(rot.y) && !float.IsNaN(rot.z) && !float.IsNaN(rot.w))
                 {
                     t.localRotation = rot;
