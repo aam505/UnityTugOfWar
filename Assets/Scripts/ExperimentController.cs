@@ -144,13 +144,20 @@ public class ExperimentController : MonoBehaviour
             parentCanvas.worldCamera = Camera.main;
 
         quizzCanvas = GameObject.Find("QuizzCanvas");
-        quizzCanvas.SetActive(false);
+        quizz = GameObject.Find("QUIZZ");
 
+        setActiveQuizzPanel(false);
+  
         uiImage = parentCanvas.GetComponentInChildren<Image>();
         uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
 
     }
 
+    void setActiveQuizzPanel(bool active)
+    {
+        quizzCanvas.SetActive(active);
+        quizz.SetActive(active);
+    }
     IEnumerator SpawnAvatar()
     {
         if (!parentCanvas.gameObject.activeSelf)
@@ -158,7 +165,7 @@ public class ExperimentController : MonoBehaviour
         yield return new WaitForSeconds(blackDuration);
 
         if (quizzCanvas.activeSelf == true)  //disable canvas
-            quizzCanvas.SetActive(false);
+            setActiveQuizzPanel(false);
 
         currentAvatarIdx++;
         Writer.logData.action = "start_trial";
@@ -227,7 +234,7 @@ public class ExperimentController : MonoBehaviour
 
 
         if (quizzCanvas.activeSelf == false)
-            quizzCanvas.SetActive(true);
+            setActiveQuizzPanel(true);
         else
             Debug.LogError("Canvas already active.");
         yield return null;
@@ -309,6 +316,8 @@ public class ExperimentController : MonoBehaviour
     }
 
     bool experimentStarted = false;
+    private GameObject quizz;
+
     void Update()
     {
         if (first && !experimentStarted)

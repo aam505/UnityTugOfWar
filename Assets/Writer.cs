@@ -34,23 +34,23 @@ public class Writer : MonoBehaviour
     {
         logData.timestamp = DateTime.Now;
         // Debug.Log(logData.timestamp);
-        //using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_" + gender +".csv", true))
-        //{
-        //    if (first)
-        //    {
-        //        outputfile.WriteLine(logData.getHeader());
-        //        first = false;
-        //    }
-        //    outputfile.WriteLine(logData.toString());
-        // }
-        if (Input.GetKeyDown("space"))
+        using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_" + gender +".csv", true))
         {
-            logData.space = "pressed";
-            Debug.Log(logData.toStringShort());
-            logData.space = "";
+            if (first)
+            {
+                outputfile.WriteLine(logData.getHeader());
+                first = false;
+            }
+            if (Input.GetKeyDown("space"))
+            {
+                logData.space = "pressed";
+                Debug.Log(logData.toStringShort());
+              //  outputfile.WriteLine(logData.toString());
+                logData.space = "";
 
+            }
+           //outputfile.WriteLine(logData.toString());
         }
-        Debug.Log(logData.toStringShort());
-
+       Debug.Log(logData.toStringShort());
     }
 }

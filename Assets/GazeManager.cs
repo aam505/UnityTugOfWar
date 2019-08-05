@@ -13,11 +13,11 @@ public class GazeManager : MonoBehaviour
         Ray raydirection = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(raydirection, out seen, sightlength))
         {
-
             //Debug.Log(seen.transform.name);
             if (seen.transform != null)
             {
                 Writer.logData.gazeTarget = seen.transform.name;
+                Debug.DrawLine(raydirection.origin, seen.point,Color.red);
 
             }
         }
