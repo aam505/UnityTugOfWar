@@ -85,6 +85,14 @@ namespace Valve.VR
             OnEnable();
         }
 
+        private void Update()
+        {
+            MeshRenderer mesh = transform.GetComponent<MeshRenderer>();
+            if (mesh != null)
+            {
+                mesh.enabled = false;
+            }
+        }
         void OnEnable()
         {
             var render = SteamVR_Render.instance;

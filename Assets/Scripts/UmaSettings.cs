@@ -550,7 +550,7 @@ public class UmaSettings : MonoBehaviour
         avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
 
 
-        dna["height"].Set(0.55f);
+        dna["height"].Set(0.6f);
         dna["chinPosition"].Set(0.5f);
         dna["chinPronounced"].Set(0.5f);
         dna["chinSize"].Set(0.5f);
@@ -618,7 +618,7 @@ public class UmaSettings : MonoBehaviour
 
         avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
 
-        dna["height"].Set(0.6f);
+        dna["height"].Set(0.8f);
 
         dna["chinPosition"].Set(1f);
         dna["chinPronounced"].Set(1f);
@@ -670,6 +670,9 @@ public class UmaSettings : MonoBehaviour
     /// ObiHandleAvatarThumbL -0.017 -0.029 0.005
     /// ObiHandleAvatarThumbR -0.0211 0.0407 0.017
     /// 
+    /// strong
+    /// ObiHandleAvatarThumbR -0.009f, 0.0392f, 0.0027f
+    ///  
     /// F2 UM
     /// ObiHandleAvatarThumbR -0.014f, -0.028f, -0.022f
     /// ObiHandleAvatarThumbL -0.0042f, 0.0142f, -0.0246f
@@ -756,7 +759,12 @@ public class UmaSettings : MonoBehaviour
                 thumbHandleR.parent = part;
 
                 if (umaName.Equals("UMA_F4") || umaName.Equals("UMA_F3"))
-                    thumbHandleR.localPosition = new Vector3(-0.0211f, 0.0407f, 0.017f);
+                    if (avatars[controller.currentAvatarIdx].condition == Condition.Strong)
+                        thumbHandleR.localPosition = new Vector3(-0.009f, 0.0392f, 0.0027f);
+
+                    else
+
+                        thumbHandleR.localPosition = new Vector3(-0.0211f, 0.0407f, 0.017f);
                 else
 
                     thumbHandleR.localPosition = new Vector3(-0.022f, 0.023f, -0.015f);

@@ -14,13 +14,15 @@ public class Writer : MonoBehaviour
     private static object locker = new Object();
     public static bool logging = true;
     bool first = true;
+    string initTimestamp;
     public static string gender;
 
     void Start()
     {
+        Debug.Log("Started");
         logData = new LogData();
-
-
+        initTimestamp = DateTime.Now.ToString("s").Replace(':','-');
+       
     }
 
     void Update()
@@ -30,11 +32,13 @@ public class Writer : MonoBehaviour
 
     }
 
+
     public void Log()
     {
         logData.timestamp = DateTime.Now;
-        // Debug.Log(logData.timestamp);
-        using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_" + gender +".csv", true))
+        Debug.Log(logData.timestamp);
+   
+        using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_" + gender + "_"+initTimestamp+".csv", true))
         {
             if (first)
             {
@@ -44,13 +48,13 @@ public class Writer : MonoBehaviour
             if (Input.GetKeyDown("space"))
             {
                 logData.space = "pressed";
-                Debug.Log(logData.toStringShort());
-              //  outputfile.WriteLine(logData.toString());
+                //Debug.Log(logData.toStringShort());
+                outputfile.WriteLine(logData.toString());
                 logData.space = "";
 
             }
-           //outputfile.WriteLine(logData.toString());
+            outputfile.WriteLine(logData.toString());
         }
-       Debug.Log(logData.toStringShort());
+        //Debug.Log(logData.toStringShort());
     }
 }

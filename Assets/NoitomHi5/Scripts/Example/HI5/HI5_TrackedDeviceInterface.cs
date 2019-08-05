@@ -39,6 +39,16 @@ public class HI5_TrackedDeviceInterface : MonoBehaviour
         HI5_Calibration.OnCalibrationComplete -= HandleCalibrationComplete;
     }
 
+    private void Update()
+    {
+        if (m_SteamVR_TrackedObject != null)
+        {
+            Transform body = m_SteamVR_TrackedObject.transform.Find("body");
+
+            if (body!=null)
+                body.GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
 
     private void OnNewPoses(TrackedDevicePose_t[] poses)
     {
