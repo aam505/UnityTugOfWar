@@ -550,7 +550,7 @@ public class UmaSettings : MonoBehaviour
         avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
 
 
-        dna["height"].Set(0.6f);
+        dna["height"].Set(0.55f);
         dna["chinPosition"].Set(0.5f);
         dna["chinPronounced"].Set(0.5f);
         dna["chinSize"].Set(0.5f);
@@ -618,7 +618,7 @@ public class UmaSettings : MonoBehaviour
 
         avatar.characterColors.SetColor("Eyes", new Color(99f / 255f, 67f / 255f, 67f / 255f));
 
-        dna["height"].Set(0.8f);
+        dna["height"].Set(0.6f);
 
         dna["chinPosition"].Set(1f);
         dna["chinPronounced"].Set(1f);

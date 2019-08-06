@@ -135,9 +135,32 @@ public class ExperimentController : MonoBehaviour
         Writer.gender = gender.ToString();
 
         if (gender == Gender.Female)
+        {
             maleArms.SetActive(false);
+            GameObject rht = GameObject.Find("RHT");
+            rht.transform.localPosition = new Vector3(-0.0163f, 0.0405f, 0.0201f);
+
+            GameObject rhp = GameObject.Find("RHP");
+            rhp.transform.localPosition = new Vector3(0.031f, -0.028f, 0.013f);
+
+        }
         else
+        {
+            GameObject lht = GameObject.Find("LHT");
+            lht.transform.localPosition = new Vector3(0.0163f, 0.077f, -0.0115f);
+
+            GameObject lhp = GameObject.Find("LHP");
+            lhp.transform.localPosition = new Vector3(-0.0286f, -0.0163f, 0.0159f);
+
+
+            GameObject rht = GameObject.Find("RHT");
+            rht.transform.localPosition = new Vector3(-0.009f, 0.053f, 0.033f);
+
+            GameObject rhp = GameObject.Find("RHP");
+            rhp.transform.localPosition = new Vector3(0.0359f, -0.0108f, 0.0178f);
+
             femaleArms.SetActive(false);
+        }
 
 
         if (parentCanvas.worldCamera != Camera.main)
@@ -246,7 +269,7 @@ public class ExperimentController : MonoBehaviour
         //Random r = new Random(2);
         //wait 2 sec for anim pulling to end
         //Debug.Log("Waiting for pulling anim to finish");
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(1);
 
         //wait random time to trigger animation
         // Debug.Log("Waiting 4 seconds...");
@@ -441,13 +464,12 @@ public class ExperimentController : MonoBehaviour
 
         thumbHandleR.transform.parent = avatarParent;
         //pinkyHandleR.transform.parent = avatarParent;
+    
+        thumbHandleL.transform.localPosition = new Vector3(-0.0257f, 0.8218f, 0.7196f);
+        pinkyHandleL.transform.localPosition = new Vector3(-0.023f, 0.823f, 0.653f);
+        thumbHandleR.transform.localPosition = new Vector3(-0.035f, 0.839f, 0.923f);
 
-        thumbHandleL.transform.localPosition = new Vector3(-0.185f, 0.079f, 0.275f);
-        pinkyHandleL.transform.localPosition = new Vector3(-0.205f, 0.093f, 0.688f);
-
-        thumbHandleR.transform.localPosition = new Vector3(-0.185f, 0.079f, 0.275f);
         //pinkyHandleR.transform.localPosition = new Vector3(-0.205f, 0.093f, 0.688f);
-
     }
 
 
