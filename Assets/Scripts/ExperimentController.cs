@@ -48,7 +48,7 @@ public class ExperimentController : MonoBehaviour
     public Transform avatarParent;
 
     float postTrialDelay = 60;
-    float trialDuration = 6;
+    float trialDuration = 10;
 
     private float startCounter;
     private bool counting;
@@ -63,7 +63,7 @@ public class ExperimentController : MonoBehaviour
     bool connected = true;
 
     bool startedExperiment = false;
-    public int currentAvatarIdx = 0;
+    public int currentAvatarIdx = -1;
 
     Image uiImage;
 
