@@ -185,7 +185,10 @@ public class ExperimentController : MonoBehaviour
     {
         if (!parentCanvas.gameObject.activeSelf)
             StartCoroutine(DisplayImage(false)); //blacking in
-        yield return new WaitForSeconds(blackDuration);
+
+
+
+        yield return new WaitForSeconds(10);
 
         if (quizzCanvas.activeSelf == true)  //disable canvas
             setActiveQuizzPanel(false);
