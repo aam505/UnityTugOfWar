@@ -29,7 +29,7 @@ public class ExperimentController : MonoBehaviour
     public GameObject participantRightHand;
     public Gender gender;
     public GameObject myPrefab;
-    
+
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     bool trialOngoing;
@@ -85,7 +85,7 @@ public class ExperimentController : MonoBehaviour
 
     IEnumerator DisplayImage(bool startWithImage)
     {
-    
+
         if (startWithImage) //black out  -- going out of black screen
         {
 
@@ -123,11 +123,18 @@ public class ExperimentController : MonoBehaviour
 
     public void Start()
     {
+
         currentAvatar = avatarParent.transform.Find("Avatar");
 
-
-        initialPosition = currentAvatar.transform.position;
-        initialRotation = currentAvatar.transform.rotation;
+        if (currentAvatar != null)
+        {
+            initialPosition = currentAvatar.transform.position;
+            initialRotation = currentAvatar.transform.rotation;
+        }
+        else
+        {
+            StartCoroutine(DisplayImage(false));
+        }
 
         trialOngoing = false;
 
@@ -170,7 +177,7 @@ public class ExperimentController : MonoBehaviour
         quizz = GameObject.Find("QUIZZ");
 
         setActiveQuizzPanel(false);
-  
+
         uiImage = parentCanvas.GetComponentInChildren<Image>();
         uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
 
@@ -186,21 +193,18 @@ public class ExperimentController : MonoBehaviour
         if (!parentCanvas.gameObject.activeSelf)
             StartCoroutine(DisplayImage(false)); //blacking in
 
-
-
         yield return new WaitForSeconds(blackDuration);
 
         if (quizzCanvas.activeSelf == true)  //disable canvas
             setActiveQuizzPanel(false);
-
-        currentAvatarIdx++;
+        
         Writer.logData.action = "start_trial";
 
         if (currentAvatarIdx < 5)
         {
             if (!first)
             {
-          
+
                 currentAvatar = Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity).transform;
                 currentAvatar.parent = avatarParent;
                 currentAvatar.position = initialPosition;
@@ -209,7 +213,8 @@ public class ExperimentController : MonoBehaviour
                 currentAvatar.localScale = new Vector3(1, 1, 1);
             }
 
-            Writer.logData.conditon = originalAvatarsList[currentIndex].condition.ToString();
+  
+             Writer.logData.conditon = originalAvatarsList[currentIndex].condition.ToString();
 
             yield return new WaitForSeconds(blackDuration);
             StartCoroutine(DisplayImage(true)); //blacking out
@@ -223,13 +228,13 @@ public class ExperimentController : MonoBehaviour
 
             Debug.Log("Starting countdown...");
             startCounter = Time.time;
-            counting = true;           
+            counting = true;
             Writer.logData.action = "start_counter";
         }
         else
         {
             Writer.logData.conditon = "";
-            Writer.logData.action ="end";
+            Writer.logData.action = "end";
 
             yield return new WaitForSeconds(blackDuration);
             StartCoroutine(DisplayImage(true)); //blacking out
@@ -249,8 +254,35 @@ public class ExperimentController : MonoBehaviour
         yield return new WaitForSeconds(blackDuration);
 
         parentHandles();
-       
-        Destroy(avatarParent.transform.Find("Avatar").gameObject);  //destroy current avatar
+
+        if(currentAvatar!=null)
+            Destroy(avatarParent.transform.Find("Avatar").gameObject);  //destroy current avatar
+
+        Writer.logData.action = "quizz_active";
+
+        yield return new WaitForSeconds(blackDuration);
+        StartCoroutine(DisplayImage(true)); //blacking out
+
+
+        if (quizzCanvas.activeSelf == false)
+            setActiveQuizzPanel(true);
+        else
+            Debug.LogError("Canvas already active.");
+        yield return null;
+
+    }
+
+
+    IEnumerator SpawnQuizzDup()
+    {
+        //blacking in
+     
+        yield return new WaitForSeconds(blackDuration);
+
+        parentHandles();
+
+        if (currentAvatar != null)
+            Destroy(avatarParent.transform.Find("Avatar").gameObject);  //destroy current avatar
 
         Writer.logData.action = "quizz_active";
 
@@ -333,12 +365,14 @@ public class ExperimentController : MonoBehaviour
             currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
 
             string umaName = originalAvatarsList[currentAvatarIdx].name;
-           if (umaName.Equals("UMA_M6") || umaName.Equals("UMA_M7")|| umaName.Equals("UMA_F3") || umaName.Equals("UMA_F4")) //if o3n race
-            
-                currentAvatar.GetComponent<UmaSettings>().setMood(1);
-
-            else
+           
+            if (umaName.Equals("UMA_M6") || umaName.Equals("UMA_M7") || umaName.Equals("UMA_F3") || umaName.Equals("UMA_F4")) //if o3n race
+            {
+           
                 currentAvatar.GetComponent<UmaSettings>().setMood(2);
+            }
+            else
+                currentAvatar.GetComponent<UmaSettings>().setMood(1);
 
 
             StartCoroutine(PushBack());
@@ -350,14 +384,25 @@ public class ExperimentController : MonoBehaviour
 
     bool experimentStarted = false;
     private GameObject quizz;
-
+    private bool nullCondition=false;
     void Update()
     {
         if (first && !experimentStarted)
         {
-            experimentStarted = true;
-            startExperiment = true;
-            pressed = true;
+            if (currentAvatar != null)
+            {
+                experimentStarted = true;
+                startExperiment = true;
+                pressed = true;
+            }
+            else
+            {
+                if (!nullCondition)
+                {
+                    nullCondition = true;
+                    StartCoroutine(SpawnQuizzDup());
+                }
+            }
         }
         if (Input.GetKeyDown("space"))
         {
@@ -365,7 +410,7 @@ public class ExperimentController : MonoBehaviour
             {
                 startExperiment = true;
                 pressed = true;
-               
+
             }
             else
             {
@@ -395,7 +440,6 @@ public class ExperimentController : MonoBehaviour
 
         if (startExperiment && !startedExperiment)
         {
-
             StartCoroutine(SpawnAvatar()); //black out and then start experiment after 30 seconds
             startedExperiment = true;
         }
@@ -454,6 +498,7 @@ public class ExperimentController : MonoBehaviour
                     endedTrial = 0;
                     if (first)
                         first = false;
+                    currentAvatarIdx++;
                     StartCoroutine(SpawnQuizz());
                 }
             }
@@ -462,6 +507,7 @@ public class ExperimentController : MonoBehaviour
 
     void parentHandles()
     {
+
 
         Transform pinkyHandleL = GameObject.Find("ObiHandleAvatarPinkyL").transform;
         Transform thumbHandleL = GameObject.Find("ObiHandleAvatarThumbL").transform;
@@ -474,10 +520,11 @@ public class ExperimentController : MonoBehaviour
 
         thumbHandleR.transform.parent = avatarParent;
         //pinkyHandleR.transform.parent = avatarParent;
-    
+
         thumbHandleL.transform.localPosition = new Vector3(-0.239f, 0.805f, 0.548f);
         pinkyHandleL.transform.localPosition = new Vector3(-0.34f, 0.86f, 0.539f);
         thumbHandleR.transform.localPosition = new Vector3(-0.012f, 0.844f, 0.55f);
+
 
         //pinkyHandleR.transform.localPosition = new Vector3(-0.205f, 0.093f, 0.688f);
     }
