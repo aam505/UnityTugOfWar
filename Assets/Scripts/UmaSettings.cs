@@ -101,7 +101,7 @@ public class UmaSettings : MonoBehaviour
             else
                 setMaleNames();
 
-            Shuffle<Avatar>(controller.originalAvatarsList);
+           Shuffle<Avatar>(controller.originalAvatarsList);
 
         }
 

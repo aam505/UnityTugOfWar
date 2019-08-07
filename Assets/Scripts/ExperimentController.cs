@@ -188,7 +188,7 @@ public class ExperimentController : MonoBehaviour
 
 
 
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(blackDuration);
 
         if (quizzCanvas.activeSelf == true)  //disable canvas
             setActiveQuizzPanel(false);
@@ -223,8 +223,7 @@ public class ExperimentController : MonoBehaviour
 
             Debug.Log("Starting countdown...");
             startCounter = Time.time;
-            counting = true;
-            
+            counting = true;           
             Writer.logData.action = "start_counter";
         }
         else
@@ -332,7 +331,15 @@ public class ExperimentController : MonoBehaviour
             startSound.GetComponent<AudioSource>().Play();
 
             currentAvatar.GetComponent<Animator>().SetTrigger("Pull"); //start pulling
-            currentAvatar.GetComponent<UmaSettings>().setMood(1);
+
+            string umaName = originalAvatarsList[currentAvatarIdx].name;
+           if (umaName.Equals("UMA_M6") || umaName.Equals("UMA_M7")|| umaName.Equals("UMA_F3") || umaName.Equals("UMA_F4")) //if o3n race
+            
+                currentAvatar.GetComponent<UmaSettings>().setMood(1);
+
+            else
+                currentAvatar.GetComponent<UmaSettings>().setMood(2);
+
 
             StartCoroutine(PushBack());
             // currentAvatar.GetComponent<UmaSettings>().setIKTargetHand();
@@ -468,9 +475,9 @@ public class ExperimentController : MonoBehaviour
         thumbHandleR.transform.parent = avatarParent;
         //pinkyHandleR.transform.parent = avatarParent;
     
-        thumbHandleL.transform.localPosition = new Vector3(-0.0257f, 0.8218f, 0.7196f);
-        pinkyHandleL.transform.localPosition = new Vector3(-0.023f, 0.823f, 0.653f);
-        thumbHandleR.transform.localPosition = new Vector3(-0.035f, 0.839f, 0.923f);
+        thumbHandleL.transform.localPosition = new Vector3(-0.239f, 0.805f, 0.548f);
+        pinkyHandleL.transform.localPosition = new Vector3(-0.34f, 0.86f, 0.539f);
+        thumbHandleR.transform.localPosition = new Vector3(-0.012f, 0.844f, 0.55f);
 
         //pinkyHandleR.transform.localPosition = new Vector3(-0.205f, 0.093f, 0.688f);
     }

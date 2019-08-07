@@ -11,7 +11,7 @@ public class UmaMoodSlider : MonoBehaviour
     private bool connected = false;
 
 
-    [Range(0, 2)]
+    [Range(0, 3)]
     public int mood;
 
     void OnEnable()
@@ -86,8 +86,28 @@ public class UmaMoodSlider : MonoBehaviour
                     expression.noseSneer = Mathf.Lerp(expression.noseSneer, 0.3f, delta);
                     expression.leftEyeOpen_Close = Mathf.Lerp(expression.leftEyeOpen_Close, -0.2f, delta);
                     expression.rightEyeOpen_Close = Mathf.Lerp(expression.rightEyeOpen_Close, -0.2f, delta);
-                     break;
+                    expression.browsIn = Mathf.Lerp(expression.browsIn, 1f, delta);
+                    break;
+                case 2:
+                    expression.rightMouthSmile_Frown = Mathf.Lerp(expression.rightMouthSmile_Frown, 0.6f, delta);
+                    expression.leftMouthSmile_Frown = Mathf.Lerp(expression.leftMouthSmile_Frown, 0.6f, delta);
 
+                    expression.midBrowUp_Down = Mathf.Lerp(expression.midBrowUp_Down, -1f, delta);
+                    expression.leftBrowUp_Down = Mathf.Lerp(expression.leftBrowUp_Down, 1f, delta);
+                    expression.browsIn = Mathf.Lerp(expression.browsIn, 1f, delta);
+                    expression.rightBrowUp_Down = Mathf.Lerp(expression.rightBrowUp_Down, 1f, delta);
+                    expression.rightUpperLipUp_Down = Mathf.Lerp(expression.rightUpperLipUp_Down, 1f, delta);
+                    expression.leftUpperLipUp_Down = Mathf.Lerp(expression.leftUpperLipUp_Down, 1f, delta);
+                    expression.rightLowerLipUp_Down = Mathf.Lerp(expression.rightLowerLipUp_Down, 0f, delta);
+                    expression.leftLowerLipUp_Down = Mathf.Lerp(expression.leftLowerLipUp_Down, 0f, delta);
+                    expression.mouthNarrow_Pucker = Mathf.Lerp(expression.mouthNarrow_Pucker, 0.7f, delta);
+                    expression.mouthUp_Down = Mathf.Lerp(expression.mouthUp_Down, 1, delta);
+                    expression.noseSneer = Mathf.Lerp(expression.noseSneer, 1f, delta);
+                    expression.jawOpen_Close = Mathf.Lerp(expression.jawOpen_Close, 0.15f, delta);
+                    expression.leftEyeOpen_Close = Mathf.Lerp(expression.leftEyeOpen_Close, -0.2f, delta);
+                    expression.rightEyeOpen_Close = Mathf.Lerp(expression.rightEyeOpen_Close, -0.2f, delta);
+
+                    break;
                 case 3:
                     break;
 
