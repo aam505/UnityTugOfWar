@@ -19,6 +19,7 @@ public class Writer : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Started");
         logData = new LogData();
         initTimestamp = DateTime.Now.ToString("s").Replace(':','-');
        

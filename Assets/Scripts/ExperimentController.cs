@@ -143,39 +143,35 @@ public class ExperimentController : MonoBehaviour
 
         if (gender == Gender.Female)
         {
-            maleArms.SetActive(false);   //female arms
-
+            maleArms.SetActive(false);
             GameObject rht = GameObject.Find("RHT");
             rht.transform.localPosition = new Vector3(-0.0163f, 0.0405f, 0.0201f);
 
             GameObject rhp = GameObject.Find("RHP");
             rhp.transform.localPosition = new Vector3(0.031f, -0.028f, 0.013f);
 
+        }
+        else
+        {
             GameObject lht = GameObject.Find("LHT");
             lht.transform.localPosition = new Vector3(0.0163f, 0.077f, -0.0115f);
 
             GameObject lhp = GameObject.Find("LHP");
             lhp.transform.localPosition = new Vector3(-0.0286f, -0.0163f, 0.0159f);
-        }
-        else
-        {
-            femaleArms.SetActive(false); //male arms
-
-            GameObject lht = GameObject.Find("LHT");
-            lht.transform.localPosition = new Vector3(-0.0176f, 0.0292f, 0.0137f);
-
-            GameObject lhp = GameObject.Find("LHP");
-            lhp.transform.localPosition = new Vector3(-0.0105f, -0.0181f, -0.023f);
 
 
             GameObject rht = GameObject.Find("RHT");
-            rht.transform.localPosition = new Vector3(0.0237f, 0.0129f, 0.0276f);
+            rht.transform.localPosition = new Vector3(-0.009f, 0.053f, 0.033f);
 
             GameObject rhp = GameObject.Find("RHP");
-            rhp.transform.localPosition = new Vector3(0.0225f, -0.0145f, -0.013f);
+            rhp.transform.localPosition = new Vector3(0.0359f, -0.0108f, 0.0178f);
 
+            femaleArms.SetActive(false);
         }
 
+
+        if (parentCanvas.worldCamera != Camera.main)
+            parentCanvas.worldCamera = Camera.main;
 
         quizzCanvas = GameObject.Find("QuizzCanvas");
         quizz = GameObject.Find("QUIZZ");
@@ -232,7 +228,7 @@ public class ExperimentController : MonoBehaviour
 
             Debug.Log("Starting countdown...");
             startCounter = Time.time;
-           counting = true;
+            counting = true;
             Writer.logData.action = "start_counter";
         }
         else
