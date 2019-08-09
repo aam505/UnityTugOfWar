@@ -35,7 +35,7 @@ public class LogData
     public float rightHandz;
     public float rightHandrz;
 
-    public string splashScreen;
+    public string splashScreen = "";
 
     public string gazeTarget = "";
      string s = ",";

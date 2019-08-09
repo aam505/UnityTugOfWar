@@ -107,7 +107,9 @@ public class ExperimentController : MonoBehaviour
             //uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, 0);
             //Fade out for loop
             parentCanvas.gameObject.SetActive(true);
+
             Writer.logData.splashScreen = "blackIn";
+
             for (float alpha = 0; alpha < 1; alpha += Time.deltaTime / fadeTime)
             {
                 uiImage.color = new Color(uiImage.color.r, uiImage.color.g, uiImage.color.b, alpha);
@@ -125,6 +127,12 @@ public class ExperimentController : MonoBehaviour
     {
 
         currentAvatar = avatarParent.transform.Find("Avatar");
+        Writer.participantId = ParticipantId;
+        Writer.gender = gender.ToString();
+
+        uiImage = parentCanvas.GetComponentInChildren<Image>();
+        uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
+
 
         if (currentAvatar != null)
         {
@@ -138,8 +146,7 @@ public class ExperimentController : MonoBehaviour
 
         trialOngoing = false;
 
-        Writer.participantId = ParticipantId;
-        Writer.gender = gender.ToString();
+
 
         if (gender == Gender.Female)
         {
@@ -181,10 +188,6 @@ public class ExperimentController : MonoBehaviour
         quizz = GameObject.Find("QUIZZ");
 
         setActiveQuizzPanel(false);
-
-        uiImage = parentCanvas.GetComponentInChildren<Image>();
-        uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
-
     }
 
     void setActiveQuizzPanel(bool active)

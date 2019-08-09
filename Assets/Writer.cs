@@ -8,7 +8,7 @@ using Object = System.Object;
 public class Writer : MonoBehaviour
 {
 
-    public static LogData logData;
+    public static LogData logData = new LogData();
     public static int participantId = -1;
     private static string fileName = "ExLog";
     private static object locker = new Object();
@@ -19,9 +19,7 @@ public class Writer : MonoBehaviour
 
     void Start()
     {
-        logData = new LogData();
         initTimestamp = DateTime.Now.ToString("s").Replace(':','-');
-       
     }
 
     void Update()
