@@ -101,7 +101,7 @@ public class UmaSettings : MonoBehaviour
             else
                 setMaleNames();
 
-//           Shuffle<Avatar>(controller.originalAvatarsList);
+           Shuffle<Avatar>(controller.originalAvatarsList);
 
         }
 
@@ -127,8 +127,8 @@ public class UmaSettings : MonoBehaviour
 
     private void setMaleNames()
     {
-       // controller.originalAvatarsList.Add(new Avatar(Condition.Weak, "UMA_M7"));
-       // controller.originalAvatarsList.Add(new Avatar(Condition.Average, "UMA_M7"));
+        controller.originalAvatarsList.Add(new Avatar(Condition.Weak, "UMA_M7"));
+        controller.originalAvatarsList.Add(new Avatar(Condition.Average, "UMA_M7"));
         controller.originalAvatarsList.Add(new Avatar(Condition.Strong, "UMA_M6"));
         controller.originalAvatarsList.Add(new Avatar(Condition.Average, "UMA_M1"));
         controller.originalAvatarsList.Add(new Avatar(Condition.Strong, "UMA_M5"));

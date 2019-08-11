@@ -81,6 +81,8 @@ public class ExperimentController : MonoBehaviour
     GameObject quizzCanvas;
     int currentIndex = 0;
     bool first = true;
+
+    public float preTrialDuration = 30;
     Condition currentCondition;
 
     IEnumerator DisplayImage(bool startWithImage)
@@ -126,17 +128,16 @@ public class ExperimentController : MonoBehaviour
 
         currentAvatar = avatarParent.transform.Find("Avatar");
 
-        if (currentAvatar != null)
-        {
-            initialPosition = currentAvatar.transform.position;
-            initialRotation = currentAvatar.transform.rotation;
-        }
-        else
-        {
-            StartCoroutine(DisplayImage(false));
-        }
+        quizzCanvas = GameObject.Find("QuizzCanvas");
+        quizz = GameObject.Find("QUIZZ");
 
-        trialOngoing = false;
+        setActiveQuizzPanel(false);
+
+        uiImage = parentCanvas.GetComponentInChildren<Image>();
+        uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
+
+
+      
 
         Writer.participantId = ParticipantId;
         Writer.gender = gender.ToString();
@@ -146,16 +147,16 @@ public class ExperimentController : MonoBehaviour
             maleArms.SetActive(false);   //female arms
 
             GameObject rht = GameObject.Find("RHT");
-            rht.transform.localPosition = new Vector3(-0.0163f, 0.0405f, 0.0201f);
+            rht.transform.localPosition = new Vector3(0.0268f, 0.0099f, 0.0271f);
 
             GameObject rhp = GameObject.Find("RHP");
-            rhp.transform.localPosition = new Vector3(0.031f, -0.028f, 0.013f);
+            rhp.transform.localPosition = new Vector3(-0.0036f, -0.0135f, -0.0165f);
 
             GameObject lht = GameObject.Find("LHT");
-            lht.transform.localPosition = new Vector3(0.0163f, 0.077f, -0.0115f);
+            lht.transform.localPosition = new Vector3(-0.0124f, 0.0095f, 0.035f);
 
             GameObject lhp = GameObject.Find("LHP");
-            lhp.transform.localPosition = new Vector3(-0.0286f, -0.0163f, 0.0159f);
+            lhp.transform.localPosition = new Vector3(-0.0077f, -0.0153f, -0.0162f);
         }
         else
         {
@@ -176,14 +177,17 @@ public class ExperimentController : MonoBehaviour
 
         }
 
+        if (currentAvatar != null)
+        {
+            initialPosition = currentAvatar.transform.position;
+            initialRotation = currentAvatar.transform.rotation;
+        }
+        else
+        {
+            StartCoroutine(DisplayImage(false));
+        }
 
-        quizzCanvas = GameObject.Find("QuizzCanvas");
-        quizz = GameObject.Find("QUIZZ");
-
-        setActiveQuizzPanel(false);
-
-        uiImage = parentCanvas.GetComponentInChildren<Image>();
-        uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
+        trialOngoing = false;
 
     }
 
@@ -279,8 +283,7 @@ public class ExperimentController : MonoBehaviour
 
     IEnumerator SpawnQuizzDup()
     {
-        //blacking in
-     
+  
         yield return new WaitForSeconds(blackDuration);
 
         parentHandles();
@@ -298,27 +301,12 @@ public class ExperimentController : MonoBehaviour
             setActiveQuizzPanel(true);
         else
             Debug.LogError("Canvas already active.");
-        yield return null;
 
-    }
 
-    IEnumerator PushBack()
-    {
-        //Random r = new Random(2);
-        //wait 2 sec for anim pulling to end
-        //Debug.Log("Waiting for pulling anim to finish");
-        //yield return new WaitForSeconds(1);
-
-        //wait random time to trigger animation
-        // Debug.Log("Waiting 4 seconds...");
-        // yield return new WaitForSeconds(4);
-
-        //Debug.Log("PushBack triggered in 3");
-        //yield return new WaitForSeconds(3);
-        // Debug.Log("PushBack triggered");
-        currentAvatar.GetComponent<Animator>().SetTrigger("PushBack");
-        Writer.logData.action = "push_back";
-
+        Debug.Log("Waiting to black out..");
+        yield return new WaitForSeconds(preTrialDuration);
+        StartCoroutine(DisplayImage(false)); //blacking in
+        //
         yield return null;
 
     }
@@ -379,8 +367,8 @@ public class ExperimentController : MonoBehaviour
                 currentAvatar.GetComponent<UmaSettings>().setMood(1);
 
 
-            StartCoroutine(PushBack());
-            // currentAvatar.GetComponent<UmaSettings>().setIKTargetHand();
+            currentAvatar.GetComponent<Animator>().SetTrigger("PushBack");
+            Writer.logData.action = "push_back";
 
         }
 
@@ -389,6 +377,7 @@ public class ExperimentController : MonoBehaviour
     bool experimentStarted = false;
     private GameObject quizz;
     private bool nullCondition=false;
+
     void Update()
     {
         if (first && !experimentStarted)
@@ -404,6 +393,7 @@ public class ExperimentController : MonoBehaviour
                 if (!nullCondition)
                 {
                     nullCondition = true;
+                    Writer.logging = false;
                     StartCoroutine(SpawnQuizzDup());
                 }
             }
@@ -475,7 +465,7 @@ public class ExperimentController : MonoBehaviour
 
                 currentAvatar.GetComponent<Animator>().SetTrigger("Reverse");
                 currentAvatar.GetComponent<UmaSettings>().setMood(0);
-                // currentAvatar.GetComponent<UmaSettings>().setIKTargetHead();
+
 
                 startText.GetComponent<TMPro.TextMeshProUGUI>().text = "STOP";
                 Writer.logData.action = "stop";
