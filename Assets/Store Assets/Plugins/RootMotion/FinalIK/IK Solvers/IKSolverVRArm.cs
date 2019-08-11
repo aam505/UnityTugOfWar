@@ -133,8 +133,8 @@ namespace RootMotion.FinalIK {
 			private Vector3 chestUp;
 			private Quaternion forearmRelToUpperArm = Quaternion.identity;
 
-			private const float yawOffsetAngle = 45f;
-			private const float pitchOffsetAngle = -30f;
+			public  float yawOffsetAngle = 45f;
+			public  float pitchOffsetAngle = -30f;
 
 			protected override void OnRead(Vector3[] positions, Quaternion[] rotations, bool hasChest, bool hasNeck, bool hasShoulders, bool hasToes, int rootIndex, int index) {
 				Vector3 shoulderPosition = positions[index];

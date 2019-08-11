@@ -16,18 +16,18 @@ public class Writer : MonoBehaviour
     bool first = true;
     string initTimestamp;
     public static string gender;
+    private float sampleRate = 60f;
 
     void Start()
     {
         logData = new LogData();
         initTimestamp = DateTime.Now.ToString("s").Replace(':','-');
-       
-    }
+       // StartCoroutine(LoggingCoroutine());
+     }
 
     void Update()
     {
-        if (logging)
-            Log();
+        // if (logging) Log();
 
     }
 
@@ -35,7 +35,7 @@ public class Writer : MonoBehaviour
     public void Log()
     {
         logData.timestamp = DateTime.Now;
-        Debug.Log(logData.timestamp);
+       // Debug.Log(logData.timestamp);
    
         using (StreamWriter outputfile = new StreamWriter(fileName + "_p" + participantId + "_" + gender + "_"+initTimestamp+".csv", true))
         {
@@ -55,5 +55,18 @@ public class Writer : MonoBehaviour
             outputfile.WriteLine(logData.toString());
         }
         //Debug.Log(logData.toStringShort());
+    }
+
+    IEnumerator LoggingCoroutine()
+    {
+        while (true)
+        {
+            while (logging)
+            {
+                Log();
+                yield return new WaitForSeconds(1f / sampleRate);
+            }
+            yield return new WaitUntil(() => logging);
+        }
     }
 }
