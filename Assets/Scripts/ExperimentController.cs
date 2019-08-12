@@ -78,7 +78,7 @@ public class ExperimentController : MonoBehaviour
     float afterStopCounter = 10; // AMOUNT OF TIME BETWEEN stopping pulling and blacking in
 
     GameObject quizzCanvas;
-    int currentIndex = 0;
+
     bool first = true;
 
     public float preTrialDuration = 30;
@@ -238,7 +238,7 @@ public class ExperimentController : MonoBehaviour
             }
 
   
-             Writer.logData.conditon = originalAvatarsList[currentIndex].condition.ToString();
+             Writer.logData.conditon = originalAvatarsList[currentAvatarIdx].condition.ToString()+ " " + originalAvatarsList[currentAvatarIdx].name.ToString();
 
             yield return new WaitForSeconds(blackDuration);
             StartCoroutine(DisplayImage(true)); //blacking out
@@ -264,6 +264,7 @@ public class ExperimentController : MonoBehaviour
             StartCoroutine(DisplayImage(true)); //blacking out
 
             startText.GetComponent<TMPro.TextMeshProUGUI>().text = "THE END!";
+            Writer.outputfile.Close();
 
         }
 
@@ -330,9 +331,7 @@ public class ExperimentController : MonoBehaviour
 
     bool pressed = false;
     private void countToStart()
-    {
-
-        
+    {   
         float seconds = getSeconds(startCounter);
 
         if (seconds < 4)
@@ -397,15 +396,7 @@ public class ExperimentController : MonoBehaviour
     GameObject lHand, rHand, ArmsrHand, ArmslHand;
     void Update()
     {
-      
-        //if (moveArms)
-        //{
-        //    ArmslHand.transform.position = lHand.transform.position;
-        //    ArmsrHand.transform.rotation = lHand.transform.rotation;
-
-        //    ArmsrHand.transform.position = rHand.transform.position;
-        //    ArmsrHand.transform.rotation = rHand.transform.rotation;
-        //}
+       
         if (first && !experimentStarted)
         {
             if (currentAvatar != null)

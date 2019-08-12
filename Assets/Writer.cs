@@ -17,7 +17,7 @@ public class Writer : MonoBehaviour
     string initTimestamp;
     public static string gender;
     private float sampleRate = 60f;
-    StreamWriter outputfile;
+    public static StreamWriter outputfile;
     void Start()
     {
         
