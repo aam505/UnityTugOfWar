@@ -10,12 +10,12 @@ using System.Collections.Generic;
 using Valve.VR;
 using HI5.VRCalibration;
 
-    namespace HI5
+namespace HI5
 {
     public class HI5_VIVEInstance : HI5_Instance
     {
         [SerializeField] private Renderer m_Renderer;
-        internal  bool isVisible = true;
+        internal bool isVisible = true;
         public bool IsValid { get { return isValid; } }
         private bool isValid = false;
 
@@ -26,26 +26,26 @@ using HI5.VRCalibration;
         private HumanButtons mHumanButtons;
         public bool trackPosition = true;
         SteamVR_Events.Action newPosesAction;
-        
+
         private void Awake()
         {
             newPosesAction = SteamVR_Events.NewPosesAction(OnNewPoses);
             mHumanButtons = GetComponentInChildren<HumanButtons>();
-      
+
         }
 
         new void OnEnable()
         {
             base.OnEnable();
             //LoadValidBones();
-            if(newPosesAction != null)
+            if (newPosesAction != null)
                 newPosesAction.enabled = true;
         }
 
         new void OnDisable()
         {
             base.OnDisable();
-            if(newPosesAction != null)
+            if (newPosesAction != null)
                 newPosesAction.enabled = false;
         }
 
@@ -79,10 +79,10 @@ using HI5.VRCalibration;
         {
             bool isAvailable = false;
             if (m_Status != null)
-                isAvailable  = m_Status.IsGloveAvailable(HandType);
+                isAvailable = m_Status.IsGloveAvailable(HandType);
             bool isBinded = HI5_BindInfoManager.IsGloveBinded(HandType);
             bool isBposSuccess = HI5_Manager.GetGloveStatus().isGloveBPosSuccess();
-           
+
             if (isAvailable && isBinded && isBposSuccess)
             {
                 if (HI5_Calibration.IsCalibratingBPose)
@@ -92,7 +92,7 @@ using HI5.VRCalibration;
             }
             else
                 isValid = false;
-           
+
             //if (HI5_Calibration.IsCalibratingBPose)
             //    isValid = false;
         }
@@ -103,12 +103,12 @@ using HI5.VRCalibration;
             if (isVisible)
             {
                 m_Renderer.gameObject.SetActive(value);
-              
+
             }
             else
             {
                 m_Renderer.gameObject.SetActive(false);
-                
+
             }
 
             if (mHumanButtons != null)
@@ -120,7 +120,7 @@ using HI5.VRCalibration;
 
         private void ApplyFingerMotion(HI5_Source source)
         {
-            for (int i = (m_INDEX_Hand +1 ); i < (int)Bones.NumOfHI5Bones && i < HandBones.Length; i++)
+            for (int i = (m_INDEX_Hand + 1); i < (int)Bones.NumOfHI5Bones && i < HandBones.Length; i++)
             {
                 if (HandBones[i] != null)
                 {
@@ -144,14 +144,14 @@ using HI5.VRCalibration;
                 Vector3 offset = HandType == Hand.LEFT ? HI5_Manager.LeftOffset : HI5_Manager.RightOffset;
                 Vector3 handPos = pos + rot * offset;
 
-                if (HandBones[m_INDEX_Hand] != null)
-                {
+                if (HandBones[m_INDEX_Hand] != null && !float.IsNaN(handPos.x) && !float.IsNaN(handPos.y) && !float.IsNaN(handPos.z))
+                { 
                     HandBones[m_INDEX_Hand].localPosition = handPos;
                 }
             }
         }
 
-        
+
         private void SetPosition(Transform[] bones, int bone, Vector3 position)
         {
             Transform t = bones[(int)bone];
@@ -202,7 +202,7 @@ using HI5.VRCalibration;
 
             ApplyHandMotion_Position(pos, rot);
         }
-        
+
         /*
         private void LoadValidBones()
         {

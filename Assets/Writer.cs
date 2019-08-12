@@ -12,7 +12,7 @@ public class Writer : MonoBehaviour
     public static int participantId = -1;
     private static string fileName = "ExLog";
     private static object locker = new Object();
-    public static bool logging = true;
+    public static bool logging=false;
     bool first = true;
     string initTimestamp;
     public static string gender;
@@ -22,8 +22,8 @@ public class Writer : MonoBehaviour
     {
         
         initTimestamp = DateTime.Now.ToString("s").Replace(':', '-');
-        // StartCoroutine(LoggingCoroutine());
-        outputfile = new StreamWriter(fileName + "_p" + participantId + "_" + gender + "_" + initTimestamp + ".csv", true);
+        StartCoroutine(LoggingCoroutine());
+        
     }
 
 
@@ -34,6 +34,7 @@ public class Writer : MonoBehaviour
 
         if (first)
         {
+            outputfile = new StreamWriter(fileName + "_p" + participantId + "_" + gender + "_" + initTimestamp + ".csv", true);
             outputfile.WriteLine(logData.getHeader());
             first = false;
         }

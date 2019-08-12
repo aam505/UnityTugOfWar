@@ -25,8 +25,7 @@ public class ExperimentController : MonoBehaviour
     private bool started = false;
     float startedTrialTime;
     bool finishedExperiment = false;
-    public GameObject participantLeftHand;
-    public GameObject participantRightHand;
+  
     public Gender gender;
     public GameObject myPrefab;
 
@@ -84,7 +83,7 @@ public class ExperimentController : MonoBehaviour
 
     public float preTrialDuration = 30;
     Condition currentCondition;
-
+    GameObject arms;
     IEnumerator DisplayImage(bool startWithImage)
     {
 
@@ -126,6 +125,13 @@ public class ExperimentController : MonoBehaviour
     public void Start()
     {
 
+        //Application.targetFrameRate = 60;
+        ArmsrHand = GameObject.Find("ArmsrHand");
+        ArmslHand = GameObject.Find("ArmslHand");
+
+        lHand = GameObject.Find("lHand");
+        rHand = GameObject.Find("rHand");
+
         currentAvatar = avatarParent.transform.Find("Avatar");
 
         quizzCanvas = GameObject.Find("QuizzCanvas");
@@ -135,9 +141,6 @@ public class ExperimentController : MonoBehaviour
 
         uiImage = parentCanvas.GetComponentInChildren<Image>();
         uiImage.sprite = parentCanvas.transform.GetChild(0).GetComponent<Image>().sprite;
-
-
-      
 
         Writer.participantId = ParticipantId;
         Writer.gender = gender.ToString();
@@ -157,6 +160,15 @@ public class ExperimentController : MonoBehaviour
 
             GameObject lhp = GameObject.Find("LHP");
             lhp.transform.localPosition = new Vector3(-0.0077f, -0.0153f, -0.0162f);
+
+            //lht.transform.parent = ArmslHand.transform;
+            //lhp.transform.parent = ArmslHand.transform;
+
+            //rht.transform.parent = ArmsrHand.transform;
+            //rhp.transform.parent = ArmsrHand.transform;
+
+
+          //  moveArms = true;
         }
         else
         {
@@ -175,6 +187,13 @@ public class ExperimentController : MonoBehaviour
             GameObject rhp = GameObject.Find("RHP");
             rhp.transform.localPosition = new Vector3(0.0225f, -0.0145f, -0.013f);
 
+            //lht.transform.parent = ArmslHand.transform;
+            //lhp.transform.parent = ArmslHand.transform;
+
+            //rht.transform.parent = ArmsrHand.transform;
+            //rhp.transform.parent = ArmsrHand.transform;
+
+            //moveArms = true;
         }
 
         if (currentAvatar != null)
@@ -182,15 +201,12 @@ public class ExperimentController : MonoBehaviour
             initialPosition = currentAvatar.transform.position;
             initialRotation = currentAvatar.transform.rotation;
         }
-        else
-        {
-            StartCoroutine(DisplayImage(false));
-        }
 
         trialOngoing = false;
 
     }
 
+    bool moveArms = false;
     void setActiveQuizzPanel(bool active)
     {
         quizzCanvas.SetActive(active);
@@ -250,7 +266,6 @@ public class ExperimentController : MonoBehaviour
             startText.GetComponent<TMPro.TextMeshProUGUI>().text = "THE END!";
 
         }
-
 
         yield return null;
     }
@@ -316,6 +331,8 @@ public class ExperimentController : MonoBehaviour
     bool pressed = false;
     private void countToStart()
     {
+
+        
         float seconds = getSeconds(startCounter);
 
         if (seconds < 4)
@@ -377,23 +394,32 @@ public class ExperimentController : MonoBehaviour
     bool experimentStarted = false;
     private GameObject quizz;
     private bool nullCondition=false;
-
+    GameObject lHand, rHand, ArmsrHand, ArmslHand;
     void Update()
     {
+      
+        //if (moveArms)
+        //{
+        //    ArmslHand.transform.position = lHand.transform.position;
+        //    ArmsrHand.transform.rotation = lHand.transform.rotation;
+
+        //    ArmsrHand.transform.position = rHand.transform.position;
+        //    ArmsrHand.transform.rotation = rHand.transform.rotation;
+        //}
         if (first && !experimentStarted)
         {
             if (currentAvatar != null)
             {
                 experimentStarted = true;
                 startExperiment = true;
+                Writer.logging = true;
                 pressed = true;
             }
             else
             {
                 if (!nullCondition)
                 {
-                    nullCondition = true;
-                    Writer.logging = false;
+                    nullCondition = true;                 
                     StartCoroutine(SpawnQuizzDup());
                 }
             }
